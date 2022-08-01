@@ -37,6 +37,7 @@ public class Driver {
 				break;
 			case "2":
 				EmployeeLogin.employeeLogin();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Not implemented yet");
 				break;
 			case "3":

@@ -41,11 +41,16 @@ public class CustomerMenu {
 				} else {
 					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Previous orders:");
+					System.out.println("       -");
 					for(Order order : customer.getOrderList()) {
 						System.out.println("Purchased from: " + order.getStoreAddress());
 						order.printOrderWithTax();
+						if(order != customer.getOrderList().get(customer.getOrderList().size()-1)) {
+							System.out.println(" ");
+						}
 					}
 					System.out.println("-------------------------------------------------------------------------------");
+
 				}
 
 				break;

@@ -109,7 +109,7 @@ public class Duckie {
 	@Override
 	public String toString() {
 		return "Duck#: " + duckNumber + "\nDuckie Name: " + name + "\nStock: " + stock + "\nDuckie Price: $" + price + 
-				"\nDescription: " + description + "\nDuckiness: " + duckiness + "\n--------------------";
+				"\nDescription: " + description + "\nDuckiness: " + duckiness;
 	}
 	
 	

@@ -13,7 +13,7 @@ public class TemporaryStorage {
 	public static ArrayList<Employee> employees = new ArrayList<>();
 
 	public static StoreFront goodDuckinDuckies = new StoreFront("Good Duckin' Duckies", "123 Lake Avenue, Duck Town, Duck Nation, 11111");
-	public static StoreFront discountDuckies = new StoreFront("Discout Duckies", "5732 Pond Road, Duck Town, Duck Nation, 11111");
+	public static StoreFront discountDuckies = new StoreFront("Discount Duckies", "5732 Pond Road, Duck Town, Duck Nation, 11111");
 	public static StoreFront duckieDynasty = new StoreFront("Duckie Dynasty", "63111 Ducktail Way, Duck Town, Duck Nation, 11111");
 
 	

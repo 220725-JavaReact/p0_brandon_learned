@@ -31,7 +31,9 @@ public class DuckieDynastyMenu {
 			
 			switch (scanner.nextLine()) {
 			case "1":	
-				System.out.println("Good Duckin' Duckies - Duckie Catalog:\n--------------------");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Good Duckin' Duckies - Duckie Catalog:");
+				System.out.println("-------------------------------------------------------------------------------");
 				BusinessLogic.printAllDuckies(duckieDynasty);
 				break;
 			case "2":

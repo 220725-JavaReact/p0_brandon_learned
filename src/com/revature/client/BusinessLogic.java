@@ -125,15 +125,19 @@ public class BusinessLogic {
 		while(isRunning) {
 			//find out what duck to add
 			while(duckieToAdd == null) {
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Please select the Duckie you wish to add to your cart");
 				for(Duckie duckie : goodDuckinDuckies.getDuckieList()) {
 					System.out.println("[" + duckie.getDuckNumber() + "] " + duckie.getName());
 					choicesNumber++;
 				}
-				System.out.println("Please select the Duckie you wish to add to your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int desiredDuckie = scanner.nextInt();
 					if(desiredDuckie < 1 || desiredDuckie > choicesNumber) {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Not a valid option.");
+						System.out.println("-------------------------------------------------------------------------------");
 						choicesNumber = 0;
 					} else {
 						duckieToAdd = goodDuckinDuckies.getDuckieList().get(desiredDuckie-1);
@@ -146,7 +150,9 @@ public class BusinessLogic {
 						}
 					}	
 				} catch (Exception e) {
+					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
+					System.out.println("-------------------------------------------------------------------------------");
 					choicesNumber = 0;
 					scanner.nextLine();
 					continue;
@@ -155,19 +161,27 @@ public class BusinessLogic {
 			
 			//find out how many to add
 			while(lineToAdd.getQuantity() == 0) {
-				System.out.println("Please select the amount of duckies you wish to add");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Please select the amount of duckies you wish to add (Enter a number)");
+				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int desiredQuantity = scanner.nextInt();
 					if(desiredQuantity < 1) {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Not a valid quantity");
+						System.out.println("-------------------------------------------------------------------------------");
 					} else if(desiredQuantity + inCartQuantity > goodDuckinDuckies.getDuckieList().get(duckieToAdd.getDuckNumber()-1).getStock()) {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("There are not enough of that duckie in stock");
+						System.out.println("-------------------------------------------------------------------------------");
 						break;
 					} else {
 						lineToAdd.setQuantity(desiredQuantity);
 					}
 				} catch (Exception e) {
+					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
+					System.out.println("-------------------------------------------------------------------------------");
 					scanner.nextLine();
 					continue;
 				}
@@ -176,41 +190,52 @@ public class BusinessLogic {
 			
 			while(isRunning2) {
 				if(lineToAdd.getQuantity() == 0) {
-					System.out.println("No duckies were added to card\n--------------------");
+					System.out.println("-------------------------------------------------------------------------------");
+					System.out.println("No duckies were added to card");
+					System.out.println("-------------------------------------------------------------------------------");
 					break;
 				}
-				
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("You wish to add " + lineToAdd.getQuantity() + 
 						" " + duckieToAdd.getName() + 
 						"(s) to cart?[Y/N]");
+				System.out.println("-------------------------------------------------------------------------------");
 				String reply = scanner.nextLine();
 				
 				if(reply.toLowerCase().equals("y")) {
 					if(order.containsDuckie(duckieToAdd)) {
 						order.increaseLineItemQuantity(duckieToAdd, lineToAdd.getQuantity());
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println(lineToAdd.getQuantity() + " " + 
 								duckieToAdd.getName() + 
-								"(s) added to Cart!\n--------------------");
+								"(s) added to Cart!");
+						System.out.println("-------------------------------------------------------------------------------");						
 								printCart(order);
 								isRunning2 = false;
 					
 					} else {
 						lineToAdd.setDuckie(duckieToAdd);
 						order.addLineItem(lineToAdd);
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println(lineToAdd.getQuantity() + " " + 
 						duckieToAdd.getName() + 
-						"(s) added to Cart!\n--------------------");
+						"(s) added to Cart!");
+						System.out.println("-------------------------------------------------------------------------------");
 						printCart(order);
 						isRunning2 = false;
 					}					
 				} else if(reply.toLowerCase().equals("n")) {
-					System.out.println(quantityToAdd + " " + 
+					System.out.println("-------------------------------------------------------------------------------");
+					System.out.println(lineToAdd.getQuantity() + " " + 
 							duckieToAdd.getName() + 
-							"(s) were not added to your cart\n--------------------");
+							"(s) were not added to your cart");
+					System.out.println("-------------------------------------------------------------------------------");
 					printCart(order);
 					isRunning2 = false;
 				} else {
+					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
+					System.out.println("-------------------------------------------------------------------------------");
 				}
 				
 				isRunning = false;
@@ -228,23 +253,30 @@ public class BusinessLogic {
 		while(isRunning) {
 
 			while(duckieToRemove == null) {
-				System.out.println("Which duckies would you like to remove from your cart?");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Which duckies would you like to remove from your cart?(Enter a number)");
+				System.out.println("-------------------------------------------------------------------------------");
 				for(int i = 0; i< order.getLineItemArray().size(); i++) {
 					int indexPlus = i+1;
 					System.out.println("[" + indexPlus + "]" + " " + 
 							order.getLineItemArray().get(i).getDuckie().getName() +
 							" x " + order.getLineItemArray().get(i).getQuantity());
 				}
+				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int reply = scanner.nextInt();
 					if(reply < 1 || reply > order.getLineItemArray().size()) {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("That is not a valid option");
+						System.out.println("-------------------------------------------------------------------------------");
 					} else {
 						duckieToRemove = order.getLineItemArray().get(reply-1).getDuckie();
 						previousReply = reply;
 					}
 				} catch (Exception e) {
+					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
+					System.out.println("-------------------------------------------------------------------------------");
 					scanner.nextLine();
 					continue;
 				}
@@ -252,48 +284,66 @@ public class BusinessLogic {
 			}
 
 			while(quantityToRemove == -1) {
-				System.out.println("How many " + duckieToRemove.getName() + "s would you like to remove from your cart?");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("How many " + duckieToRemove.getName() + "s would you like to remove from your cart?(Enter a number)");
+				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int reply = scanner.nextInt();
 					if(reply < 1) {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("You must select an amount greater than 0");
+						System.out.println("-------------------------------------------------------------------------------");
 					} else if(reply > order.getLineItemArray().get(previousReply-1).getQuantity()){
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("You do not have that many duckies of that type in your cart");
+						System.out.println("-------------------------------------------------------------------------------");
 					} else {
 						quantityToRemove = reply;
 					}
 				} catch (Exception e) {
+					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
+					System.out.println("-------------------------------------------------------------------------------");
 					scanner.nextLine();
 					continue;
 				}
 			}
 			
 			scanner.nextLine();
+			System.out.println("-------------------------------------------------------------------------------");
 			System.out.println("You wish to remove " + quantityToRemove + " " + 
 			duckieToRemove.getName() +
 			" from your cart?[Y/N]");
+			System.out.println("-------------------------------------------------------------------------------");
 		
 			switch (scanner.nextLine()) {
 			case "Y":
 				order.removeFromLineItemQuantity(duckieToRemove, quantityToRemove);
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were removed from your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				printCart(order);
 				isRunning = false;
 				break;
 			case "y":
 				order.removeFromLineItemQuantity(duckieToRemove, quantityToRemove);
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were removed from your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				printCart(order);
 				isRunning = false;
 				break;
 			case "N":
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				printCart(order);
 				isRunning = false;
 				break;
 			case "n":
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				printCart(order);
 				isRunning = false;
 				break;
@@ -305,17 +355,23 @@ public class BusinessLogic {
 	
 	public static void printCart(Order order) {
 		if(order.getLineItemArray().isEmpty()) {
-			System.out.println("-------------------\nYour cart is empty\n--------------------");
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Your cart is empty");
+			System.out.println("-------------------------------------------------------------------------------");
 		} else {
-			System.out.println("-------------------\nYour Current Duckie Cart: \n--------------------");
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Your Current Duckie Cart:");
+			System.out.println("-------------------------------------------------------------------------------");
 			order.printOrder();
-			System.out.println("\n-------------------");
+			System.out.println("-------------------------------------------------------------------------------");
 		}
 	}
 
 	public static void printAllDuckies(StoreFront storeFront) {
 		for(Duckie duckie : storeFront.getDuckieList()) {
 			System.out.println(duckie);
+			System.out.println("-------------------------------------------------------------------------------");
+
 		}
 	}
 
@@ -323,10 +379,13 @@ public class BusinessLogic {
 		boolean isRunning = true;
 		
 		while(isRunning) {
-			System.out.println("Your current order: \n--------------------");
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Your current order:");
+			System.out.println("-------------------------------------------------------------------------------");
 			order.printOrderWithTax();
+			System.out.println("-------------------------------------------------------------------------------");
 			System.out.println("Would you like to finalize your order?[Y/N]");
-			
+			System.out.println("-------------------------------------------------------------------------------");
 			switch (scanner.nextLine()) {
 			case "Y":
 				customer.addOrder(order);
@@ -339,10 +398,14 @@ public class BusinessLogic {
 					}
 				}
 				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
-				System.out.println("Your order of:\n--------------------");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Your order of:");
+				System.out.println("-------------------------------------------------------------------------------");
 				order.printOrder();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("has been finalized!");
-				System.out.println("Thank you for shopping with " + storeFront.getName() + "!\n--------------------");
+				System.out.println("Thank you for shopping with " + storeFront.getName() + "!");
+				System.out.println("-------------------------------------------------------------------------------");
 				return true;
 			case "y":
 				customer.addOrder(order);
@@ -355,38 +418,42 @@ public class BusinessLogic {
 					}
 				}
 				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
-				System.out.println("Your order of:\n--------------------");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Your order of:");
+				System.out.println("-------------------------------------------------------------------------------");
 				order.printOrder();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("has been finalized!");
-				System.out.println("Thank you for shopping with " + storeFront.getName() + "!\n--------------------");
+				System.out.println("Thank you for shopping with " + storeFront.getName() + "!");
+				System.out.println("-------------------------------------------------------------------------------");
 				return true;
 			case "N":
-				System.out.println("Your order of:\n--------------------");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Your order of:");
+				System.out.println("-------------------------------------------------------------------------------");
 				order.printOrder();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("was not finalized!");
+				System.out.println("-------------------------------------------------------------------------------");
+
 				return false;
 			case "n":
-				System.out.println("Your order of:\n--------------------");
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Your order of:");
+				System.out.println("-------------------------------------------------------------------------------");
 				order.printOrder();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("was not finalized!");
+				System.out.println("-------------------------------------------------------------------------------");
+
 				return false;
 			default:
 				break;
 			}
 			
 		}
-		return false;
-		
-		
-		
-		
+		return false;	
 	}
-
-	
-	
-	
-	
-	
 }
 
 
