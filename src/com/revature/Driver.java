@@ -20,13 +20,17 @@ public class Driver {
 		
 		
 		boolean isRunning = true;
+		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("Hello and welcome to Quality-Quackin' Ducks! Where everyday is your Duckie Day!");
+
 		Scanner scanner = new Scanner(System.in);
 		
 		while(isRunning) {
+			System.out.println("-------------------------------------------------------------------------------");
 			System.out.println("Please choose from the options below: ");
 			System.out.println("[1] Customer Login \n[2] Employee Login \n[3] Create Account \n[4] Exit Application" );
-			
+			System.out.println("-------------------------------------------------------------------------------");
+
 			switch (scanner.nextLine()) {
 			case "1":	
 				CustomerLogin.customerLogin(scanner);
@@ -39,7 +43,9 @@ public class Driver {
 				CreateAccount.createAccount(scanner);
 				break;
 			case "4":
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Come 'Quack' Soon! ;)");
+				System.out.println("-------------------------------------------------------------------------------");
 				scanner.close();
 				isRunning = false;
 			default:

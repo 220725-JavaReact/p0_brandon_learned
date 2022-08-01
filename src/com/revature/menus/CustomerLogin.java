@@ -11,12 +11,12 @@ public class CustomerLogin {
 	public static void customerLogin(Scanner scanner) {
 		
 		ArrayList<Customer> customersForLogin = TemporaryStorage.customers;
-		for(Customer customer : customersForLogin) {
-			System.out.println(customer);
-		}
-		
 		boolean isRunning = true;
 		
+		System.out.println("-------------------------------------------------------------------------------");
+		System.out.println("CUSTOMER LOGIN:");
+		System.out.println("-------------------------------------------------------------------------------");
+
 		while(isRunning) {
 			
 			System.out.println("Input Username: ");
@@ -26,7 +26,6 @@ public class CustomerLogin {
 			for(Customer customer : customersForLogin) {
 				if(customer.getUsername().equals(attemptUsername)) {
 					targetPassword = customer.getPassword();
-					System.out.println(targetPassword);
 				}
 				
 				if(!targetPassword.equals("")) {
@@ -36,7 +35,9 @@ public class CustomerLogin {
 						isRunning = false;
 						break;
 					} else {
+						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Incorrect Username or Password");
+						System.out.println("-------------------------------------------------------------------------------");
 						isRunning = false;
 						break;
 					}
@@ -46,7 +47,10 @@ public class CustomerLogin {
 			if(isRunning) {
 				System.out.println("Input Password");
 				scanner.nextLine();
+				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Incorrect Username or Password");
+				System.out.println("-------------------------------------------------------------------------------");
+
 			}			
 			isRunning = false;
 		}

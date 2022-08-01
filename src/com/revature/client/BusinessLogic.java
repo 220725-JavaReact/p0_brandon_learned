@@ -338,8 +338,7 @@ public class BusinessLogic {
 						}
 					}
 				}
-				
-				
+				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
 				System.out.println("Your order of:\n--------------------");
 				order.printOrder();
 				System.out.println("has been finalized!");
@@ -355,11 +354,7 @@ public class BusinessLogic {
 						}
 					}
 				}
-				
-				//A logger of some sort
 				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
-				//logger above 
-				
 				System.out.println("Your order of:\n--------------------");
 				order.printOrder();
 				System.out.println("has been finalized!");

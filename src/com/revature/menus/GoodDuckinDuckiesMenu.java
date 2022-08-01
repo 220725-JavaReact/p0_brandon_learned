@@ -18,9 +18,10 @@ public class GoodDuckinDuckiesMenu {
 		Order order = new Order(goodDuckinDuckies.getName());
 		boolean isRunning = true;
 
-		
+		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("Welcome to Good Duckin' Duckies!");
-		
+		System.out.println("-------------------------------------------------------------------------------");
+
 		while(isRunning) {
 			System.out.println("Please choose from the options below: ");
 			System.out.println("[1] View Duckie Catalog \n[2] Add Duckie To Cart "

@@ -83,8 +83,10 @@ public class CreateAccount {
 		//this should be altered for when database is implemented
 		Customer customer = new Customer(firstName, lastName, username, password, email);
 		TemporaryStorage.customers.add(customer);
-		System.out.println("User " + customer.getUsername() + " successfully created!\n");
-		
+		System.out.println("-------------------------------------------------------------------------------");
+		System.out.println("User " + customer.getUsername() + " successfully created!");
+		System.out.println("-------------------------------------------------------------------------------");
+	
 		//login as customer
 		
 		

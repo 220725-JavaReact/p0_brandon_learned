@@ -16,8 +16,9 @@ public class DiscountDuckiesMenu {
 		StoreFront discountDuckies = TemporaryStorage.discountDuckies;
 		Order order = new Order(discountDuckies.getName());
 		boolean isRunning = true;
-		
+		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("Welcome to Discount Duckies!");
+		System.out.println("-------------------------------------------------------------------------------");
 		
 		while(isRunning) {
 			System.out.println("Please choose from the options below: ");

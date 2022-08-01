@@ -17,8 +17,10 @@ public class DuckieDynastyMenu {
 		Order order = new Order(duckieDynasty.getName());
 		boolean isRunning = true;
 		
+		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("Welcome to Good Duckie Dynasty!");
-		
+		System.out.println("-------------------------------------------------------------------------------");
+	
 		while(isRunning) {
 			System.out.println("Please choose from the options below: ");
 			System.out.println("[1] View Duckie Catalog \n[2] Add Duckie To Cart "
