@@ -7,24 +7,15 @@ import com.revature.models.Customer;
 import com.revature.models.Duckie;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
+import com.revature.tempdatastorage.TemporaryStorage;
 
 public class DiscountDuckiesMenu {
 
 	public static void discountDuckiesMenu(Scanner scanner, Customer customer) {
 		
-		StoreFront discountDuckies = new StoreFront("Discout Duckies", "5732 Pond Road, Duck Town, Duck Nation, 11111");
+		StoreFront discountDuckies = TemporaryStorage.discountDuckies;
 		Order order = new Order(discountDuckies.getName());
 		boolean isRunning = true;
-		
-		
-		//This can be deleted once the Database is implemented
-		discountDuckies.getDuckieList().add(new Duckie(1, "Rubber Duckie", 1.99, "A bisic Rubber Duckie", "Mildly Duckie"));
-		discountDuckies.getDuckieList().add(new Duckie(2, "Red Duckie", 2.99, "A basic Rubber Duckie, but red!", "Kinda Duckie?"));
-		discountDuckies.getDuckieList().add(new Duckie(3, "Alien Duckie", 9.95, "Keep your cows under a tight watch!", "Quite Duckie"));
-		discountDuckies.getDuckieList().add(new Duckie(4, "Duckie Lasek", 6.99, "Skateboarding pro Duckie", "The Steeziest Duckie"));
-		discountDuckies.getDuckieList().add(new Duckie(5, "Mighty Duckie", 9.99, "Ever seen a duck fight? No. Why? Because other animals are afraid", "The Mightiest and Duckiest"));
-		//-------------------------------------------------
-		
 		
 		System.out.println("Welcome to Discount Duckies!");
 		

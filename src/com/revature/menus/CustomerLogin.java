@@ -10,12 +10,10 @@ public class CustomerLogin {
 
 	public static void customerLogin(Scanner scanner) {
 		
-		//This can be deleted when database is implemented
-		ArrayList<Customer> customers = new ArrayList<>();
-		customers.add(new Customer("Brandon", "Learned", "blearned92", "password", "email@email.com"));
-		customers.add(new Customer("Jon", "Duckett", "duckduckgoose", "password", "jon@email.com"));
-		//---------------------------------------------
-		
+		ArrayList<Customer> customersForLogin = TemporaryStorage.customers;
+		for(Customer customer : customersForLogin) {
+			System.out.println(customer);
+		}
 		
 		boolean isRunning = true;
 		
@@ -25,30 +23,32 @@ public class CustomerLogin {
 			String attemptUsername = scanner.nextLine();
 			String targetPassword = "";
 			
-			//Search is username exists in array
-			for(Customer customer : customers) {
-				if(attemptUsername.equals(customer.getUsername())) {
+			for(Customer customer : customersForLogin) {
+				if(customer.getUsername().equals(attemptUsername)) {
 					targetPassword = customer.getPassword();
+					System.out.println(targetPassword);
+				}
+				
+				if(!targetPassword.equals("")) {
 					System.out.println("Input Password");
-					String attemptedPassword = scanner.nextLine();
-					if(attemptedPassword.equals(targetPassword)) {
+					if(scanner.nextLine().equals(targetPassword)) {
 						CustomerMenu.customerMenu(scanner, customer);
 						isRunning = false;
 						break;
 					} else {
-						System.out.println("Incorrect Username or Password \n--------------------");
+						System.out.println("Incorrect Username or Password");
 						isRunning = false;
 						break;
 					}
-				} else {
-					System.out.println("Input Password");
-					scanner.nextLine();
-					System.out.println("Incorrect Username or Password\n--------------------");
-					isRunning = false;
-					break;
 				}
 			}
 			
+			if(isRunning) {
+				System.out.println("Input Password");
+				scanner.nextLine();
+				System.out.println("Incorrect Username or Password");
+			}			
+			isRunning = false;
 		}
 		
 	}

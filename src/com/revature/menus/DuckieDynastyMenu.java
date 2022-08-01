@@ -7,24 +7,15 @@ import com.revature.models.Customer;
 import com.revature.models.Duckie;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
+import com.revature.tempdatastorage.TemporaryStorage;
 
 public class DuckieDynastyMenu {
 
 	public static void duckieDynastyMenu(Scanner scanner, Customer customer) {
 		
-		StoreFront duckieDynasty = new StoreFront("Duckie Dynasty", "63111 Ducktail Way, Duck Town, Duck Nation, 11111");
+		StoreFront duckieDynasty = TemporaryStorage.duckieDynasty;
 		Order order = new Order(duckieDynasty.getName());
 		boolean isRunning = true;
-		
-		
-		//This can be deleted once the Database is implemented
-		duckieDynasty.getDuckieList().add(new Duckie(1, "Rubber Duckie", 4.99, "A bisic Rubber Duckie of the Highest Quality", "Mildly Duckie"));
-		duckieDynasty.getDuckieList().add(new Duckie(2, "Howard the Duckie", 17.99, "Drake Mallard Duckie dons a mask to fight crime. Let's get dangerous!", "Very Stealthy and Very Duckie"));
-		duckieDynasty.getDuckieList().add(new Duckie(3, "Scrooge McDuckie", 9.95, "A classic duckie that is very difficult to understand at times", "Quite Duckie"));
-		duckieDynasty.getDuckieList().add(new Duckie(4, "Psyduckie", 6.99, "It's duck season, and I say 'fire'!", "Very Duckie"));
-		duckieDynasty.getDuckieList().add(new Duckie(6, "[LIMITED EDITION] Black Mage Donald Duckie", 2, 79.99, "ZETAFLAAAAARE!!!!!!", "The Duckiest"));
-		//-------------------------------------------------
-		
 		
 		System.out.println("Welcome to Good Duckie Dynasty!");
 		

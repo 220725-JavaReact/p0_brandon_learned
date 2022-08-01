@@ -15,6 +15,10 @@ public class Driver {
 	public static void main(String[] args) {
 		
 		//This is Temporary and should be deleted after database is implemented
+		TemporaryStorage.initializeData();
+		
+		
+		
 		boolean isRunning = true;
 		System.out.println("Hello and welcome to Quality-Quackin' Ducks! Where everyday is your Duckie Day!");
 		Scanner scanner = new Scanner(System.in);

@@ -9,9 +9,7 @@ public class EmployeeMenu {
 
 	public static void employeeMenu() {
 		
-		ArrayList<Employee> employees = new ArrayList<>();
-		TemporaryStorage.employees.add(new Employee("user", "password"));
-		TemporaryStorage.employees.add(new Employee("user2", "password"));
+		ArrayList<Employee> employees = TemporaryStorage.employees;
 		TemporaryStorage.printAllEmployees();
 		
 		
