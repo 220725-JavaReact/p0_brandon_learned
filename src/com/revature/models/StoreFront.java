@@ -6,7 +6,7 @@ public class StoreFront {
 
 	String name;
 	String address;
-	ArrayList<Duckie> duckieList = new ArrayList<>();
+	ArrayList<Duckie> duckieList = new ArrayList<>(); //this may need to become an array list of line items
 	ArrayList<Order> orderList = new ArrayList<>();
 	
 	public StoreFront(String name, String address) {

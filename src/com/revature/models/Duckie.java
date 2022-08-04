@@ -6,23 +6,23 @@ public class Duckie {
 	
 	int duckNumber;
 	String name;
-	int stock;
+	int quantity;
 	double price;
 	String description;
 	String duckiness;
 	
 	public Duckie(int duckNumber, String name, double price, String description, String duckiness) {
 		this.name = name;
-		this.stock = 10;
+		this.quantity = 10;
 		this.price = price;
 		this.description = description;
 		this.duckiness = duckiness;
 		this.duckNumber = duckNumber;
 	}
 	
-	public Duckie(int duckNumber, String name, int stock, double price, String description, String duckiness) {
+	public Duckie(int duckNumber, String name, int quantity, double price, String description, String duckiness) {
 		this.name = name;
-		this.stock = stock;
+		this.quantity = quantity;
 		this.price = price;
 		this.description = description;
 		this.duckiness = duckiness;
@@ -42,25 +42,25 @@ public class Duckie {
 		this.name = name;
 	}
 	
-	public int getStock() {
-		return stock;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void addStock(int stock) {
-		this.stock += stock;
+	public void addQuantity(int quantity) {
+		this.quantity += quantity;
 	}
 	
-	public void removeStock(int stock) {
-		if(this.stock < stock) {
+	public void removeQuantity(int quantity) {
+		if(this.quantity < quantity) {
 			System.out.println("Do not have that much stock to remove");
 		} else {
-			this.stock -= stock;
+			this.quantity -= quantity;
 		}
 		
 	}
 	
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public double getPrice() {
@@ -108,7 +108,7 @@ public class Duckie {
 
 	@Override
 	public String toString() {
-		return "Duck#: " + duckNumber + "\nDuckie Name: " + name + "\nStock: " + stock + "\nDuckie Price: $" + price + 
+		return "Duck#: " + duckNumber + "\nDuckie Name: " + name + "\nQuantity: " + quantity + "\nDuckie Price: $" + price + 
 				"\nDescription: " + description + "\nDuckiness: " + duckiness;
 	}
 	

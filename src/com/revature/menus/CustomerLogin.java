@@ -1,16 +1,17 @@
 package com.revature.menus;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.revature.models.Customer;
-import com.revature.tempdatastorage.TemporaryStorage;
+
+import DataLayer.CustomerDAO;
+import DataLayer.DAO;
 
 public class CustomerLogin {
 
 	public static void customerLogin(Scanner scanner) {
 		
-		ArrayList<Customer> customersForLogin = TemporaryStorage.customers;
+		DAO<Customer> customerDao = new CustomerDAO();
 		boolean isRunning = true;
 		
 		System.out.println("-------------------------------------------------------------------------------");
@@ -21,37 +22,30 @@ public class CustomerLogin {
 			
 			System.out.println("Input Username: ");
 			String attemptUsername = scanner.nextLine();
-			String targetPassword = "";
+			Customer customer = customerDao.getByName(attemptUsername);
+			System.out.println("Input Password");
+			String attemptPassword = scanner.nextLine();
 			
-			for(Customer customer : customersForLogin) {
-				if(customer.getUsername().equals(attemptUsername)) {
-					targetPassword = customer.getPassword();
-				}
-				
-				if(!targetPassword.equals("")) {
-					System.out.println("Input Password");
-					if(scanner.nextLine().equals(targetPassword)) {
-						CustomerMenu.customerMenu(scanner, customer);
-						isRunning = false;
-						break;
-					} else {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("Incorrect Username or Password");
-						System.out.println("-------------------------------------------------------------------------------");
-						isRunning = false;
-						break;
-					}
-				}
-			}
 			
-			if(isRunning) {
-				System.out.println("Input Password");
-				scanner.nextLine();
+			if(customer == null) {
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Incorrect Username or Password");
 				System.out.println("-------------------------------------------------------------------------------");
+				isRunning = false;
+				break;
+			}
 
-			}			
+			String targetPassword = customer.getPassword();
+			if(!targetPassword.equals(attemptPassword)) {
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Incorrect Username or Password");
+				System.out.println("-------------------------------------------------------------------------------");
+				isRunning = false;
+				break;
+			}
+			
+			CustomerMenu.customerMenu(scanner, customer);
+					
 			isRunning = false;
 		}
 		

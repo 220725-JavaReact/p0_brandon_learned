@@ -1,11 +1,14 @@
 package com.revature.client;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.revature.menus.StoreFrontMenu;
 import com.revature.models.Customer;
 import com.revature.models.Duckie;
+import com.revature.models.Employee;
 import com.revature.models.LineItem;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
@@ -13,8 +16,14 @@ import com.revature.tempdatastorage.TemporaryStorage;
 import com.revature.util.Logger;
 import com.revature.util.Logger.LogLevel;
 
+import DataLayer.StoreFrontsDAO;
+
 public class BusinessLogic {
 
+	
+	//Account Logic - Line 25
+	//Store Logic - Line 121
+	//Employee Logic - Line 465
 	
 	//ACCOUNT CREATION METHODS
 	
@@ -112,14 +121,14 @@ public class BusinessLogic {
 		}
 	}
 	
-	//GOOD DUCKIN DUCKIES METHODS
+	//DUCKI SHOP METHODS
 	public static void addDuckiesToCart(Scanner scanner, Customer customer, Order order, StoreFront goodDuckinDuckies) {
 		boolean isRunning = true;
 		boolean isRunning2 = true;
 		int choicesNumber = 0;
 		int inCartQuantity = 0;
 		Duckie duckieToAdd = null;
-		int quantityToAdd = 0;
+		//int quantityToAdd = 0;
 		LineItem lineToAdd = new LineItem(null, 0);
 		
 		while(isRunning) {
@@ -127,6 +136,7 @@ public class BusinessLogic {
 			while(duckieToAdd == null) {
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Please select the Duckie you wish to add to your cart");
+				System.out.println("-------------------------------------------------------------------------------");
 				for(Duckie duckie : goodDuckinDuckies.getDuckieList()) {
 					System.out.println("[" + duckie.getDuckNumber() + "] " + duckie.getName());
 					choicesNumber++;
@@ -170,7 +180,7 @@ public class BusinessLogic {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Not a valid quantity");
 						System.out.println("-------------------------------------------------------------------------------");
-					} else if(desiredQuantity + inCartQuantity > goodDuckinDuckies.getDuckieList().get(duckieToAdd.getDuckNumber()-1).getStock()) {
+					} else if(desiredQuantity + inCartQuantity > goodDuckinDuckies.getDuckieList().get(duckieToAdd.getDuckNumber()-1).getQuantity()) {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("There are not enough of that duckie in stock");
 						System.out.println("-------------------------------------------------------------------------------");
@@ -393,7 +403,7 @@ public class BusinessLogic {
 				for(Duckie duckie : storeFront.getDuckieList()) {
 					for(LineItem lineItem : order.getLineItemArray()) {
 						if(duckie.getName().equals(lineItem.getDuckie().getName())) {
-							duckie.removeStock(lineItem.getQuantity());
+							duckie.removeQuantity(lineItem.getQuantity());
 						}
 					}
 				}
@@ -413,7 +423,7 @@ public class BusinessLogic {
 				for(Duckie duckie : storeFront.getDuckieList()) {
 					for(LineItem lineItem : order.getLineItemArray()) {
 						if(duckie.getName().equals(lineItem.getDuckie().getName())) {
-							duckie.removeStock(lineItem.getQuantity());
+							duckie.removeQuantity(lineItem.getQuantity());
 						}
 					}
 				}
@@ -453,6 +463,154 @@ public class BusinessLogic {
 			
 		}
 		return false;	
+	}
+
+	//EMPLOYEE LOGIC
+	
+	public static void viewCustomerOrders(Scanner scanner, ArrayList<Customer> customersToView, Employee employee) {
+		boolean isRunning = true;
+		while(isRunning) {
+			System.out.println("-------------------------------------------------------------------------------");
+			for(int i = 0; i<customersToView.size(); i++) {
+				System.out.println("[" + (i+1) + "]" + customersToView.get(i).getUsername());
+			}
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Select a customer to view their placed orders(Enter a Number)");
+			System.out.println("-------------------------------------------------------------------------------");			
+			try {
+				int response = scanner.nextInt();
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(customersToView.get(response-1).getUsername() + "'s previous orders:");
+				System.out.println("       -");
+				for(Order order : customersToView.get(response-1).getOrderList()) {
+					System.out.println("Purchased at: " + order.getStoreAddress());
+					order.printOrderWithTax();
+					if(order != customersToView.get(response-1).getOrderList().get(customersToView.get(response-1).getOrderList().size()-1)) {
+						System.out.println(" ");
+					}
+				}
+				Customer customer = customersToView.get(response-1);
+//				if(customer.getOrderList().size() == 0) {
+//					
+//				} else {
+//					
+//				}
+				
+				
+				alterOrders(scanner, customer, employee);
+				scanner.nextLine();
+				isRunning = false;
+				System.out.println("-------------------------------------------------------------------------------");
+			} catch(Exception e) {
+				System.out.println("Not a vlid option");
+				break;
+			}
+			scanner.nextLine();
+			isRunning = false;
+
+			
+		}		
+	}
+
+	private static void alterOrders(Scanner scanner, Customer customer, Employee employee) {
+
+		boolean isRunning = true;
+		while(isRunning) {
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Would you like to alter " + customer.getUsername() + "'s orders?[Y/N]");
+			System.out.println("-------------------------------------------------------------------------------");
+			scanner.nextLine(); //clear scanner
+			String reply = scanner.nextLine();
+			if(reply.toLowerCase().equals("y")) {
+				//move to menu method
+				isRunning = false;
+				break;
+			} else if(reply.toLowerCase().equals("n")) {
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("User " + customer.getUsername() + "'s orders were not altered");
+				System.out.println("-------------------------------------------------------------------------------");
+				isRunning = false;
+				break;
+			} else {
+				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println("Not a valid option");
+				System.out.println("-------------------------------------------------------------------------------");
+			}
+			
+		}
+		
+	}
+
+	public static void alterCustomerOrders(Scanner scanner, Customer customer, Employee employee) {
+		boolean isRunning = true;
+		ArrayList<Order> custOrders = customer.getOrderList();
+		int response = -1;
+		Order order = null;
+		while(isRunning) {
+			
+			while(response == -1) {
+				System.out.println("Which order would you like to alter?");
+				for(int i = 0; i<custOrders.size(); i++) {
+					System.out.println("[" + (i+1) + "] " + custOrders.get(i));
+				}
+			try {
+				response = scanner.nextInt();
+				if(response < 1 || response > custOrders.size()) {
+					System.out.println("Not a valid input");
+					response = -1;
+				} else {
+					order = custOrders.get(response-1);
+					System.out.println("success");
+					//call next method to alter parts
+					//remove line item
+					//change quantity
+					//delete order
+					scanner.nextLine();
+					isRunning = false;
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println("Not a valid input");
+				response = -1;
+			}
+			
+			scanner.nextLine();
+				
+			}
+		}
+		
+	}
+
+	public static StoreFront selectStore(Scanner scanner, Customer customer) {
+		StoreFrontsDAO storeFrontsDao = new StoreFrontsDAO();
+		StoreFront storeFront = null;
+		ArrayList<StoreFront> storeFronts = storeFrontsDao.getAll();
+		int response = -1;
+		while(response == -1) {
+			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println("Please choose from the stores below to browse Rubber Duckie Catalogs!: ");
+			System.out.println("-------------------------------------------------------------------------------");
+			for(int i=0; i<storeFronts.size();i++) {
+				System.out.println("[" + (i+1) + "] " + storeFronts.get(i).getName());
+			}
+			System.out.println("-------------------------------------------------------------------------------");
+			try {
+				response = scanner.nextInt();
+				if(response < 1 || response > storeFronts.size()+1) {
+					System.out.println("Not a valid input");
+					response = -1;
+				} else {
+					storeFront = storeFronts.get(response-1);
+					scanner.nextLine();
+					return storeFront;
+				}
+			} catch (Exception e) {
+				System.out.println("Not a valid input");
+				response = -1;
+				scanner.nextLine();
+			}
+		}
+		return storeFront;		
 	}
 }
 

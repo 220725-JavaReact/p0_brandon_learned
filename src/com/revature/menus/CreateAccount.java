@@ -6,10 +6,13 @@ import com.revature.client.BusinessLogic;
 import com.revature.models.Customer;
 import com.revature.tempdatastorage.TemporaryStorage;
 
+import DataLayer.CustomerDAO;
+import DataLayer.DAO;
+
 public class CreateAccount {
 
 	public static void createAccount(Scanner scanner) {
-		
+		DAO<Customer> customerDao = new CustomerDAO();
 		boolean isRunning = true;
 		String firstName = "";
 		String lastName = "";
@@ -82,7 +85,7 @@ public class CreateAccount {
 		
 		//this should be altered for when database is implemented
 		Customer customer = new Customer(firstName, lastName, username, password, email);
-		TemporaryStorage.customers.add(customer);
+		customerDao.addInstance(customer);
 		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("User " + customer.getUsername() + " successfully created!");
 		System.out.println("-------------------------------------------------------------------------------");
