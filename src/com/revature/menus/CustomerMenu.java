@@ -25,7 +25,7 @@ public class CustomerMenu {
 			
 			switch (scanner.nextLine()) {
 			case "1":	
-				StoreFront storeFront = BusinessLogic.selectStore(scanner, customer);
+				StoreFront storeFront = BusinessLogic.selectStore(scanner);
 				StoreFrontMenu.storeFrontMenu(scanner, customer, storeFront);
 				break;
 			case "2":

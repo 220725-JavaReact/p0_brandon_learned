@@ -4,12 +4,22 @@ import java.util.ArrayList;
 
 public class Customer {
 
+	int id;
 	String fName;
 	String lName;
 	String username;
 	String password;
 	String email;
 	ArrayList<Order> orderList = new ArrayList<>();
+	
+	public Customer(int id, String fName, String lName, String username, String password, String email) {
+		this.id = id;
+		this.fName = fName;
+		this.lName = lName;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
 	
 	public Customer(String fName, String lName, String username, String password, String email) {
 		this.fName = fName;

@@ -4,34 +4,34 @@ import java.util.Objects;
 
 public class Duckie {
 	
-	int duckNumber;
+	int id;
 	String name;
 	int quantity;
 	double price;
 	String description;
 	String duckiness;
 	
-	public Duckie(int duckNumber, String name, double price, String description, String duckiness) {
+	public Duckie(int id, String name, double price, String description, String duckiness) {
 		this.name = name;
 		this.quantity = 10;
 		this.price = price;
 		this.description = description;
 		this.duckiness = duckiness;
-		this.duckNumber = duckNumber;
+		this.id = id;
 	}
 	
-	public Duckie(int duckNumber, String name, int quantity, double price, String description, String duckiness) {
+	public Duckie(int id, String name, int quantity, double price, String description, String duckiness) {
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.description = description;
 		this.duckiness = duckiness;
-		this.duckNumber = duckNumber;
+		this.id = id;
 	}
 
 	
-	public int getDuckNumber() {
-		return duckNumber;
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -108,7 +108,7 @@ public class Duckie {
 
 	@Override
 	public String toString() {
-		return "Duck#: " + duckNumber + "\nDuckie Name: " + name + "\nQuantity: " + quantity + "\nDuckie Price: $" + price + 
+		return "Duckie Name: " + name + "\nQuantity: " + quantity + "\nDuckie Price: $" + price + 
 				"\nDescription: " + description + "\nDuckiness: " + duckiness;
 	}
 	

@@ -5,17 +5,16 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.revature.menus.StoreFrontMenu;
 import com.revature.models.Customer;
 import com.revature.models.Duckie;
 import com.revature.models.Employee;
 import com.revature.models.LineItem;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
-import com.revature.tempdatastorage.TemporaryStorage;
 import com.revature.util.Logger;
 import com.revature.util.Logger.LogLevel;
 
+import DataLayer.CustomerDAO;
 import DataLayer.StoreFrontsDAO;
 
 public class BusinessLogic {
@@ -50,12 +49,11 @@ public class BusinessLogic {
 		Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
 		Matcher m = p.matcher(username);
 		boolean b = m.find();
+		CustomerDAO customerDao = new CustomerDAO();		
 		
-		for(Customer customer : TemporaryStorage.customers) {
-			if(username.equals(customer.getUsername())) {
-				System.out.println("That Username is Already in Use. Please Try Another");
-				return "";
-			}
+		if(customerDao.getByName(username) != null) {
+			System.out.println("That Username is Already in Use. Please Try Another");
+			return "";
 		}
 		
 		if(username.contains(" ")) {
@@ -121,7 +119,7 @@ public class BusinessLogic {
 		}
 	}
 	
-	//DUCKI SHOP METHODS
+	//DUCKIE SHOP METHODS
 	public static void addDuckiesToCart(Scanner scanner, Customer customer, Order order, StoreFront goodDuckinDuckies) {
 		boolean isRunning = true;
 		boolean isRunning2 = true;
@@ -328,13 +326,6 @@ public class BusinessLogic {
 		
 			switch (scanner.nextLine()) {
 			case "Y":
-				order.removeFromLineItemQuantity(duckieToRemove, quantityToRemove);
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were removed from your cart");
-				System.out.println("-------------------------------------------------------------------------------");
-				printCart(order);
-				isRunning = false;
-				break;
 			case "y":
 				order.removeFromLineItemQuantity(duckieToRemove, quantityToRemove);
 				System.out.println("-------------------------------------------------------------------------------");
@@ -344,12 +335,6 @@ public class BusinessLogic {
 				isRunning = false;
 				break;
 			case "N":
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart");
-				System.out.println("-------------------------------------------------------------------------------");
-				printCart(order);
-				isRunning = false;
-				break;
 			case "n":
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart");
@@ -387,6 +372,8 @@ public class BusinessLogic {
 
 	public static boolean finalizeOrder(Scanner scanner, Customer customer, Order order, StoreFront storeFront) {
 		boolean isRunning = true;
+		CustomerDAO customerDao = new CustomerDAO();
+		StoreFrontsDAO storeFrontDao = new StoreFrontsDAO();
 		
 		while(isRunning) {
 			System.out.println("-------------------------------------------------------------------------------");
@@ -398,28 +385,11 @@ public class BusinessLogic {
 			System.out.println("-------------------------------------------------------------------------------");
 			switch (scanner.nextLine()) {
 			case "Y":
-				customer.addOrder(order);
-				storeFront.addOrder(order);
-				for(Duckie duckie : storeFront.getDuckieList()) {
-					for(LineItem lineItem : order.getLineItemArray()) {
-						if(duckie.getName().equals(lineItem.getDuckie().getName())) {
-							duckie.removeQuantity(lineItem.getQuantity());
-						}
-					}
-				}
-				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Your order of:");
-				System.out.println("-------------------------------------------------------------------------------");
-				order.printOrder();
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("has been finalized!");
-				System.out.println("Thank you for shopping with " + storeFront.getName() + "!");
-				System.out.println("-------------------------------------------------------------------------------");
-				return true;
 			case "y":
 				customer.addOrder(order);
 				storeFront.addOrder(order);
+				customerDao.updateInstance(customer);
+				storeFrontDao.updateInstance(storeFront);
 				for(Duckie duckie : storeFront.getDuckieList()) {
 					for(LineItem lineItem : order.getLineItemArray()) {
 						if(duckie.getName().equals(lineItem.getDuckie().getName())) {
@@ -438,15 +408,6 @@ public class BusinessLogic {
 				System.out.println("-------------------------------------------------------------------------------");
 				return true;
 			case "N":
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Your order of:");
-				System.out.println("-------------------------------------------------------------------------------");
-				order.printOrder();
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("was not finalized!");
-				System.out.println("-------------------------------------------------------------------------------");
-
-				return false;
 			case "n":
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Your order of:");
@@ -541,47 +502,7 @@ public class BusinessLogic {
 		
 	}
 
-	public static void alterCustomerOrders(Scanner scanner, Customer customer, Employee employee) {
-		boolean isRunning = true;
-		ArrayList<Order> custOrders = customer.getOrderList();
-		int response = -1;
-		Order order = null;
-		while(isRunning) {
-			
-			while(response == -1) {
-				System.out.println("Which order would you like to alter?");
-				for(int i = 0; i<custOrders.size(); i++) {
-					System.out.println("[" + (i+1) + "] " + custOrders.get(i));
-				}
-			try {
-				response = scanner.nextInt();
-				if(response < 1 || response > custOrders.size()) {
-					System.out.println("Not a valid input");
-					response = -1;
-				} else {
-					order = custOrders.get(response-1);
-					System.out.println("success");
-					//call next method to alter parts
-					//remove line item
-					//change quantity
-					//delete order
-					scanner.nextLine();
-					isRunning = false;
-					break;
-				}
-			} catch (Exception e) {
-				System.out.println("Not a valid input");
-				response = -1;
-			}
-			
-			scanner.nextLine();
-				
-			}
-		}
-		
-	}
-
-	public static StoreFront selectStore(Scanner scanner, Customer customer) {
+	public static StoreFront selectStore(Scanner scanner) {
 		StoreFrontsDAO storeFrontsDao = new StoreFrontsDAO();
 		StoreFront storeFront = null;
 		ArrayList<StoreFront> storeFronts = storeFrontsDao.getAll();

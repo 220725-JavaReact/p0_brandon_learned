@@ -1,13 +1,10 @@
 package com.revature;
 
-import java.util.Scanner;
+import java.util.Scanner; 
 
 import com.revature.menus.CreateAccount;
 import com.revature.menus.CustomerLogin;
 import com.revature.menus.EmployeeLogin;
-import com.revature.models.Employee;
-import com.revature.models.LineItem;
-import com.revature.models.Order;
 import com.revature.tempdatastorage.TemporaryStorage;
 
 public class Driver {

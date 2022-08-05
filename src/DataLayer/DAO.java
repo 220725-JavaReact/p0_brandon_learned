@@ -10,7 +10,7 @@ public interface DAO<T> {
 	void addInstance(T newInstance);
 	void updateInstance(T newInstance);
 	T getByName(String name);
-	
+	void deleteInstance(T newInstance);
 	
 	//get all customers
 	//get customer by username

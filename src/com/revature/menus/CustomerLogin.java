@@ -1,6 +1,6 @@
 package com.revature.menus;
 
-import java.util.Scanner;
+import java.util.Scanner; 
 
 import com.revature.models.Customer;
 

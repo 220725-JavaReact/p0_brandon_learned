@@ -41,25 +41,25 @@ public class TemporaryStorage {
 		storeFronts.get(2).getDuckieList().add(new Duckie(4, "Psyduckie", 6.99, "This duckie is very prone to massive headaches", "Very Duckie"));
 		storeFronts.get(2).getDuckieList().add(new Duckie(5, "Golduckie", 2, 7.99, "The evolved Psyduckie!", "The Duckiest"));
 		//-------------------------------------------------
-		customers.add(new Customer("Brandon", "Learned", "blearned92", "password", "email@email.com"));
-		customers.add(new Customer("Jon", "Duckett", "duckieman", "password", "jon@email.com"));
+//		customers.add(new Customer("Brandon", "Learned", "blearned92", "password", "email@email.com"));
+//		customers.add(new Customer("Jon", "Duckett", "duckieman", "password", "jon@email.com"));
 		//-------------------------------------------------
-		employees.add(new Employee("user", "password"));
-		employees.add(new Employee("user2", "password"));
+//		employees.add(new Employee("user", "password"));
+//		employees.add(new Employee("user2", "password"));
 		
 	}
 	
-	public static void printAllCustomers() {
-		for(Customer cust : customers) {
-			System.out.println(cust.toString());
-		}
-	}
-	
-	public static void printAllEmployees() {
-		for(Employee emp : employees) {
-			System.out.println(emp.toString());
-		}
-	}
+//	public static void printAllCustomers() {
+//		for(Customer cust : customers) {
+//			System.out.println(cust.toString());
+//		}
+//	}
+//	
+//	public static void printAllEmployees() {
+//		for(Employee emp : employees) {
+//			System.out.println(emp.toString());
+//		}
+//	}
 //	
 //	public static void printAllDuckiesFromStore1() {
 //		for(Duckie duckie : store1Duckies) {

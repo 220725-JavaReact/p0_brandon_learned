@@ -1,9 +1,7 @@
 package com.revature.models;
 
-import java.text.DecimalFormat;
+import java.text.DecimalFormat; 
 import java.util.ArrayList;
-
-import javax.sound.sampled.Line;
 
 public class Order {
 

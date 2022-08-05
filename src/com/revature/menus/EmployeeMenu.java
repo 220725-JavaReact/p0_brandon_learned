@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.revature.client.BusinessLogic;
+import com.revature.client.EmployeeSpecificBusinessLogic;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
 import com.revature.models.Order;
@@ -32,31 +33,45 @@ public class EmployeeMenu {
 		
 		while(isRunning) {
 			System.out.println("Please choose from the options below: ");
-			System.out.println("[1] Update Good Duckin' Duckies Stock"
-					+ "\n[2] Update Discount Duckies Stock"
-					+ "\n[3] Update Duckie Dynasty Stock"
-					+ "\n[4] View Previous Orders Placed By Customers"
-					+ "\n[5] Logout" );
+			System.out.println("[1] Update Store Product"
+					+ "\n[2] Update Customer Orders"
+					+ "\n[3] Delete Customer"
+					+ "\n[4] Logout" );
+			//other things to maybe do: create new stores/ create new products and allocated them to store
 			System.out.println("-------------------------------------------------------------------------------");
 
 			
 			switch (scanner.nextLine()) {
 			case "1":	
-				//update good duckin duckies
+				//update a store
 				System.out.println("Not implemented yet...");
 				break;
 			case "2":
-				//update discount duckies
-				System.out.println("Not implemented yet...");
+				String response = null;
+				Customer customer = EmployeeSpecificBusinessLogic.selectCustomer(scanner);
+				Order order = EmployeeSpecificBusinessLogic.chooseCustomerOrders(scanner, employee, customer);
+				if(order != null) {
+					response = EmployeeSpecificBusinessLogic.alterCustomerOrderType(scanner, order);
+					if(response.equals("add")) {
+						EmployeeSpecificBusinessLogic.addToOrder(scanner, order, employee, customer);
+					} else if (response.equals("remove")) {
+						EmployeeSpecificBusinessLogic.removeFromOrder(scanner, order, employee);
+					} else if (response.equals("delete")) {
+						customerDao.deleteOrder(customer, order);
+						System.out.println("-------------------------------------------------------------------------------");
+						System.out.println("Order:");
+						order.printOrder();
+						System.out.println("was deleted from " + customer.getUsername() + "'s orders");
+						System.out.println("-------------------------------------------------------------------------------");
+
+					}
+				}
+				
 				break;
 			case "3":
-				//update duckie dynasy
-				System.out.println("Not implemented yet...");
+				//choose a customer and delete them (line items and orders too)
 				break;
 			case "4":
-				EmployeeExtendedMenu.employeeExtendedMenu(scanner, employee, customersToView);
-				break;
-			case "5":
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Logging Out of User " + employee.getUsername() + "'s account...");
 				System.out.println("-------------------------------------------------------------------------------");

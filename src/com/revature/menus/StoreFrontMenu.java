@@ -1,14 +1,11 @@
 package com.revature.menus;
 
-import java.util.Scanner; 
+import java.util.Scanner;  
 
 import com.revature.client.BusinessLogic;
 import com.revature.models.Customer;
-import com.revature.models.Duckie;
-import com.revature.models.LineItem;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
-import com.revature.tempdatastorage.TemporaryStorage;
 
 public class StoreFrontMenu {
 

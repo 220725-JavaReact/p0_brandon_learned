@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import com.revature.client.BusinessLogic;
 import com.revature.models.Customer;
-import com.revature.tempdatastorage.TemporaryStorage;
 
 import DataLayer.CustomerDAO;
 import DataLayer.DAO;
@@ -60,18 +59,10 @@ public class CreateAccount {
 			
 			switch (scanner.nextLine()) {
 			case "Y":	
-				isRunning = false;
-				break;
 			case "y":
 				isRunning = false;
 				break;
 			case "N":
-				firstName = "";
-				lastName = "";
-				username = "";
-				password = "";
-				email = "";
-				break;
 			case "n":
 				firstName = "";
 				lastName = "";

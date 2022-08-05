@@ -2,17 +2,19 @@ package com.revature.models;
 
 public class Employee {
 
+	int id;
 	String username;
 	String password;
 	
-	public Employee(String username, String password) {
+	public Employee(int id, String username, String password) {
+		this.id = id;
 		this.username = username;
 		this.password = password;
 	}
 
 	
 	
-		//view all customers
+	//view all customers
 	//view all orders
 	//view orders of specific customers
 	//alter the orders
