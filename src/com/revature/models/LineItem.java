@@ -2,12 +2,27 @@ package com.revature.models;
 
 public class LineItem {
 
+	int id;
 	Duckie duckie;
 	int quantity;
 	
 	public LineItem(Duckie duckie, int quantity) {
 		this.duckie = duckie;
 		this.quantity = quantity;
+	}
+	
+	public LineItem(int id, Duckie duckie, int quantity) {
+		this.id = id;
+		this.duckie = duckie;
+		this.quantity = quantity;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Duckie getDuckie() {
@@ -36,7 +51,7 @@ public class LineItem {
 
 	@Override
 	public String toString() {
-		return "Item: " + duckie + "\n Quantity: " + quantity + "\n--------------------";
+		return duckie + "\nIn Stock: " + quantity;
 	}
 	
 	

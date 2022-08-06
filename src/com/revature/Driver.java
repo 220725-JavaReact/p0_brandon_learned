@@ -1,17 +1,14 @@
 package com.revature;
 
-import java.util.Scanner; 
+import java.util.Scanner;  
 
 import com.revature.menus.CreateAccount;
 import com.revature.menus.CustomerLogin;
 import com.revature.menus.EmployeeLogin;
-import com.revature.tempdatastorage.TemporaryStorage;
 
 public class Driver {
 
 	public static void main(String[] args) {
-		
-		TemporaryStorage.initializeData();//This is Temporary and should be deleted after database is implemented
 		
 		boolean isRunning = true;
 		Scanner scanner = new Scanner(System.in);

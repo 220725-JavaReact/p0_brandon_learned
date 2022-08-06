@@ -84,13 +84,20 @@ public class Customer {
 	}
 
 	public void setOrderList(ArrayList<Order> orderList) {
-		this.orderList = orderList;
+		this.orderList = new ArrayList<>();
+		for(Order order : orderList) {
+			this.orderList.add(order);
+		}
 	}
 
 	@Override
 	public String toString() {
 		return "Name: " + fName + " " + lName + "\nUsername: " + username + "\nPassword: " + password
 				+ "\nEmail: " + email + "\n--------------------";
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 	

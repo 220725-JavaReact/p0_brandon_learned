@@ -4,30 +4,37 @@ import java.util.ArrayList;
 
 public class StoreFront {
 
+	int id;
 	String name;
 	String address;
-	ArrayList<Duckie> duckieList = new ArrayList<>(); //this may need to become an array list of line items
+	ArrayList<LineItem> lineItems = new ArrayList<>();
 	ArrayList<Order> orderList = new ArrayList<>();
 	
+	public ArrayList<LineItem> getLineItems() {
+		return lineItems;
+	}
+
+	public void setLineItems(ArrayList<LineItem> lineItems) {
+		this.lineItems = lineItems;
+	}
+
 	public StoreFront(String name, String address) {
 		this.name = name;
 		this.address = address;
 	}
 	
-	public void addDuckie(Duckie duckie) {
-		if(!duckieList.contains(duckie)) {
-			duckieList.add(duckie);
-		} else {
-			System.out.println("Duckie already exists in inventory.");
-		}
+	public StoreFront(int id, String name, String address) {
+		this.name = name;
+		this.address = address;
+		this.id = id;
 	}
 	
-	public void removeDuckie(Duckie duckie) {
-		if(duckieList.contains(duckie)) {
-			duckieList.remove(duckie);
-		} else {
-			System.out.println("That duckie does not exist in inventory.");
-		}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public void addOrder(Order order) {
@@ -50,14 +57,6 @@ public class StoreFront {
 		this.address = address;
 	}
 
-	public ArrayList<Duckie> getDuckieList() {
-		return duckieList;
-	}
-
-	public void setDuckieList(ArrayList<Duckie> duckieList) {
-		this.duckieList = duckieList;
-	}
-
 	public ArrayList<Order> getOrderList() {
 		return orderList;
 	}
@@ -68,7 +67,7 @@ public class StoreFront {
 
 	@Override
 	public String toString() {
-		return "StoreFront [name=" + name + ", address=" + address + ", duckieList=" + duckieList + ", orderList="
+		return "StoreFront [name=" + name + ", address=" + address + ", orderList="
 				+ orderList + "]";
 	}
 	

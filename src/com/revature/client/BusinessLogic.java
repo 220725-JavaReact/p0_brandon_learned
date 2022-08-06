@@ -15,6 +15,9 @@ import com.revature.util.Logger;
 import com.revature.util.Logger.LogLevel;
 
 import DataLayer.CustomerDAO;
+import DataLayer.DuckieDAO;
+import DataLayer.LineItemDAO;
+import DataLayer.OrderDAO;
 import DataLayer.StoreFrontsDAO;
 
 public class BusinessLogic {
@@ -120,13 +123,12 @@ public class BusinessLogic {
 	}
 	
 	//DUCKIE SHOP METHODS
-	public static void addDuckiesToCart(Scanner scanner, Customer customer, Order order, StoreFront goodDuckinDuckies) {
+	public static void addDuckiesToCart(Scanner scanner, Customer customer, Order order, StoreFront storeFront) {
 		boolean isRunning = true;
 		boolean isRunning2 = true;
-		int choicesNumber = 0;
 		int inCartQuantity = 0;
 		Duckie duckieToAdd = null;
-		//int quantityToAdd = 0;
+		int previousIndex = 0;
 		LineItem lineToAdd = new LineItem(null, 0);
 		
 		while(isRunning) {
@@ -135,23 +137,23 @@ public class BusinessLogic {
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Please select the Duckie you wish to add to your cart");
 				System.out.println("-------------------------------------------------------------------------------");
-				for(Duckie duckie : goodDuckinDuckies.getDuckieList()) {
-					System.out.println("[" + duckie.getDuckNumber() + "] " + duckie.getName());
-					choicesNumber++;
+				for(int i=0; i<storeFront.getLineItems().size();i++) {
+					System.out.println("[" + (i+1) + "] " + storeFront.getLineItems().get(i).getDuckie().getName() + " - " 
+							+ storeFront.getLineItems().get(i).getQuantity() + " in stock");
 				}
 				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int desiredDuckie = scanner.nextInt();
-					if(desiredDuckie < 1 || desiredDuckie > choicesNumber) {
+					if(desiredDuckie < 1 || desiredDuckie > storeFront.getLineItems().size()) {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Not a valid option.");
 						System.out.println("-------------------------------------------------------------------------------");
-						choicesNumber = 0;
 					} else {
-						duckieToAdd = goodDuckinDuckies.getDuckieList().get(desiredDuckie-1);
+						duckieToAdd = storeFront.getLineItems().get(desiredDuckie-1).getDuckie();
+						previousIndex = desiredDuckie-1;
 						if(order.containsDuckie(duckieToAdd)) {
 							for(LineItem lineItem : order.getLineItemArray()) {
-								if(lineItem.getDuckie() == duckieToAdd) {
+								if(lineItem.getDuckie().getName().equals(duckieToAdd.getName())) {
 									inCartQuantity = lineItem.getQuantity();
 								}
 							}
@@ -161,7 +163,6 @@ public class BusinessLogic {
 					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Not a valid option");
 					System.out.println("-------------------------------------------------------------------------------");
-					choicesNumber = 0;
 					scanner.nextLine();
 					continue;
 				}
@@ -170,7 +171,7 @@ public class BusinessLogic {
 			//find out how many to add
 			while(lineToAdd.getQuantity() == 0) {
 				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Please select the amount of duckies you wish to add (Enter a number)");
+				System.out.println("Please select the amount of " + duckieToAdd.getName() + "s you wish to add (Enter a number)");
 				System.out.println("-------------------------------------------------------------------------------");
 				try {
 					int desiredQuantity = scanner.nextInt();
@@ -178,7 +179,7 @@ public class BusinessLogic {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("Not a valid quantity");
 						System.out.println("-------------------------------------------------------------------------------");
-					} else if(desiredQuantity + inCartQuantity > goodDuckinDuckies.getDuckieList().get(duckieToAdd.getDuckNumber()-1).getQuantity()) {
+					} else if(desiredQuantity + inCartQuantity > storeFront.getLineItems().get(previousIndex).getQuantity()) {
 						System.out.println("-------------------------------------------------------------------------------");
 						System.out.println("There are not enough of that duckie in stock");
 						System.out.println("-------------------------------------------------------------------------------");
@@ -209,7 +210,7 @@ public class BusinessLogic {
 						"(s) to cart?[Y/N]");
 				System.out.println("-------------------------------------------------------------------------------");
 				String reply = scanner.nextLine();
-				
+				System.out.println(order.containsDuckie(duckieToAdd));
 				if(reply.toLowerCase().equals("y")) {
 					if(order.containsDuckie(duckieToAdd)) {
 						order.increaseLineItemQuantity(duckieToAdd, lineToAdd.getQuantity());
@@ -363,8 +364,9 @@ public class BusinessLogic {
 	}
 
 	public static void printAllDuckies(StoreFront storeFront) {
-		for(Duckie duckie : storeFront.getDuckieList()) {
-			System.out.println(duckie);
+		LineItemDAO lineItemDao = new LineItemDAO();
+		for(LineItem lineItem : storeFront.getLineItems()) {
+			System.out.println(lineItem);
 			System.out.println("-------------------------------------------------------------------------------");
 
 		}
@@ -374,6 +376,7 @@ public class BusinessLogic {
 		boolean isRunning = true;
 		CustomerDAO customerDao = new CustomerDAO();
 		StoreFrontsDAO storeFrontDao = new StoreFrontsDAO();
+		OrderDAO orderDao = new OrderDAO();
 		
 		while(isRunning) {
 			System.out.println("-------------------------------------------------------------------------------");
@@ -388,15 +391,10 @@ public class BusinessLogic {
 			case "y":
 				customer.addOrder(order);
 				storeFront.addOrder(order);
-				customerDao.updateInstance(customer);
-				storeFrontDao.updateInstance(storeFront);
-				for(Duckie duckie : storeFront.getDuckieList()) {
-					for(LineItem lineItem : order.getLineItemArray()) {
-						if(duckie.getName().equals(lineItem.getDuckie().getName())) {
-							duckie.removeQuantity(lineItem.getQuantity());
-						}
-					}
-				}
+				orderDao.upDateOrdersAndStoreItems(customer, order, storeFront);
+				
+				
+				
 				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("Your order of:");

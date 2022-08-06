@@ -7,11 +7,15 @@ import com.revature.models.Customer;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
 
+import DataLayer.OrderDAO;
+
 public class CustomerMenu {
 
 	public static void customerMenu(Scanner scanner, Customer customer) {
-
+		
+		OrderDAO orderDao = new OrderDAO();
 		//get all store fronts
+		
 		boolean isRunning = true;
 		System.out.println("-------------------------------------------------------------------------------");
 		System.out.println("Success! Welcome, " + customer.getUsername());
@@ -29,6 +33,8 @@ public class CustomerMenu {
 				StoreFrontMenu.storeFrontMenu(scanner, customer, storeFront);
 				break;
 			case "2":
+				
+				customer.setOrderList(orderDao.getAllByCustomerId(customer));
 				if(customer.getOrderList().size() == 0) {
 					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("You have no previous orders placed");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Order {
 
+	int id;
 	ArrayList<LineItem> lineItemArray = new ArrayList<>();
 	String storeAddress;
 	double totalPriceOfItems;
@@ -14,6 +15,20 @@ public class Order {
 		this.totalPriceOfItems = 0;
 	}
 	
+	public Order(int id, String storeAddress) {
+		this.id = id;
+		this.storeAddress = storeAddress;
+		this.totalPriceOfItems = 0;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void addLineItem(LineItem lineItem) {
 		lineItemArray.add(lineItem);
 		this.totalPriceOfItems += lineItem.getQuantity() * lineItem.getDuckie().getPrice();
@@ -31,7 +46,7 @@ public class Order {
 	
 	public void increaseLineItemQuantity(Duckie duckie, int amount) {
 		for(LineItem item : lineItemArray) {
-			if(item.getDuckie() == duckie) {
+			if(item.getDuckie().getName().equals(duckie.getName())) {
 				item.increaseQuanity(amount);
 				this.totalPriceOfItems += amount * item.getDuckie().getPrice();
 			}
@@ -49,16 +64,14 @@ public class Order {
 					this.lineItemArray = new ArrayList<LineItem>();
 				} else {
 					removeLineItem(item);
-				}
-				
-			}
-			
+				}		
+			}			
 		}
 	}
 	
 	public boolean containsDuckie(Duckie duckie) {
 		for(LineItem item : lineItemArray) {
-			if(item.getDuckie() == duckie) {
+			if(item.getDuckie().getName().equals(duckie.getName())) {
 				return true;
 			}
 		}

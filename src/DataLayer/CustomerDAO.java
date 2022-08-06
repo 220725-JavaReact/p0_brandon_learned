@@ -1,18 +1,37 @@
 package DataLayer;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.revature.models.Customer;
+import com.revature.models.Duckie;
 import com.revature.models.Order;
-import com.revature.tempdatastorage.TemporaryStorage;
 import com.revature.util.ConnectionFactory;
 
 public class CustomerDAO implements DAO<Customer>{
 
+	@Override
+	public ArrayList<Customer> getAll() {
+		ArrayList<Customer> customers = new ArrayList<>();
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "select * from products";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				customers.add(new Customer(rs.getInt("customer_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"), rs.getString("pw"), rs.getString("email")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return customers;
+	}
+	
 	@Override
 	public void addInstance(Customer newInstance) {
 		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
@@ -32,18 +51,9 @@ public class CustomerDAO implements DAO<Customer>{
 	}
 
 	@Override
-	public ArrayList<Customer> getAll() {
-		ArrayList<Customer> customerArray = new ArrayList<>();
-		for(Customer customer : TemporaryStorage.customers) {
-			customerArray.add(customer);
-		}
-		return customerArray;
-	}
-
-	@Override
 	public void updateInstance(Customer newInstance) {
-		// TODO Auto-generated method stub
-		
+		//this will be used to update their orders/stuff like that
+		//because the customer itself will not be alters in this instance
 	}
 
 	@Override
@@ -67,8 +77,14 @@ public class CustomerDAO implements DAO<Customer>{
 
 	@Override
 	public void deleteInstance(Customer newInstance) {
-		// TODO Auto-generated method stub
-		
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "delete from customers where id = ?";
+			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
+			pstmt.setInt(1, newInstance.getId());
+			ResultSet rs = pstmt.executeQuery();			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}		
 	}
 
 	public void deleteOrder(Customer newInstance, Order order) {
@@ -82,6 +98,12 @@ public class CustomerDAO implements DAO<Customer>{
 		
 		
 		return null;		
+	}
+
+	@Override
+	public Customer getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

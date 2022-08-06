@@ -7,11 +7,14 @@ import com.revature.models.Customer;
 import com.revature.models.Order;
 import com.revature.models.StoreFront;
 
+import DataLayer.StoreFrontsDAO;
+
 public class StoreFrontMenu {
 
 	public static void storeFrontMenu(Scanner scanner, Customer customer, StoreFront storeFront) {
 		
-		Order order = new Order(storeFront.getName());
+		StoreFrontsDAO storeFrontDao = new StoreFrontsDAO();
+		Order order = new Order(storeFront.getName()); //may need to change
 		boolean isRunning = true;
 
 		System.out.println("-------------------------------------------------------------------------------");
@@ -31,9 +34,11 @@ public class StoreFrontMenu {
 				System.out.println("-------------------------------------------------------------------------------");
 				System.out.println(storeFront.getName() + " - Duckie Catalog:");
 				System.out.println("-------------------------------------------------------------------------------");
+				storeFrontDao.initializeAllDuckies(storeFront);
 				BusinessLogic.printAllDuckies(storeFront);
 				break;
 			case "2":
+				storeFrontDao.initializeAllDuckies(storeFront);
 				BusinessLogic.addDuckiesToCart(scanner, customer, order, storeFront);
 				break;
 			case "3":

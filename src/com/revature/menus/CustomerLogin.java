@@ -22,10 +22,9 @@ public class CustomerLogin {
 			
 			System.out.println("Input Username: ");
 			String attemptUsername = scanner.nextLine();
-			Customer customer = customerDao.getByName(attemptUsername);
 			System.out.println("Input Password");
 			String attemptPassword = scanner.nextLine();
-			
+			Customer customer = customerDao.getByName(attemptUsername);
 			
 			if(customer == null) {
 				System.out.println("-------------------------------------------------------------------------------");

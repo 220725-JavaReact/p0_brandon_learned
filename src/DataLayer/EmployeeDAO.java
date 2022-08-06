@@ -1,25 +1,20 @@
 package DataLayer;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.revature.models.Customer;
 import com.revature.models.Employee;
-import com.revature.tempdatastorage.TemporaryStorage;
 import com.revature.util.ConnectionFactory;
 
 public class EmployeeDAO implements DAO<Employee>{
 
 	@Override
 	public ArrayList<Employee> getAll() {
-		ArrayList<Employee> employees = new ArrayList<>();
-		for(Employee employee : TemporaryStorage.employees) {
-			employees.add(employee);
-		}
-		return employees;
+		return null;
+		
 	}
 
 	@Override
@@ -54,6 +49,12 @@ public class EmployeeDAO implements DAO<Employee>{
 	public void deleteInstance(Employee newInstance) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Employee getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

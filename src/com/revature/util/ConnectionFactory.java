@@ -10,7 +10,7 @@ public class ConnectionFactory {
 	
 	static {
 		try { //make sure postgresql driver is ready to use
-			Class.forName("org.postgres1l.Driver");
+			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
