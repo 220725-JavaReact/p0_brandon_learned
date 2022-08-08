@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.revature.models.Duckie;
+import com.revature.models.StoreFront;
 import com.revature.util.ConnectionFactory;
 
 public class DuckieDAO implements DAO<Duckie>{
@@ -20,7 +21,44 @@ public class DuckieDAO implements DAO<Duckie>{
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				duckies.add(new Duckie(rs.getString("product_name"), rs.getDouble("price"), rs.getString("description"), rs.getString("quality")));
+				duckies.add(new Duckie(rs.getInt("product_id"), rs.getString("product_name"), rs.getDouble("price"), rs.getString("description"), rs.getString("quality")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return duckies;
+	}
+	
+	public ArrayList<Duckie> getAllNotInStoreById(StoreFront storeFront) {
+		ArrayList<Duckie> duckies = new ArrayList<>();
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "select * from products natural inner join storefronts natural inner join storefront_items where storefront_id != " + storeFront.getId() + " order by product_id;";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				duckies.add(new Duckie(rs.getInt("product_id"), rs.getString("product_name"), rs.getDouble("price"), rs.getString("description"), rs.getString("quality")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return duckies;
+	}
+	
+	
+	
+	public ArrayList<Duckie> getAllByStoreId(StoreFront storeFront) {
+		ArrayList<Duckie> duckies = new ArrayList<>();
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "select * from storefront_items natural inner join products where storefront_id = ?;";
+			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
+			pstmt.setInt(1, storeFront.getId());
+			ResultSet rs = pstmt.executeQuery();			
+			while(rs.next()) {
+				duckies.add(new Duckie(rs.getInt("product_id"),  rs.getString("product_name"), rs.getDouble("price"), rs.getString("description"), rs.getString("quality")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

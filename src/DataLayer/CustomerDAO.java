@@ -18,7 +18,7 @@ public class CustomerDAO implements DAO<Customer>{
 	public ArrayList<Customer> getAll() {
 		ArrayList<Customer> customers = new ArrayList<>();
 		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
-			String query = "select * from products";
+			String query = "select * from customers";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
@@ -66,8 +66,7 @@ public class CustomerDAO implements DAO<Customer>{
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				return new Customer(rs.getInt("customer_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"), rs.getString("pw"), rs.getString("email"));
-			}
-			
+			}	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			return null;
@@ -78,7 +77,7 @@ public class CustomerDAO implements DAO<Customer>{
 	@Override
 	public void deleteInstance(Customer newInstance) {
 		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
-			String query = "delete from customers where id = ?";
+			String query = "delete from customers where customer_id = ?";
 			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
 			pstmt.setInt(1, newInstance.getId());
 			ResultSet rs = pstmt.executeQuery();			
@@ -86,19 +85,32 @@ public class CustomerDAO implements DAO<Customer>{
 			// TODO Auto-generated catch block
 		}		
 	}
+	
+	public void deleteInstanceWithOrders(Customer newInstance) {
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "begin;\r\n"
+					+ "		delete from order_items using orders where order_items.order_id = orders.order_id and orders.customer_id = ?;\r\n"
+					+ "		delete from orders where customer_id = ?;\r\n"
+					+ "		delete from customers where customer_id =?;\r\n"
+					+ "		commit;";
+			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
+			pstmt.setInt(1, newInstance.getId());
+			pstmt.setInt(2, newInstance.getId());
+			pstmt.setInt(3, newInstance.getId());
+			ResultSet rs = pstmt.executeQuery();			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}	
+	}
 
 	public void deleteOrder(Customer newInstance, Order order) {
 		newInstance.getOrderList().remove(order);
 	}
 	
-	public ArrayList<Order> getPreviousOrders(Customer customer) {
-		ArrayList<Order> orders = new ArrayList<>();
-		
-		
-		
-		
-		return null;		
-	}
+//	public ArrayList<Order> getPreviousOrders(Customer customer) {
+//		ArrayList<Order> orders = new ArrayList<>();
+//		return null;		
+//	}
 
 	@Override
 	public Customer getById(int id) {

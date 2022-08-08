@@ -23,10 +23,10 @@ public class EmployeeLogin {
 			
 			System.out.println("Input Username: ");
 			String attemptUsername = scanner.nextLine();
-			Employee employee = employeeDao.getByName(attemptUsername);
 			System.out.println("Input Password");
 			String attemptPassword = scanner.nextLine();
-			
+			Employee employee = employeeDao.getByName(attemptUsername);
+		
 			
 			if(employee == null) {
 				System.out.println("-------------------------------------------------------------------------------");
