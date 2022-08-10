@@ -13,7 +13,7 @@ import com.revature.util.ConnectionFactory;
 
 public class StoreItemDAO {
 
-	public ArrayList getAll() {
+	public ArrayList getAllById(StoreFront storeFront) {
 		// TODO Auto-generated method stub
 		return null;
 	}

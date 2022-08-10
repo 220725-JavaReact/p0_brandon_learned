@@ -93,7 +93,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Name: " + fName + " " + lName + "\nUsername: " + username + "\nPassword: " + password
-				+ "\nEmail: " + email + "\n--------------------";
+				+ "\nEmail: " + email;
 	}
 
 	public int getId() {

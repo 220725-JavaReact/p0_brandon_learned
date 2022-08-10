@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.revature.models.Customer;
 import com.revature.models.Duckie;
@@ -23,6 +24,34 @@ public class CustomerDAO implements DAO<Customer>{
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				customers.add(new Customer(rs.getInt("customer_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"), rs.getString("pw"), rs.getString("email")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return customers;
+	}
+	
+	public LinkedList<ArrayList<Customer>> getAllIntoLinkedList() {
+		LinkedList<ArrayList<Customer>> customers = new LinkedList<>();
+		ArrayList<Customer> tempList = new ArrayList<>();
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "select * from customers";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				if(tempList.size() < 10) {
+					tempList.add(new Customer(rs.getInt("customer_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"), rs.getString("pw"), rs.getString("email")));
+				} else {
+					customers.add(tempList);
+					tempList = new ArrayList<>();
+					tempList.add(new Customer(rs.getInt("customer_id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("username"), rs.getString("pw"), rs.getString("email")));
+				}
+				
+			}
+			if(tempList.size() != 0) {
+				customers.add(tempList);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

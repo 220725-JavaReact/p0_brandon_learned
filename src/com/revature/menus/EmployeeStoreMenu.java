@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.revature.client.BusinessLogic;
 import com.revature.client.EmployeeSpecificBusinessLogic;
+import com.revature.client.UIUXBusinessLogic;
 import com.revature.models.Customer;
 import com.revature.models.Duckie;
 import com.revature.models.Employee;
@@ -27,14 +28,16 @@ public class EmployeeStoreMenu {
 		storeFrontDao.initializeAllDuckies(storeFront);
 
 		while(isRunning) {
+			System.out.println(UIUXBusinessLogic.createBanner(storeFront.getName().toUpperCase() +" EMPLOYEE MENU"));
 			System.out.println("Please choose from the options below: ");
 			System.out.println("[1] View All Current Products for " + storeFront.getName()
 					+ "\n[2] Manage Current Product Stock" //Add new, remove current, add stock, remove stock
 					+ "\n[3] Add New Products"
 					+ "\n[4] Remove Products"
 					+ "\n[5] View Previously Placed Orders" //view orders
-					+ "\n[6] Return to Employee Menu Options" );
-			System.out.println("-------------------------------------------------------------------------------");
+					+ "\n[6] View Profit Reports"
+					+ "\n[7] Return to Employee Menu Options" );
+			System.out.println(UIUXBusinessLogic.dashes());
 
 			
 			switch (scanner.nextLine()) {
@@ -54,26 +57,27 @@ public class EmployeeStoreMenu {
 			case "5":
 				ArrayList<Order> orders = orderDao.getAllByStorefrontId(storeFront);
 				if(orders.size() == 0) {
-					System.out.println("-------------------------------------------------------------------------------");			
-					System.out.println("No Previous orders to Display");
-					System.out.println("-------------------------------------------------------------------------------");			
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("No Previous orders to Display..."));
 				} else {
-					System.out.println("-------------------------------------------------------------------------------");			
-					System.out.println(storeFront.getName() + " order history:");
-					System.out.println("       -");
+					System.out.println(UIUXBusinessLogic.dashes());
+					System.out.println(UIUXBusinessLogic.centerText(storeFront.getName().toUpperCase() + " ORDER HISTORY"));
+					System.out.println(UIUXBusinessLogic.centerText("---------------"));
 					for(int i=0; i<orders.size(); i++) {
-						System.out.println(orders.get(i).toString());
+						UIUXBusinessLogic.formatOrder(orders.get(i));
 						if(orders.get(i) != orders.get(orders.size()-1)) {
 							System.out.println(" ");
 						}
 					}
-					System.out.println("-------------------------------------------------------------------------------");				
+					System.out.println(" ");
 				}
 				break;
 			case "6":
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Logging Out of User " + employee.getUsername() + "'s account...");
-				System.out.println("-------------------------------------------------------------------------------");
+				EmployeeSpecificBusinessLogic.profitReports(scanner, employee, storeFront);
+				break;
+			case "7":
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println("Returning to Menu Options...");
+				System.out.println(UIUXBusinessLogic.dashes());
 				isRunning = false;
 				break;
 			default:

@@ -1,6 +1,6 @@
 package com.revature.client;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +15,6 @@ import com.revature.util.Logger;
 import com.revature.util.Logger.LogLevel;
 
 import DataLayer.CustomerDAO;
-import DataLayer.DuckieDAO;
 import DataLayer.LineItemDAO;
 import DataLayer.OrderDAO;
 import DataLayer.StoreFrontsDAO;
@@ -23,10 +22,10 @@ import DataLayer.StoreFrontsDAO;
 public class BusinessLogic {
 
 	
-	//Account Logic - Line 25
+	//Account Logic - Line 31
 	//Store Logic - Line 121
-	//Employee Logic - Line 465
-	
+	//CUSTOMER ORDER LOGIC - Line 391
+	//General Methods-Text based
 	//ACCOUNT CREATION METHODS
 	
 	public static String verifyName(String name) {
@@ -130,24 +129,32 @@ public class BusinessLogic {
 		Duckie duckieToAdd = null;
 		int previousIndex = 0;
 		LineItem lineToAdd = new LineItem(null, 0);
+		LineItem tempItem = null;
+		int tempQuantity = 0;
+		
+		if(storeFront.getLineItems().size() == 0) {
+			System.out.println(UIUXBusinessLogic.createSpaceBanner(storeFront.getName() + " is fresh out of Duckies! Please try again later"));
+			isRunning = false;
+		}
 		
 		while(isRunning) {
 			//find out what duck to add
 			while(duckieToAdd == null) {
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Please select the Duckie you wish to add to your cart");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("Select the Duckie you wish to add to your cart"));
 				for(int i=0; i<storeFront.getLineItems().size();i++) {
-					System.out.println("[" + (i+1) + "] " + storeFront.getLineItems().get(i).getDuckie().getName() + " - " 
-							+ storeFront.getLineItems().get(i).getQuantity() + " in stock");
+					if(i+1 < 10) {
+						System.out.println("[" + (i+1) + "]  " + UIUXBusinessLogic.formatProductsIfIndex(storeFront.getLineItems().get(i).getDuckie(), storeFront.getLineItems().get(i).getQuantity()));
+					} else {
+						System.out.println("[" + (i+1) + "] " + UIUXBusinessLogic.formatProductsIfIndex(storeFront.getLineItems().get(i).getDuckie(), storeFront.getLineItems().get(i).getQuantity()));
+					}
 				}
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.dashes());
 				try {
 					int desiredDuckie = scanner.nextInt();
 					if(desiredDuckie < 1 || desiredDuckie > storeFront.getLineItems().size()) {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("Not a valid option.");
-						System.out.println("-------------------------------------------------------------------------------");
+						inValidOption();
+					} else if (storeFront.getLineItems().get(desiredDuckie-1).getQuantity() == 0) {
+						System.out.println(UIUXBusinessLogic.createSpaceBanner("That duckie is no longer available to add to cart"));
 					} else {
 						duckieToAdd = storeFront.getLineItems().get(desiredDuckie-1).getDuckie();
 						previousIndex = desiredDuckie-1;
@@ -155,14 +162,13 @@ public class BusinessLogic {
 							for(LineItem lineItem : order.getLineItemArray()) {
 								if(lineItem.getDuckie().getName().equals(duckieToAdd.getName())) {
 									inCartQuantity = lineItem.getQuantity();
+									tempItem = lineItem;
 								}
 							}
 						}
 					}	
 				} catch (Exception e) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("Not a valid option");
-					System.out.println("-------------------------------------------------------------------------------");
+					inValidOption();
 					scanner.nextLine();
 					continue;
 				}
@@ -170,27 +176,20 @@ public class BusinessLogic {
 			
 			//find out how many to add
 			while(lineToAdd.getQuantity() == 0) {
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Please select the amount of " + duckieToAdd.getName() + "s you wish to add (Enter a number)");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("Enter the number of " + duckieToAdd.getName() + "s you wish to add"));
 				try {
 					int desiredQuantity = scanner.nextInt();
 					if(desiredQuantity < 1) {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("Not a valid quantity");
-						System.out.println("-------------------------------------------------------------------------------");
-					} else if(desiredQuantity + inCartQuantity > storeFront.getLineItems().get(previousIndex).getQuantity()) {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("There are not enough of that duckie in stock");
-						System.out.println("-------------------------------------------------------------------------------");
-						break;
+						inValidOption();
+					} else if(desiredQuantity > storeFront.getLineItems().get(previousIndex).getQuantity()) {
+						System.out.println(UIUXBusinessLogic.createSpaceBanner("There are not enough of that duckie in stock to add to your cart"));
+						System.out.println(UIUXBusinessLogic.centerText(storeFront.getLineItems().get(previousIndex).getDuckie().getName() + "s currently in stock: " + storeFront.getLineItems().get(previousIndex).getQuantity()));
 					} else {
 						lineToAdd.setQuantity(desiredQuantity);
+						tempQuantity = desiredQuantity;
 					}
 				} catch (Exception e) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("Not a valid option");
-					System.out.println("-------------------------------------------------------------------------------");
+					inValidOption();
 					scanner.nextLine();
 					continue;
 				}
@@ -199,52 +198,41 @@ public class BusinessLogic {
 			
 			while(isRunning2) {
 				if(lineToAdd.getQuantity() == 0) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("No duckies were added to card");
-					System.out.println("-------------------------------------------------------------------------------");
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("No duckies were added to card"));
 					break;
 				}
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("You wish to add " + lineToAdd.getQuantity() + 
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("You wish to add " + lineToAdd.getQuantity() + 
 						" " + duckieToAdd.getName() + 
-						"(s) to cart?[Y/N]");
-				System.out.println("-------------------------------------------------------------------------------");
+						"(s) to cart?[Y/N]"));
 				String reply = scanner.nextLine();
-				System.out.println(order.containsDuckie(duckieToAdd));
 				if(reply.toLowerCase().equals("y")) {
 					if(order.containsDuckie(duckieToAdd)) {
+						storeFront.getLineItems().get(previousIndex).decreaseQuanity(tempQuantity);
 						order.increaseLineItemQuantity(duckieToAdd, lineToAdd.getQuantity());
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println(lineToAdd.getQuantity() + " " + 
+						System.out.println(UIUXBusinessLogic.createSpaceBanner(lineToAdd.getQuantity() + " " + 
 								duckieToAdd.getName() + 
-								"(s) added to Cart!");
-						System.out.println("-------------------------------------------------------------------------------");						
+								"(s) added to Cart"));
 								printCart(order);
 								isRunning2 = false;
 					
 					} else {
+						storeFront.getLineItems().get(previousIndex).decreaseQuanity(tempQuantity);
 						lineToAdd.setDuckie(duckieToAdd);
 						order.addLineItem(lineToAdd);
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println(lineToAdd.getQuantity() + " " + 
-						duckieToAdd.getName() + 
-						"(s) added to Cart!");
-						System.out.println("-------------------------------------------------------------------------------");
+						System.out.println(UIUXBusinessLogic.createSpaceBanner(lineToAdd.getQuantity() + " " + 
+								duckieToAdd.getName() + 
+								"(s) added to Cart"));
 						printCart(order);
 						isRunning2 = false;
 					}					
 				} else if(reply.toLowerCase().equals("n")) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println(lineToAdd.getQuantity() + " " + 
+					System.out.println(UIUXBusinessLogic.createSpaceBanner(lineToAdd.getQuantity() + " " + 
 							duckieToAdd.getName() + 
-							"(s) were not added to your cart");
-					System.out.println("-------------------------------------------------------------------------------");
+							"(s) were not added to Cart"));
 					printCart(order);
 					isRunning2 = false;
 				} else {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("Not a valid option");
-					System.out.println("-------------------------------------------------------------------------------");
+					inValidOption();
 				}
 				
 				isRunning = false;
@@ -262,30 +250,24 @@ public class BusinessLogic {
 		while(isRunning) {
 
 			while(duckieToRemove == null) {
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Which duckies would you like to remove from your cart?(Enter a number)");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("Which duckies would you like to remove from your cart?"));
 				for(int i = 0; i< order.getLineItemArray().size(); i++) {
 					int indexPlus = i+1;
 					System.out.println("[" + indexPlus + "]" + " " + 
 							order.getLineItemArray().get(i).getDuckie().getName() +
 							" x " + order.getLineItemArray().get(i).getQuantity());
 				}
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.dashes());
 				try {
 					int reply = scanner.nextInt();
 					if(reply < 1 || reply > order.getLineItemArray().size()) {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("That is not a valid option");
-						System.out.println("-------------------------------------------------------------------------------");
+						inValidOption();
 					} else {
 						duckieToRemove = order.getLineItemArray().get(reply-1).getDuckie();
 						previousReply = reply;
 					}
 				} catch (Exception e) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("Not a valid option");
-					System.out.println("-------------------------------------------------------------------------------");
+					inValidOption();
 					scanner.nextLine();
 					continue;
 				}
@@ -293,57 +275,53 @@ public class BusinessLogic {
 			}
 
 			while(quantityToRemove == -1) {
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("How many " + duckieToRemove.getName() + "s would you like to remove from your cart?(Enter a number)");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("Enter the number of " + duckieToRemove.getName() + "s you wish to remove"));
 				try {
 					int reply = scanner.nextInt();
 					if(reply < 1) {
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("You must select an amount greater than 0");
-						System.out.println("-------------------------------------------------------------------------------");
+						System.out.println(UIUXBusinessLogic.createSpaceBanner("You must select an amount greater than 0"));
 					} else if(reply > order.getLineItemArray().get(previousReply-1).getQuantity()){
-						System.out.println("-------------------------------------------------------------------------------");
-						System.out.println("You do not have that many duckies of that type in your cart");
-						System.out.println("-------------------------------------------------------------------------------");
+						System.out.println(UIUXBusinessLogic.createSpaceBanner("You do not have that many duckies of that type in your cart"));
 					} else {
 						quantityToRemove = reply;
+						scanner.nextLine();
+
 					}
 				} catch (Exception e) {
-					System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("Not a valid option");
-					System.out.println("-------------------------------------------------------------------------------");
+					inValidOption();
 					scanner.nextLine();
 					continue;
 				}
 			}
 			
-			scanner.nextLine();
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("You wish to remove " + quantityToRemove + " " + 
+			
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("You wish to remove " + quantityToRemove + " " + 
 			duckieToRemove.getName() +
-			" from your cart?[Y/N]");
-			System.out.println("-------------------------------------------------------------------------------");
+			"(s) from your cart?[Y/N]"));
 		
 			switch (scanner.nextLine()) {
 			case "Y":
 			case "y":
+				for(LineItem lineItem : storeFront.getLineItems()) {
+					if(lineItem.getDuckie().getId() == duckieToRemove.getId()) {
+						lineItem.increaseQuanity(quantityToRemove);
+
+					}
+				}
+
 				order.removeFromLineItemQuantity(duckieToRemove, quantityToRemove);
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were removed from your cart");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner(quantityToRemove + " " + duckieToRemove.getName() + "(s) were removed from your cart"));
 				printCart(order);
 				isRunning = false;
 				break;
 			case "N":
 			case "n":
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner(quantityToRemove + " " + duckieToRemove.getName() + "(s) were not removed from your cart"));
 				printCart(order);
 				isRunning = false;
 				break;
 			default:
+				inValidOption();
 				break;
 			}		
 		}
@@ -351,15 +329,11 @@ public class BusinessLogic {
 	
 	public static void printCart(Order order) {
 		if(order.getLineItemArray().isEmpty()) {
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Your cart is empty");
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("Your cart is empty"));
 		} else {
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Your Current Duckie Cart:");
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("Your Current Duckie Cart:"));
 			order.printOrder();
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.dashes());
 		}
 	}
 
@@ -367,7 +341,7 @@ public class BusinessLogic {
 		LineItemDAO lineItemDao = new LineItemDAO();
 		for(LineItem lineItem : storeFront.getLineItems()) {
 			System.out.println(lineItem);
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.dashes());
 
 		}
 	}
@@ -379,13 +353,9 @@ public class BusinessLogic {
 		OrderDAO orderDao = new OrderDAO();
 		
 		while(isRunning) {
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Your current order:");
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("Your current order:"));
 			order.printOrderWithTax();
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Would you like to finalize your order?[Y/N]");
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("Would you like to finalize your order?[Y/N]"));
 			switch (scanner.nextLine()) {
 			case "Y":
 			case "y":
@@ -396,24 +366,18 @@ public class BusinessLogic {
 				
 				
 				Logger.getLogger().log(LogLevel.info, "\n" + order.toString() + "\npurchased by customer: " + customer.getUsername() + "\n");
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Your order of:");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("YOUR ORDER OF"));
 				order.printOrder();
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("has been finalized!");
-				System.out.println("Thank you for shopping with " + storeFront.getName() + "!");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println(UIUXBusinessLogic.centerText("HAS BEEN FINALIZED!"));
+				System.out.println(UIUXBusinessLogic.centerText("Thank you for shopping with " + storeFront.getName() + "!"));
+				System.out.println(UIUXBusinessLogic.dashes());
 				return true;
 			case "N":
 			case "n":
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Your order of:");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("YOUR ORDER OF"));
 				order.printOrder();
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("was not finalized!");
-				System.out.println("-------------------------------------------------------------------------------");
+				System.out.println(UIUXBusinessLogic.createSpaceBanner("WAS NOT FINALIZED"));
 
 				return false;
 			default:
@@ -424,53 +388,43 @@ public class BusinessLogic {
 		return false;	
 	}
 
-	//EMPLOYEE LOGIC
+	//CUSTOMER ORDER LOGIC
 	
-	public static void viewCustomerOrders(Scanner scanner, ArrayList<Customer> customersToView, Employee employee) {
-		boolean isRunning = true;
-		while(isRunning) {
-			System.out.println("-------------------------------------------------------------------------------");
-			for(int i = 0; i<customersToView.size(); i++) {
-				System.out.println("[" + (i+1) + "]" + customersToView.get(i).getUsername());
-			}
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Select a customer to view their placed orders(Enter a Number)");
-			System.out.println("-------------------------------------------------------------------------------");			
-			try {
-				int response = scanner.nextInt();
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println(customersToView.get(response-1).getUsername() + "'s previous orders:");
-				System.out.println("       -");
-				for(Order order : customersToView.get(response-1).getOrderList()) {
-					System.out.println("Purchased at: " + order.getStoreAddress());
-					order.printOrderWithTax();
-					if(order != customersToView.get(response-1).getOrderList().get(customersToView.get(response-1).getOrderList().size()-1)) {
-						System.out.println(" ");
-					}
+	public static void viewCustomerOrders(Customer customer) {
+		if(customer.getOrderList().size() == 0) {
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("You have no previously placed orders..."));
+		} else {
+			System.out.println(UIUXBusinessLogic.dashes());
+			System.out.println(UIUXBusinessLogic.centerText("YOUR PREVIOUSLY PLACED ORDERS"));
+			System.out.println(UIUXBusinessLogic.centerText("--------------------------------------------"));
+			for(Order order : customer.getOrderList()) {
+				UIUXBusinessLogic.formatOrder(order);
+				if(order != customer.getOrderList().get(customer.getOrderList().size()-1)) {
+					System.out.println(" ");
 				}
-				Customer customer = customersToView.get(response-1);
-//				if(customer.getOrderList().size() == 0) {
-//					
-//				} else {
-//					
-//				}
-				
-				
-				alterOrders(scanner, customer, employee);
-				scanner.nextLine();
-				isRunning = false;
-				System.out.println("-------------------------------------------------------------------------------");
-			} catch(Exception e) {
-				System.out.println("Not a vlid option");
-				break;
 			}
-			scanner.nextLine();
-			isRunning = false;
-
-			
-		}		
+			System.out.println(" ");
+		}
 	}
-
+	
+	public static void viewCustomerOrdersForEmployees(Customer customer) {
+		if(customer.getOrderList().size() == 0) {
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("User " + customer.getUsername() + " has no previously placed orders..."));
+		} else {
+			System.out.println(UIUXBusinessLogic.dashes());
+			System.out.println(UIUXBusinessLogic.centerText(customer.getUsername().toUpperCase() + "'S PREVIOUSLY PLACED ORDERS"));
+			System.out.println(UIUXBusinessLogic.centerText("--------------------------------------------"));
+			for(Order order : customer.getOrderList()) {
+				UIUXBusinessLogic.formatOrder(order);
+				if(order != customer.getOrderList().get(customer.getOrderList().size()-1)) {
+					System.out.println(" ");
+				}
+			}
+			System.out.println(" ");
+		}
+	}
+	
+	
 	private static void alterOrders(Scanner scanner, Customer customer, Employee employee) {
 
 		boolean isRunning = true;
@@ -491,9 +445,8 @@ public class BusinessLogic {
 				isRunning = false;
 				break;
 			} else {
-				System.out.println("-------------------------------------------------------------------------------");
-				System.out.println("Not a valid option");
-				System.out.println("-------------------------------------------------------------------------------");
+				inValidOption();
+
 			}
 			
 		}
@@ -506,17 +459,15 @@ public class BusinessLogic {
 		ArrayList<StoreFront> storeFronts = storeFrontsDao.getAll();
 		int response = -1;
 		while(response == -1) {
-			System.out.println("-------------------------------------------------------------------------------");
-			System.out.println("Please choose from the stores below to browse Rubber Duckie Catalogs!: ");
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.createBanner("STORE SELECTION MENU"));
 			for(int i=0; i<storeFronts.size();i++) {
 				System.out.println("[" + (i+1) + "] " + storeFronts.get(i).getName());
 			}
-			System.out.println("-------------------------------------------------------------------------------");
+			System.out.println(UIUXBusinessLogic.dashes());
 			try {
 				response = scanner.nextInt();
 				if(response < 1 || response > storeFronts.size()+1) {
-					System.out.println("Not a valid input");
+					inValidOption();
 					response = -1;
 				} else {
 					storeFront = storeFronts.get(response-1);
@@ -524,13 +475,38 @@ public class BusinessLogic {
 					return storeFront;
 				}
 			} catch (Exception e) {
-				System.out.println("Not a valid input");
+				inValidOption();
 				response = -1;
 				scanner.nextLine();
 			}
 		}
-		return storeFront;		
+		return storeFront;	
 	}
+	
+	
+	public static void inValidOption() {
+		System.out.println(UIUXBusinessLogic.dashes());
+		System.out.println("Not a valid option...");
+	}
+	
+	
+	public static boolean isInt(String string) {
+
+    	try {
+    	    int x = Integer.parseInt(string);
+    	    return true;
+    	} catch (NumberFormatException e) {
+    	    return false;
+    	}
+	}
+	
+	public static int convertToInt(String string) {
+
+    	int x = Integer.parseInt(string);
+    	return x;
+	}
+	
+	
 }
 
 
