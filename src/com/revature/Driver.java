@@ -19,28 +19,34 @@ public class Driver {
 		System.out.println(" ");
 		while(isRunning) {
 			System.out.println(UIUXBusinessLogic.createBanner("MAIN MENU"));
-			System.out.println("Please choose from the options below: ");
-			System.out.println("[1] Customer Login \n[2] Employee Login \n[3] Create Account \n[4] Exit Application" );
+			System.out.println("Please choose from the options below");
+			System.out.println("[1] Customer Login \n[2] Employee Login \n[3] Create Account" );
 			System.out.println(UIUXBusinessLogic.dashes());
-
-			switch (scanner.nextLine()) {
-			case "1":	
-				CustomerLogin.customerLogin(scanner);
-				break;
-			case "2":
-				EmployeeLogin.employeeLogin(scanner);
-				break;
-			case "3":
-				CreateAccount.createAccount(scanner);
-				break;
-			case "4":
-				System.out.println(UIUXBusinessLogic.createSpaceBanner("Come 'Quack' Soon! ;)"));
-				scanner.close();
-				isRunning = false;
-			default:
-				break;
-			}
+			System.out.println("[x] Exit Application");
+			System.out.println(UIUXBusinessLogic.dashes());
 			
+			String reply = scanner.nextLine();
+			if(BusinessLogic.isInt(reply)) {
+				switch (reply) {
+				case "1":	
+					CustomerLogin.customerLogin(scanner);
+					break;
+				case "2":
+					EmployeeLogin.employeeLogin(scanner);
+					break;
+				case "3":
+					CreateAccount.createAccount(scanner);
+					break;
+				default:
+					break;
+				}
+			} else {
+				if(reply.toLowerCase().equals("x")) {
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("Come 'Quack' Soon! ;)"));
+					scanner.close();
+					isRunning = false;
+				}
+			}
 		}
 		
 		

@@ -38,6 +38,27 @@ public class UIUXBusinessLogic {
 		return dashes() + "\n" + sb.toString() + "\n" + dashes();
 	}
 	
+	public static String replaceWithDashes(String string) {
+		StringBuilder sb = new StringBuilder();
+		while(sb.toString().length() < string.length()) {
+			sb.append("-");
+		}
+
+		return sb.toString();
+	}
+	
+	public static void leftAlignPrintTwoString(String string1, String string2) {
+		StringBuilder sb = new StringBuilder();
+		int lineLength = 82;
+		sb.append(string1);
+		while (sb.toString().length()<lineLength/2) {
+			sb.append(" ");
+		}
+		sb.append(string2);
+		System.out.println(sb.toString());
+	}
+	
+	
 	public static String centerText(String string) {
 		int targetLen = ((82 - string.length())/2)-1;
 		StringBuilder sb = new StringBuilder();
@@ -86,6 +107,41 @@ public class UIUXBusinessLogic {
 				sb.append(" ");
 			}
 			sb.append("Stock: " + quantity);
+		}
+		return sb.toString();
+	}
+	
+	public static String formatProductsWithIndex(int i, Duckie duckie, int quantity) {
+		StringBuilder sb = new StringBuilder();
+
+		if(quantity == 0) {
+			if(i+1 < 10) {
+				sb.append("[" + (i+1) + "]  " + duckie.getName());
+				while(sb.toString().length() < 82 - "OUT OF STOCK".length()) {
+					sb.append(".");
+				}	
+				sb.append("OUT OF STOCK");
+			} else {
+				sb.append("[" + (i+1) + "] " + duckie.getName());
+				while(sb.toString().length() < 82 - "OUT OF STOCK".length()) {
+					sb.append(".");
+				}	
+				sb.append("OUT OF STOCK");
+			}
+		} else {
+			if(i+1 < 10) {
+				sb.append("[" + (i+1) + "]  " + duckie.getName());
+				while(sb.toString().length() < 82 - ("STOCK: " + quantity).length()) {
+					sb.append(".");
+				}
+				sb.append("Stock: " + quantity);
+			} else {
+				sb.append("[" + (i+1) + "] " + duckie.getName());
+				while(sb.toString().length() < 82 - "OUT OF STOCK".length()) {
+					sb.append(".");
+				}	
+				sb.append("OUT OF STOCK");
+			}
 		}
 		return sb.toString();
 	}

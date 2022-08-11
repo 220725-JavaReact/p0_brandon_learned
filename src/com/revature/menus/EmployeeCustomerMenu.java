@@ -1,6 +1,5 @@
 package com.revature.menus;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.revature.client.BusinessLogic;
@@ -8,23 +7,15 @@ import com.revature.client.EmployeeSpecificBusinessLogic;
 import com.revature.client.UIUXBusinessLogic;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
-import com.revature.models.Order;
-import com.revature.models.StoreFront;
 
-import DataLayer.CustomerDAO;
 import DataLayer.OrderDAO;
-import DataLayer.StoreFrontsDAO;
 
 public class EmployeeCustomerMenu {
 
 	public static void employeeCustomerMenu(Scanner scanner, Employee employee) {
 		boolean isRunning = true;
 		boolean isRunning2 = false;
-		StoreFrontsDAO storeFrontDao = new StoreFrontsDAO();
-		CustomerDAO customerDao = new CustomerDAO();
 		OrderDAO orderDao = new OrderDAO();
-		ArrayList<StoreFront> storeFronts = storeFrontDao.getAll();
-		ArrayList<Customer> customersToView = customerDao.getAll();
 		
 		while(isRunning) {
 			Customer customer = EmployeeSpecificBusinessLogic.customerSelecter(scanner);
@@ -51,7 +42,7 @@ public class EmployeeCustomerMenu {
 					break;
 				case "2":		
 					customer.setOrderList(orderDao.getAllByCustomerId(customer));
-					BusinessLogic.viewCustomerOrdersForEmployees(customer);
+					BusinessLogic.viewCustomerOrdersForEmployees(scanner, customer);
 					break;
 				case "3":
 					System.out.println(UIUXBusinessLogic.dashes());
