@@ -53,9 +53,17 @@ public class EmployeeStoreMenu {
 				case "1":
 					EmployeeSpecificBusinessLogic.newViewAllStoreProducts(scanner, storeFront);
 					break;
-				case "2":			
-					LineItem lineItem = EmployeeSpecificBusinessLogic.chooseProductToAlter(scanner, employee, storeFront);
-					EmployeeSpecificBusinessLogic.alterProduct(scanner, employee, lineItem, storeFront);
+				case "2":
+					boolean inLoop = true;
+					while(inLoop) {
+						LineItem lineItem = EmployeeSpecificBusinessLogic.chooseProductToAlter(scanner, employee, storeFront);
+						if(lineItem == null) {
+							inLoop = false;
+						} else {
+							EmployeeSpecificBusinessLogic.alterProduct(scanner, employee, lineItem, storeFront);
+						}
+					}
+					
 					break;
 				case "3":
 					EmployeeSpecificBusinessLogic.addNewProducts(scanner, employee, storeFront);

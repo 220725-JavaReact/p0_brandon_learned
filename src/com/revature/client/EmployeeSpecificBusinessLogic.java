@@ -222,43 +222,91 @@ public class EmployeeSpecificBusinessLogic {
 	
 	public static LineItem chooseProductToAlter(Scanner scanner, Employee employee, StoreFront storeFront) {
 		LineItem lineItemToReturn = null;
+		ArrayList<LineItem> itemList = new ArrayList<>();
+		LinkedList<ArrayList<LineItem>> duckieLists = new LinkedList<>();
+		boolean isRunning = true;
 		int response = -1;
+		int currentList = 0;
+		String reply = "";
 		
-		if(storeFront.getLineItems().size() == 0) {
+		for(int i = 0; i<storeFront.getLineItems().size(); i++) {
+			if(itemList.size() < 10) {
+				itemList.add(storeFront.getLineItems().get(i));
+			} else {
+				duckieLists.add(itemList);
+				itemList = new ArrayList<>();
+				itemList.add(storeFront.getLineItems().get(i));	
+			}
+		} 
+		duckieLists.add(itemList);
+		
+		if(duckieLists.get(0).size() == 0) {
+			System.out.println("there are no products to view");
 			return null;
 		}
 
-		while(response == -1) {
-			System.out.println(UIUXBusinessLogic.createSpaceBanner("SELECT A PRODUCT YOU WISH TO ALTER"));
-			for(int i = 0; i<storeFront.getLineItems().size(); i++) {
-				if(i+1 < 10) {
-					System.out.println("[" + (i+1) + "]  " + 				
-							storeFront.getLineItems().get(i).getDuckie().getName() + " - " + 
-							storeFront.getLineItems().get(i).getQuantity() + " in stock");
+		while(isRunning) {
+			ArrayList<LineItem> currentItems = duckieLists.get(currentList);
+			System.out.println(UIUXBusinessLogic.createBanner(storeFront.getName().toUpperCase() + " AVAILABLE PRODUCTS FOR PURCHASE"));
+			while(reply.equals("")) {
+				if(duckieLists.size() > 1 && (currentList != 0) && currentList != duckieLists.size()-1) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "[e] Next ->");
+				} else if (duckieLists.size() > 1 && (currentList == 0)) {
+					UIUXBusinessLogic.centerTwoString("           ", "[e] Next ->");
+				} else if (duckieLists.size() > 1 && (currentList == duckieLists.size()-1)) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "           ");
+				}
+				System.out.println(UIUXBusinessLogic.dashes());
+				for(int i = 0; i<currentItems.size(); i++) {
+					System.out.println(UIUXBusinessLogic.formatProductsWithIndex(i, currentItems.get(i).getDuckie(), currentItems.get(i).getQuantity()));
+				}				
+
+				if(currentItems.size()<10) {
+					int temp = currentItems.size();
+					while(temp<10) {
+						System.out.println(" ");
+						temp++;
+					}
+				}
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println(UIUXBusinessLogic.centerText("[x] return to menu"));
+				System.out.println(UIUXBusinessLogic.dashes());
+
+				reply = scanner.nextLine();
+				
+				if(BusinessLogic.isInt(reply)) {
+					for(int i = 0; i<currentItems.size(); i++) {
+						if(BusinessLogic.convertToInt(reply)-1 == i) {
+							lineItemToReturn = currentItems.get(i);
+							return lineItemToReturn;	
+						}
+					}
+					BusinessLogic.inValidOption();
 				} else {
-					System.out.println("[" + (i+1) + "] " + 				
-							storeFront.getLineItems().get(i).getDuckie().getName() + " - " + 
-							storeFront.getLineItems().get(i).getQuantity() + " in stock");
+					if(reply.toLowerCase().equals("x")) {
+						isRunning = false;
+					} else if (reply.toLowerCase().equals("q")){
+						if(currentList == 0) {
+							break;
+						} else {
+							currentList -= 1;
+							break;
+						}
+					} else if (reply.toLowerCase().equals("e")){
+						if(currentList == duckieLists.size()-1) {
+							break;
+						} else {
+							currentList += 1;
+							break;
+						}
+					} else {
+						BusinessLogic.inValidOption();
+						reply = "";
+						break;
+					}	
 				}
 			}
-			System.out.println(UIUXBusinessLogic.dashes());
-
-			try {
-				response = scanner.nextInt();
-				if(response < 1 || response > storeFront.getLineItems().size()) {
-					BusinessLogic.inValidOption();
-					scanner.nextLine();
-					response = -1;
-				} else {
-					lineItemToReturn = storeFront.getLineItems().get(response-1);
-					scanner.nextLine();
-					return lineItemToReturn;
-				}		
-			} catch (Exception e) {
-				BusinessLogic.inValidOption();
-				scanner.nextLine();
-				response = -1;
-			}
+			reply = "";
 		}
 		return lineItemToReturn;	
 	}	
