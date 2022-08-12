@@ -137,11 +137,31 @@ public class UIUXBusinessLogic {
 				sb.append("Stock: " + quantity);
 			} else {
 				sb.append("[" + (i+1) + "] " + duckie.getName());
-				while(sb.toString().length() < 82 - "OUT OF STOCK".length()) {
+				while(sb.toString().length() < 82 - ("STOCK: " + quantity).length()) {
 					sb.append(".");
 				}	
-				sb.append("OUT OF STOCK");
+				sb.append("Stock: " + quantity);
 			}
+		}
+		return sb.toString();
+	}
+	
+	public static String formatCartProductsWithIndex(int i, Duckie duckie, int quantity) {
+		StringBuilder sb = new StringBuilder();
+
+		if(i+1 < 10) {
+			sb.append("[" + (i+1) + "]  " + duckie.getName());
+			while(sb.toString().length() < 82 - ("In Cart: " + quantity).length()) {
+				sb.append(".");
+			}
+			sb.append("In Cart: " + quantity);
+		} else {
+			sb.append("[" + (i+1) + "] " + duckie.getName());
+			while(sb.toString().length() < 82 - ("In Cart: " + quantity).length()) {
+				sb.append(".");
+			}	
+			sb.append("In Cart: " + quantity);
+
 		}
 		return sb.toString();
 	}

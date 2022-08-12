@@ -51,7 +51,7 @@ public class EmployeeStoreMenu {
 			if(BusinessLogic.isInt(reply)) {
 				switch (reply) {
 				case "1":
-					EmployeeSpecificBusinessLogic.viewAllStoreProducts(scanner, storeFront);
+					EmployeeSpecificBusinessLogic.newViewAllStoreProducts(scanner, storeFront);
 					break;
 				case "2":			
 					LineItem lineItem = EmployeeSpecificBusinessLogic.chooseProductToAlter(scanner, employee, storeFront);

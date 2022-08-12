@@ -30,35 +30,45 @@ public class EmployeeCustomerMenu {
 				
 				System.out.println("Please choose from the options below: ");
 				System.out.println("[1] View User " + customer.getUsername() + "'s Account Details"
-						+ "\n[2] View User " + customer.getUsername() + "'s Previously Placed Orders"
-						+ "\n[3] Return to Customer Selection" );
-				//other things to maybe do: create new stores/ create new products and allocated them to store
+						+ "\n[2] View User " + customer.getUsername() + "'s Previously Placed Orders");
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println("[x] Return to Customer Selection");
 				System.out.println(UIUXBusinessLogic.dashes());
 
-				switch (scanner.nextLine()) {
-				case "1":
-					System.out.println(UIUXBusinessLogic.createSpaceBanner(customer.getUsername().toUpperCase() + " ACCOUNT DETAILS"));
-					System.out.println(customer.toString());
-					break;
-				case "2":		
-					customer.setOrderList(orderDao.getAllByCustomerId(customer));
-					BusinessLogic.viewCustomerOrdersForEmployees(scanner, customer);
-					break;
-				case "3":
-					System.out.println(UIUXBusinessLogic.dashes());
-					System.out.println("Returning to Customer Selection...");
-					System.out.println(UIUXBusinessLogic.dashes());
-					isRunning2 = false;
-					break;
-				default:
-					break;
+				String reply = scanner.nextLine();
+				if(BusinessLogic.isInt(reply)) {
+					switch (reply) {
+					case "1":
+						boolean inLoop = true;
+						while(inLoop) {
+							System.out.println(UIUXBusinessLogic.createSpaceBanner(customer.getUsername().toUpperCase() + " ACCOUNT DETAILS"));
+							System.out.println(customer.toString());
+							System.out.println(UIUXBusinessLogic.dashes());						
+							System.out.println("[x] Return to Menu Options");
+							System.out.println(UIUXBusinessLogic.dashes());						
+							if(scanner.nextLine().toLowerCase().equals("x")) {
+								inLoop = false;
+								break;
+							}
+						}
+						break;
+					case "2":		
+						customer.setOrderList(orderDao.getAllByCustomerId(customer));
+						BusinessLogic.viewCustomerOrdersForEmployees(scanner, customer);
+						break;
+					default:
+						break;
+					}
+				} else {
+					if(reply.toLowerCase().equals("x")) {
+						System.out.println(UIUXBusinessLogic.dashes());
+						System.out.println("Returning to Customer Selection...");
+						System.out.println(UIUXBusinessLogic.dashes());
+						isRunning2 = false;
+						break;
+					}
 				}
-				
-				
-				
 			}
-			
-			
 		}
 	}
 }

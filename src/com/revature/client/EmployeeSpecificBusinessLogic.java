@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import com.revature.menus.CreateAccount;
+import com.revature.menus.CustomerLogin;
+import com.revature.menus.EmployeeLogin;
 import com.revature.models.Customer;
 import com.revature.models.Duckie;
 import com.revature.models.Employee;
@@ -145,8 +148,6 @@ public class EmployeeSpecificBusinessLogic {
 			}
 		} 
 		duckieLists.add(itemList);
-
-		System.out.println(duckieLists.size());
 		
 		while(isRunning) {
 			ArrayList<LineItem> currentItems = duckieLists.get(currentList);
@@ -219,45 +220,6 @@ public class EmployeeSpecificBusinessLogic {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static LineItem chooseProductToAlter(Scanner scanner, Employee employee, StoreFront storeFront) {
 		LineItem lineItemToReturn = null;
 		int response = -1;
@@ -307,29 +269,36 @@ public class EmployeeSpecificBusinessLogic {
 		
 		while(isRunning) {
 			Duckie duckie = lineItem.getDuckie();
-			System.out.println(UIUXBusinessLogic.createSpaceBanner("How would you like to alter Product: " + lineItem.getDuckie().getName() + "?"));
+			System.out.println(UIUXBusinessLogic.createSpaceBanner("Current " + lineItem.getDuckie().getName() + " stock: " + lineItem.getQuantity()));
 			System.out.println("[1] Increase Stock"
-					+ "\n[2] Decrease Stock"
-					+ "\n[3] Do Not Alter");
+					+ "\n[2] Decrease Stock");
 			System.out.println(UIUXBusinessLogic.dashes());
-			switch (scanner.nextLine()) {
-			case "1":
-				increaseStock(scanner, employee, storeFront, lineItem);
-				isRunning = false;
-				break;
-			case "2":
-				decreaseStock(scanner, employee, storeFront, lineItem);
-				isRunning = false;
-				break;
-			case "3":
-				System.out.println(UIUXBusinessLogic.dashes());
-				System.out.println("Product " + lineItem.getDuckie().getName() + " was not altered...");
-				System.out.println(UIUXBusinessLogic.dashes());
-				isRunning = false;
-				break;
-			default:
-				break;
+			System.out.println("[x] Do Not Alter");
+			System.out.println(UIUXBusinessLogic.dashes());
+			
+			String reply = scanner.nextLine();
+			if(BusinessLogic.isInt(reply)) {
+				switch (reply) {
+				case "1":
+					increaseStock(scanner, employee, storeFront, lineItem);
+					break;
+				case "2":
+					decreaseStock(scanner, employee, storeFront, lineItem);
+					break;
+				default:
+					break;
+				}  
+				
+			} else {
+				if(reply.toLowerCase().equals("x")) {
+					System.out.println(UIUXBusinessLogic.dashes());
+					System.out.println("Returning to " + storeFront.getName() + " Employee Menu");
+					System.out.println(UIUXBusinessLogic.dashes());
+					isRunning = false;
+				}
 			}
+			
+			
 		}
 	}
 	
@@ -337,26 +306,25 @@ public class EmployeeSpecificBusinessLogic {
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		Duckie duckie = lineItem.getDuckie();
 		int response = -1;
-		
-		while(response == -1) {
+		boolean isRunning = true;
+
+		while(isRunning) {
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Current " + duckie.getName() + " stock: " + lineItem.getQuantity()));
+			System.out.println(UIUXBusinessLogic.centerText("--"));
 			System.out.println(UIUXBusinessLogic.centerText("Input the number of " + duckie.getName() + "s to add"));
+			System.out.println(UIUXBusinessLogic.centerText("(or)"));
+			System.out.println(UIUXBusinessLogic.centerText("[x] Return to Stock Options"));
 			System.out.println(UIUXBusinessLogic.dashes());
-	
-			try {
-				response = scanner.nextInt();
-				if(response < 1) {
+			
+			String reply = scanner.nextLine();
+			if(BusinessLogic.isInt(reply)) {
+				if (BusinessLogic.convertToInt(reply) < 1){
 					BusinessLogic.inValidOption();
-					response = -1;
-					scanner.nextLine();
 				} else {
-					boolean isRunning = true;
-					scanner.nextLine();
-
+					response = BusinessLogic.convertToInt(reply);
 					while (isRunning){
 						System.out.println(UIUXBusinessLogic.createSpaceBanner("Add " + response + " " + duckie.getName() + "(s) to stock?[Y/N]"));
-						
 						switch (scanner.nextLine()) {
 						case "Y":
 						case "y":
@@ -378,12 +346,15 @@ public class EmployeeSpecificBusinessLogic {
 							BusinessLogic.inValidOption();
 							break;
 						}
-					}	
+					}
 				}
-			} catch (Exception e) {
-				BusinessLogic.inValidOption();
-				response = -1;
-				scanner.nextLine();
+			} else {
+				if(reply.toLowerCase().equals("x")) {
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("Returning to Stock Options..."));
+					isRunning = false;
+				} else {
+					BusinessLogic.inValidOption();
+				}
 			}
 		}		
 	}
@@ -392,42 +363,35 @@ public class EmployeeSpecificBusinessLogic {
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		Duckie duckie = lineItem.getDuckie();
 		int response = -1;
+		boolean isRunning = true;
 		
 		if(lineItem.getQuantity() == 0) {
 			System.out.println(UIUXBusinessLogic.dashes());
-			System.out.println(UIUXBusinessLogic.centerText("Current " + duckie.getName() + " stock: " + lineItem.getQuantity()));
 			System.out.println(UIUXBusinessLogic.centerText("There are no " + lineItem.getDuckie().getName() + "s to remove"));
 			System.out.println(UIUXBusinessLogic.dashes());
-			response = 0;
+			isRunning = false;
 		}
-		
-		
-		while(response == -1) {
+
+		while(isRunning) {
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Current " + duckie.getName() + " stock: " + lineItem.getQuantity()));
+			System.out.println(UIUXBusinessLogic.centerText("--"));
 			System.out.println(UIUXBusinessLogic.centerText("Input the number of " + duckie.getName() + "s to remove"));
+			System.out.println(UIUXBusinessLogic.centerText("(or)"));
+			System.out.println(UIUXBusinessLogic.centerText("[x] Return to Stock Options"));
 			System.out.println(UIUXBusinessLogic.dashes());
-	
-			try {
-				response = scanner.nextInt();
-				if(response < 1) {
+			
+			String reply = scanner.nextLine();
+			if(BusinessLogic.isInt(reply)) {
+				if (BusinessLogic.convertToInt(reply) < 1){
 					BusinessLogic.inValidOption();
-					response = -1;
-					scanner.nextLine();
-				} else if(response > lineItem.getQuantity()){
+				} else if(BusinessLogic.convertToInt(reply) > lineItem.getQuantity()) {
 					System.out.println(UIUXBusinessLogic.dashes());
-					System.out.println(UIUXBusinessLogic.centerText("There are only " + lineItem.getQuantity() + " " + duckie.getName() + "(s) in stock."));
-					System.out.println(UIUXBusinessLogic.centerText("You may not remove " + response));
-					System.out.println(UIUXBusinessLogic.dashes());
-					response = -1;
-					scanner.nextLine();
+					System.out.println(UIUXBusinessLogic.centerText("Not enough of that duckie to remove"));
 				} else {
-					boolean isRunning = true;
-					scanner.nextLine();
-
+					response = BusinessLogic.convertToInt(reply);
 					while (isRunning){
 						System.out.println(UIUXBusinessLogic.createSpaceBanner("Remove " + response + " " + duckie.getName() + "(s) from stock?[Y/N]"));
-						
 						switch (scanner.nextLine()) {
 						case "Y":
 						case "y":
@@ -448,12 +412,15 @@ public class EmployeeSpecificBusinessLogic {
 							BusinessLogic.inValidOption();
 							break;
 						}
-					}	
+					}
 				}
-			} catch (Exception e) {
-				BusinessLogic.inValidOption();
-				response = -1;
-				scanner.nextLine();
+			} else {
+				if(reply.toLowerCase().equals("x")) {
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("Returning to Stock Options..."));
+					isRunning = false;
+				} else {
+					BusinessLogic.inValidOption();
+				}
 			}
 		}		
 	}
