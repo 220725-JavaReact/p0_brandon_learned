@@ -35,7 +35,17 @@ public class StoreFrontsDAO implements DAO<StoreFront>{
 
 	@Override
 	public void addInstance(StoreFront newInstance) {
-		// TODO Auto-generated method stub
+		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
+			String query = "insert into storefronts(storefront_name, address) values (?, ?)";
+			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
+			pstmt.setString(1, newInstance.getName());
+			pstmt.setString(2, newInstance.getAddress());
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Something went wrong");
+			//e.printStackTrace();
+		}
 		
 	}
 

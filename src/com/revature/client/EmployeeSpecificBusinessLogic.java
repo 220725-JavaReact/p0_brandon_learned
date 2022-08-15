@@ -710,16 +710,19 @@ public class EmployeeSpecificBusinessLogic {
 		        	 bestSellingDuckie = new_Map.getKey();
 		         }
 		     }
-	
-		    System.out.println("\n" + UIUXBusinessLogic.centerText("Best Selling Product: " + bestSellingDuckie.getName()));
-			System.out.println(UIUXBusinessLogic.centerText( "Quantity Sold: " + currentValue + " - Total Product Revenue: $" + df.format(bestSellingDuckie.getPrice() * currentValue)));
-		    System.out.println(UIUXBusinessLogic.centerText("---------------------------"));
-			System.out.println(UIUXBusinessLogic.centerText("Total Sales: $" + df.format(totalSales)));
-			
+		    
+		     if(bestSellingDuckie == null) {
+		    	 System.out.println(UIUXBusinessLogic.centerText("NO PROFITS TO REPORT"));
+		     } else {
+		    	System.out.println("\n" + UIUXBusinessLogic.centerText("Best Selling Product: " + bestSellingDuckie.getName()));
+				System.out.println(UIUXBusinessLogic.centerText( "Quantity Sold: " + currentValue + " - Total Product Revenue: $" + df.format(bestSellingDuckie.getPrice() * currentValue)));
+			    System.out.println(UIUXBusinessLogic.centerText("---------------------------"));
+				System.out.println(UIUXBusinessLogic.centerText("Total Sales: $" + df.format(totalSales)));
+ 
+		     }
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println("[x] Return to Menu Options");
-			System.out.println(UIUXBusinessLogic.dashes());
-
+			System.out.println(UIUXBusinessLogic.dashes()); 
 			if(scanner.nextLine().toLowerCase().equals("x")) {
 				inLoop = false;
 			}

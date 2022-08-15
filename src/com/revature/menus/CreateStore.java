@@ -1,87 +1,81 @@
 package com.revature.menus;
 
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
-import com.revature.client.CreateProductLogic;
+import com.revature.client.CreateStoreFrontLogic;
 import com.revature.client.UIUXBusinessLogic;
-import com.revature.models.Duckie;
 import com.revature.models.Employee;
+import com.revature.models.StoreFront;
 import com.revature.util.Logger;
 import com.revature.util.Logger.LogLevel;
 
 import DataLayer.DAO;
-import DataLayer.DuckieDAO;
+import DataLayer.StoreFrontsDAO;
 
 public class CreateStore {
 
 	public static void createStore(Scanner scanner, Employee employee) {
 		
-		DAO<Duckie> duckieDao = new DuckieDAO();
+		DAO<StoreFront> storeFrontDao = new StoreFrontsDAO();
 		boolean isRunning = true;
-		String productName = "";
-		double price = 0;
-		String description = "";
-		String quality = "";
+		String name = "";
+		String street = "";
+		String city = "";
+		String state = "";
+		int zip = 0;
 		String reply  ="";
-		
-		//StoreName = format replace all ' with '' (2 of them) (MAX 50)
-		//Address - street (MAX FOR ENTIRE ADDRESS IS 100)
-		// city
-		// state
-		// zip 
 		
 		while(isRunning) {
 			
 			System.out.println(UIUXBusinessLogic.createBanner("STOREFRONT REGISTRY"));
 	
-			System.out.println("\nPlease enter a StoreFront Name. (Max Characters: 25)");
-			while(productName.equals("")) {
+			while(name.equals("")) {
+				System.out.println("\nPlease enter a StoreFront Name. (Max Characters: 25)");
 				String attemptName =  scanner.nextLine();
-				productName = CreateProductLogic.verifyProductName(attemptName);
+				name = CreateStoreFrontLogic.verifyStoreFrontName(attemptName);
 			}
 			
-			while(price == 0) {
-				System.out.println("\nPlease enter a Street Address (Max Characters: 25)");
-				String attamptPrice = scanner.nextLine();
-				price = CreateProductLogic.verfiyPrice(attamptPrice);
+			while(street.equals("")) {
+				System.out.println("\nPlease enter a Street Address (Ex: 1234 Dillan Street) (Max Characters: 25)");
+				String attemptStreet = scanner.nextLine();
+				street = CreateStoreFrontLogic.verifyStreetAddress(attemptStreet);
 			}
 			
-			System.out.println("\nPlease enter a City. (Max Characters: 25)");
-			while(description.equals("")) {
-				String attemptDescription =  scanner.nextLine();
-				description = CreateProductLogic.verifyDescription(attemptDescription);
+			while(city.equals("")) {
+				System.out.println("\nPlease enter a City. (Max Characters: 25)");
+				String attemptCity =  scanner.nextLine();
+				city = CreateStoreFrontLogic.verifyCity(attemptCity);
 			}
 			
-			System.out.println("\nPlease enter a City. (Format Ex: 'AZ')"); //make sure to return capital version
-			while(quality.equals("")) {
-				String attemptQuality =  scanner.nextLine();
-				quality = CreateProductLogic.verifyQuality(attemptQuality);
+			while(state.equals("")) {
+				System.out.println("\nPlease enter a State. (Format Ex: 'AZ')"); //make sure to return capital version
+				String attemptState =  scanner.nextLine();
+				state = CreateStoreFrontLogic.verifyState(attemptState);
 			}
 			
-			while(price == 0) {
+			while(zip == 0) {
 				System.out.println("\nPlease enter a Zip Code (Format Ex: '#####')");
-				String attamptPrice = scanner.nextLine();
-				price = CreateProductLogic.verfiyPrice(attamptPrice);
+				String attemptZip = scanner.nextLine();
+				zip = CreateStoreFrontLogic.verifyZip(attemptZip);
 			}
 			
 			while(reply.equals("")) {
-				DecimalFormat df = new DecimalFormat("0.00");
-				System.out.println("\nProduct Name: " + productName  
-						+"\nPrice: $" + df.format(price)
-						+"\nDescription: " + description
-						+"\nQuality: " + quality
+				System.out.println("\nStoreFront Name: " + name  
+						+"\nStreet Address: " + street
+						+"\nCity: " + city
+						+"\nState: " + state
+						+"\nZip: " + zip
 						+"\nDoes this look correct to you? \n[Y/N]"
 						+ "\n" + UIUXBusinessLogic.dashes());
+				String Address = street + ", " + city + ", " + state + ", " + zip;
 				reply = scanner.nextLine();
 				switch (reply) {
 				case "Y":	
 				case "y":
-					//this should be altered for when database is implemented
-					Duckie duckie = new Duckie(productName, price, description, quality);
-					duckieDao.addInstance(duckie);
-					System.out.println(UIUXBusinessLogic.createSpaceBanner("Product " + duckie.getName() + " successfully created!"));
-					Logger.getLogger().log(LogLevel.info, "\nAdmin User " + employee.getUsername() + " Created New Product: " + duckie.toString() + "\n");
+					StoreFront storeFront = new StoreFront(name, Address);
+					storeFrontDao.addInstance(storeFront);
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("StoreFront " + storeFront.getName() + " successfully created!"));
+					Logger.getLogger().log(LogLevel.info, "\nAdmin User " + employee.getUsername() + " Created New StoreFront: " + storeFront.toString() + "\n");
 					isRunning = false;
 					break;
 				case "N":
@@ -92,13 +86,7 @@ public class CreateStore {
 					reply = "";
 					break;
 				}
-			}
-			
-				
+			}	
 		}
-		
-		
-		
-		
 	}
 }

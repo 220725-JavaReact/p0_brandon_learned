@@ -146,3 +146,144 @@ Description: Duckie
 Duckiness: Duckie
 2022-08-15T09:06:19.452955900
 ---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T11:46:03.662415300
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T11:49:46.123661600
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T11:51:29.377856800
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:32:24.959091500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:34:54.210230100
+---------------------------------
+info	
+Admin User user Created New StoreFront: StoreFront [name=Duckies ''R'' Us, address=1234 Dillan Street, Gogotown, CO, 12345, orderList=[]]
+2022-08-15T13:35:40.731262700
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:37:27.438940900
+---------------------------------
+info	
+Admin User user Created New StoreFront: StoreFront [name=Duckies 'R' Us, address=Duckduckgo, City, ST, 12345, orderList=[]]
+2022-08-15T13:37:48.457414
+---------------------------------
+info	
+Admin User: prowler4 logged into account
+2022-08-15T13:38:57.212655500
+---------------------------------
+info	
+Admin User prowler4 Created New StoreFront: StoreFront [name=Duckies 'R' Us, address=123 Duck Street, Duckington, DN, 12345, orderList=[]]
+2022-08-15T13:40:14.029991
+---------------------------------
+info	
+Admin User: prowler4 added product Rubber Duckie to storefront Duckies 'R' Us with a stock of 50
+2022-08-15T13:41:20.950376100
+---------------------------------
+info	
+Admin User: prowler4 added product Alien Rubber Duckie to storefront Duckies 'R' Us with a stock of 50
+2022-08-15T13:41:29.459200200
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:45:27.549567800
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:46:12.204487500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:46:50.228550900
+---------------------------------
+info	
+Admin User: user increased the stock of Rubber Duckie by 1 for storefront Duckies 'R' Us
+2022-08-15T13:47:24.487246500
+---------------------------------
+info	
+Admin User: user logged out of account
+2022-08-15T13:47:42.798258700
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T13:48:15.063841900
+---------------------------------
+info	
+Order: 
+9 x Rubber Duckie
+StoreAddress: Duckies 'R' Us
+TotalPriceOfItems: 26.910000000000004
+purchased by customer: blearned92
+2022-08-15T13:49:03.043488
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T13:49:14.732566200
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:49:19.686870500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:50:01.570695700
+---------------------------------
+info	
+Admin User user Created New StoreFront: StoreFront [name=Duckie Town USA, address=1234 Quack Street, Ducktown, CO, 12345, orderList=[]]
+2022-08-15T13:50:43.212997900
+---------------------------------
+info	
+Admin User user Created New Product: Duckie Name: GIANT DUCKIE
+Duckie Price: $99.90
+Description: THIS IS A REEEEAAAAALLY BIG DUCKIE
+Duckiness: SUPER  BIG
+2022-08-15T13:51:20.327977
+---------------------------------
+info	
+Admin User: user added product GIANT DUCKIE to storefront Duckie Town USA with a stock of 5
+2022-08-15T13:51:43.485338
+---------------------------------
+info	
+Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 100
+2022-08-15T13:51:55.177513700
+---------------------------------
+info	
+Admin User: user added product Howard the Duckie to storefront Duckie Town USA with a stock of 40
+2022-08-15T13:52:06.639332800
+---------------------------------
+info	
+Admin User: user logged out of account
+2022-08-15T13:52:26.915676600
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T13:52:40.725592900
+---------------------------------
+info	
+Order: 
+1 x Rubber Duckie
+1 x Howard the Duckie
+1 x GIANT DUCKIE
+StoreAddress: Duckie Town USA
+TotalPriceOfItems: 129.88
+purchased by customer: blearned92
+2022-08-15T13:53:30.888306300
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T13:53:41.457051700
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T13:53:45.477307
+---------------------------------

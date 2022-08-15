@@ -1,11 +1,13 @@
 package com.revature.client;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CreateStoreFrontLogic {
 
 	//StoreName
-	public static String verifyStoreFrontName(String attemptName) { //Make sure everything is letters
+	public static String verifyStoreFrontName(String attemptName) { 
 		if(attemptName.length()<1) {
 			System.out.println("You must input a StoreFront Name");
 			return "";
@@ -36,129 +38,69 @@ public class CreateStoreFrontLogic {
 	
 	//City
 	public static String verifyCity (String attemptCity) { //make sure everything is letters
-		if(attemptCity.length()<1) {
-			System.out.println("You must input a City Name");
+		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(attemptCity);
+		boolean b = m.find();
+		if(b) {
+			System.out.println("City Names Cannot Contain Numbers or Special Characters");
 			return "";
-		}
-		
-		if(attemptCity.length() > 25) {
+		} else if(attemptCity.length() < 1) {
+			System.out.println("You Must Input a City Name");
+			return "";
+		} else if(attemptCity.length() > 25) {
 			System.out.println("Max Characters: 25");
 			return "";
+		} else {
+			String formattedName = attemptCity.substring(0, 1).toUpperCase() + attemptCity.substring(1).toLowerCase();
+			return formattedName;
 		}
-		
-		return attemptCity;
 	}
 	
 	//State
 	public static String verifyState (String attemptState) {  //Make sure everything is letters
-		if(attemptState.length()<1) {
+		Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(attemptState);
+		boolean b = m.find();
+		if(attemptState.length() < 1) {
 			System.out.println("You must input a State");
 			return "";
-		}
-		
-		if(attemptState.length() != 2) {
+		} else if(attemptState.length() != 2) {
 			System.out.println("Input Must be in the Format of 'AZ'");
 			return "";
+		} else if(b) {
+			System.out.println("State Cannot Contain Numbers or Special Characters");
+			return "";
+		} else {
+			return attemptState.toUpperCase();
 		}
-		
-		return attemptState.toUpperCase();
 	}
 	
 	//Zip Code
-	public static String verifyZip (String attemptZip) { //make sure everything is numeric
-		if(attemptZip.length()<1) {
-			System.out.println("You must input a State");
-			return "";
-		}
+	public static int verifyZip (String attemptZip) { //make sure everything is numeric
 		
-		if(attemptZip.length() != 2) {
-			System.out.println("Input Must be in the Format of 'AZ'");
-			return "";
-		}
-		
-		return attemptZip;
-	}
-	
-	
-	
-	public static String verifyQuality(String attemptName) {
-		if(attemptName.length()<1) {
-			System.out.println("You must input a Quality");
-			return "";
-		}
-		
-		if(attemptName.length() > 50) {
-			System.out.println("Max Characters: 50");
-			return "";
-		}
-		
-		return attemptName;
-	}
-	
-	public static String verifyDescription(String attemptName) {
-		if(attemptName.length()<1) {
-			System.out.println("You must input a Description");
-			return "";
-		}
-		
-		if(attemptName.length() > 100) {
-			System.out.println("Max Characters: 100");
-			return "";
-		}
-		
-		return attemptName;
-	}
-
-
-	public static double verfiyPrice(String attamptPrice) {
-		DecimalFormat df = new DecimalFormat("0.00");
-		
-		if(attamptPrice.length() < 1) {
-			System.out.println("You must input a price");
+		if(attemptZip.length() < 1) {
+			System.out.println("You must input a Zip Code");
 			return 0;
 		}
-		if(attamptPrice.length() < 4) {
-            System.out.println("Input Must be a Number in the Format of #.##");
+		if(attemptZip.length() != 5) {
+            System.out.println("Input Must be a Number in the Format of #####");
 			return 0;
-		}
-		if(!attamptPrice.contains(".")) {
-            System.out.println("Input Must be a Number in the Format of #.##");
-			return 0;
-		}
-		if(attamptPrice.contains(".")) {
-			String[] arr = attamptPrice.split("\\.");
-			if(arr.length != 2) {
-	            System.out.println("Input Must be a Number in the Format of #.##");
-				return 0;
-			}
-			if(arr[1].length() != 2) {
-	            System.out.println("Input Must be a Number in the Format of #.##");
-				return 0;
-			}
-		}
-		
+		}		
 		
 		try{
-	        double isNum = Double.parseDouble(attamptPrice);
+	        double isNum = Double.parseDouble(attemptZip);
 	        if(isNum == Math.floor(isNum)) {
-	            String returnString = df.format(isNum);
-	            if(Double.parseDouble(returnString) == 0){
-	            	System.out.println("You must input a price");
-	            }
-		       return Double.parseDouble(returnString);
+		       return (int) isNum;
 	        }else {
-	            String returnString = df.format(isNum);
-	            if(Double.parseDouble(returnString) == 0){
-	            	System.out.println("You must input a price");
-	            }
-		       return Double.parseDouble(returnString);
+	           System.out.println("Input Must be a Number in the Format of #####");
+		       return 0;
 	        }
 	    } catch(Exception e) {
-	        if(attamptPrice.toCharArray().length == 1) {
-	            System.out.println("Input Must be a Number in the Format of #.##");
+	        if(attemptZip.toCharArray().length == 1) {
+	            System.out.println("Input Must be a Number in the Format of #####");
 	             //enter a double again
 	        }else {
-	            System.out.println("Input Must be a Number in the Format of #.##");
+	            System.out.println("Input Must be a Number in the Format of #####");
 	            //enter a double again
 	        }
 	    }
