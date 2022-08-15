@@ -109,8 +109,8 @@ public class Order {
 			System.out.println(lineItem.getQuantity() + " x " + lineItem.getDuckie().getName() + 
 					" - $" + df.format(lineItem.getDuckie().getPrice() * lineItem.getQuantity()));
 		}
-		System.out.println("Sales tax: " + df.format(this.totalPriceOfItems * 0.07));
-		System.out.println("Items Price: " + df.format(this.totalPriceOfItems));
+		System.out.println("Sales tax: $" + df.format(this.totalPriceOfItems * 0.07));
+		System.out.println("Items Price: $" + df.format(this.totalPriceOfItems));
 		System.out.println("Total: $" + df.format(this.totalPriceOfItems + (this.totalPriceOfItems * 0.07)));
 	}
 	

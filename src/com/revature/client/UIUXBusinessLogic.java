@@ -171,10 +171,10 @@ public class UIUXBusinessLogic {
 		DecimalFormat df = new DecimalFormat("#.00");
 
 		sb.append(duckie.getName() + "s Sold: " + quantity);
-		while(sb.toString().length() < 82 - ("Product Profits: " + df.format(duckie.getPrice() * quantity)).length()) {
+		while(sb.toString().length() < 82 - ("Product Profits: $" + df.format(duckie.getPrice() * quantity)).length()) {
 			sb.append(" ");
 		}
-		sb.append("Product Profits: " + df.format(duckie.getPrice() * quantity));
+		sb.append("Product Profits: $" + df.format(duckie.getPrice() * quantity));
 		return sb.toString();
 	}	
 	

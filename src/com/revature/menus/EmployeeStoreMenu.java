@@ -27,6 +27,7 @@ public class EmployeeStoreMenu {
 		StoreFrontsDAO storeFrontDao = new StoreFrontsDAO();
 		OrderDAO orderDao = new OrderDAO();
 		StoreFront storeFront = BusinessLogic.selectStore(scanner);
+		boolean inLoop = true;
 		
 		if(storeFront == null) {
 			isRunning = false;
@@ -54,7 +55,6 @@ public class EmployeeStoreMenu {
 					EmployeeSpecificBusinessLogic.newViewAllStoreProducts(scanner, storeFront);
 					break;
 				case "2":
-					boolean inLoop = true;
 					while(inLoop) {
 						LineItem lineItem = EmployeeSpecificBusinessLogic.chooseProductToAlter(scanner, employee, storeFront);
 						if(lineItem == null) {
@@ -63,7 +63,7 @@ public class EmployeeStoreMenu {
 							EmployeeSpecificBusinessLogic.alterProduct(scanner, employee, lineItem, storeFront);
 						}
 					}
-					
+					inLoop = true;
 					break;
 				case "3":
 					EmployeeSpecificBusinessLogic.addNewProducts(scanner, employee, storeFront);
@@ -76,17 +76,28 @@ public class EmployeeStoreMenu {
 					if(orders.size() == 0) {
 						System.out.println(UIUXBusinessLogic.createSpaceBanner("No Previous orders to Display..."));
 					} else {
-						System.out.println(UIUXBusinessLogic.dashes());
-						System.out.println(UIUXBusinessLogic.centerText(storeFront.getName().toUpperCase() + " ORDER HISTORY"));
-						System.out.println(UIUXBusinessLogic.centerText("---------------"));
-						for(int i=0; i<orders.size(); i++) {
-							UIUXBusinessLogic.formatOrder(orders.get(i));
-							if(orders.get(i) != orders.get(orders.size()-1)) {
-								System.out.println(" ");
+						while(inLoop) {
+							System.out.println(UIUXBusinessLogic.dashes());
+							System.out.println(UIUXBusinessLogic.centerText(storeFront.getName().toUpperCase() + " ORDER HISTORY"));
+							System.out.println(UIUXBusinessLogic.centerText("---------------"));
+							for(int i=0; i<orders.size(); i++) {
+								UIUXBusinessLogic.formatOrder(orders.get(i));
+								if(orders.get(i) != orders.get(orders.size()-1)) {
+									System.out.println(" ");
+								}
+							}
+							System.out.println(" ");
+							System.out.println(UIUXBusinessLogic.dashes());
+							System.out.println("[x] Return to Menu Options");
+							System.out.println(UIUXBusinessLogic.dashes());
+
+							if(scanner.nextLine().toLowerCase().equals("x")) {
+								inLoop = false;
 							}
 						}
-						System.out.println(" ");
+							
 					}
+					inLoop = true;
 					break;
 				case "6":
 					EmployeeSpecificBusinessLogic.profitReports(scanner, employee, storeFront);

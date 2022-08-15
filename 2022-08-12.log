@@ -234,3 +234,75 @@ info
 Admin User: user increased the stock of Red Rubber Duckie by 100 for storefront Good Duckin' Duckies
 2022-08-12T12:39:57.438990100
 ---------------------------------
+info	
+Admin User: user logged into account
+2022-08-12T12:42:14.186243400
+---------------------------------
+info	
+Admin User: user decreased the stock of Red Rubber Duckie by 6 for storefront Good Duckin' Duckies
+2022-08-12T12:42:27.999464500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-12T12:50:29.970048700
+---------------------------------
+info	
+Admin User: user removed product Rubber Duckie from storefront Good Duckin' Duckies
+2022-08-12T12:50:56.128608500
+---------------------------------
+info	
+Admin User: user increased the stock of Rubber Duckie by 50 for storefront Good Duckin' Duckies
+2022-08-12T12:51:17.662367800
+---------------------------------
+info	
+Admin User: user increased the stock of [LIMITED EDITION] Black Mage Donald Duckie by 5 for storefront Good Duckin' Duckies
+2022-08-12T13:33:50.036638300
+---------------------------------
+info	
+Admin User: user logged out of account
+2022-08-12T13:33:55.205210700
+---------------------------------
+info	
+User: subwoofer12 logged into account
+2022-08-12T13:34:03.924203600
+---------------------------------
+info	
+Order: 
+2 x [LIMITED EDITION] Black Mage Donald Duckie
+StoreAddress: Good Duckin' Duckies
+TotalPriceOfItems: 159.98
+purchased by customer: subwoofer12
+2022-08-12T13:35:09.578546600
+---------------------------------
+info	
+User: subwoofer12 logged out of account
+2022-08-12T13:35:17.617759900
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-12T13:35:24.280135900
+---------------------------------
+info	
+Admin User: user logged out of account
+2022-08-12T13:35:53.227493700
+---------------------------------
+info	
+User: bustersword logged into account
+2022-08-12T13:35:59.031185700
+---------------------------------
+info	
+Order: 
+3 x [LIMITED EDITION] Black Mage Donald Duckie
+StoreAddress: Good Duckin' Duckies
+TotalPriceOfItems: 239.96999999999997
+purchased by customer: bustersword
+2022-08-12T13:36:48.274947500
+---------------------------------
+info	
+User: bustersword logged out of account
+2022-08-12T13:36:49.296188800
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-12T13:36:53.191202500
+---------------------------------

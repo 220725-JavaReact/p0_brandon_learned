@@ -22,7 +22,7 @@ public class EmployeeMenu {
 			System.out.println("[1] Manage Current Stores" //maybe add sales trends
 					+ "\n[2] Manage Customer Accounts" // search for customers, see their details, see their orders
 					+ "\n[3] Create New Store (Not working as of yet)"
-					+ "\n[4] Create New Products For Stores (Not working as of yet)");
+					+ "\n[4] Create New Products For Stores");
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println("[x] Logout");
 			System.out.println(UIUXBusinessLogic.dashes());
@@ -40,7 +40,7 @@ public class EmployeeMenu {
 					System.out.println("Under Maintainence");
 					break;
 				case "4":
-					System.out.println("Under Maintainence");
+					CreateProduct.createProduct(scanner, employee);
 					break;
 				default:
 					break;

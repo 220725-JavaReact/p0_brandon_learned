@@ -359,7 +359,7 @@ public class EmployeeSpecificBusinessLogic {
 		while(isRunning) {
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Current " + duckie.getName() + " stock: " + lineItem.getQuantity()));
-			System.out.println(UIUXBusinessLogic.centerText("--"));
+			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Input the number of " + duckie.getName() + "s to add"));
 			System.out.println(UIUXBusinessLogic.centerText("(or)"));
 			System.out.println(UIUXBusinessLogic.centerText("[x] Return to Stock Options"));
@@ -423,7 +423,7 @@ public class EmployeeSpecificBusinessLogic {
 		while(isRunning) {
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Current " + duckie.getName() + " stock: " + lineItem.getQuantity()));
-			System.out.println(UIUXBusinessLogic.centerText("--"));
+			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText("Input the number of " + duckie.getName() + "s to remove"));
 			System.out.println(UIUXBusinessLogic.centerText("(or)"));
 			System.out.println(UIUXBusinessLogic.centerText("[x] Return to Stock Options"));
@@ -475,6 +475,7 @@ public class EmployeeSpecificBusinessLogic {
 	
 	public static void addNewProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
 		boolean isRunning = true;
+		DecimalFormat df = new DecimalFormat("#.00");
 		DuckieDAO duckieDao = new DuckieDAO();
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		StoreFrontsDAO storeDao = new StoreFrontsDAO();
@@ -516,11 +517,11 @@ public class EmployeeSpecificBusinessLogic {
 					if(i+1 < 10) {
 						System.out.println("[" + (i+1) + "]  " + 				
 								duckies.get(i).getName() 
-								+ " - $" + duckies.get(i).getPrice() + " - " + duckies.get(i).getQuality());
+								+ " - $" + df.format(duckies.get(i).getPrice()) + " - " + duckies.get(i).getQuality());
 					} else {
 						System.out.println("[" + (i+1) + "] " + 				
 								duckies.get(i).getName() 
-								+ " - $" + duckies.get(i).getPrice() + " - " + duckies.get(i).getQuality());
+								+ " - $" + df.format(duckies.get(i).getPrice()) + " - " + duckies.get(i).getQuality());
 					}
 
 				}
@@ -594,6 +595,7 @@ public class EmployeeSpecificBusinessLogic {
 	
 	public static void removeProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
 		boolean isRunning = true;
+		DecimalFormat df = new DecimalFormat("#.00");
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		StoreFrontsDAO storeDao = new StoreFrontsDAO();
 		ArrayList<LineItem> lineItems = storeFront.getLineItems();
@@ -617,11 +619,11 @@ public class EmployeeSpecificBusinessLogic {
 					if(i+1 < 10) {
 						System.out.println("[" + (i+1) + "]  " + 				
 								lineItems.get(i).getDuckie().getName() 
-								+ " - $" + lineItems.get(i).getDuckie().getPrice() + " - " + lineItems.get(i).getDuckie().getQuality());
+								+ " - $" + df.format(lineItems.get(i).getDuckie().getPrice()) + " - " + lineItems.get(i).getDuckie().getQuality());
 					} else {
 						System.out.println("[" + (i+1) + "] " + 				
 								lineItems.get(i).getDuckie().getName() 
-								+ " - $" + lineItems.get(i).getDuckie().getPrice() + " - " + lineItems.get(i).getDuckie().getQuality());
+								+ " - $" + df.format(lineItems.get(i).getDuckie().getPrice()) + " - " + lineItems.get(i).getDuckie().getQuality());
 					}
 				}
 				System.out.println(UIUXBusinessLogic.dashes());
@@ -664,9 +666,7 @@ public class EmployeeSpecificBusinessLogic {
 				} else {
 					BusinessLogic.inValidOption();
 				}
-				
 			}
-			
 		}
 	}
 	
@@ -676,63 +676,86 @@ public class EmployeeSpecificBusinessLogic {
 		ArrayList<Order> orders = orderDao.getAllByStorefrontId(storeFront);
 		Map<Duckie, Integer> duckieSales = new HashMap<>();
 		DecimalFormat df = new DecimalFormat("#.00");
+		boolean inLoop = true;
 		
-		for(Order order :  orders) {
-			for(LineItem lineItem : order.getLineItemArray()) {
-				if(!duckieSales.containsKey(lineItem.getDuckie())) {
-					duckieSales.put(lineItem.getDuckie(), lineItem.getQuantity());
-				} else {
-					duckieSales.put(lineItem.getDuckie(), duckieSales.get(lineItem.getDuckie()) + lineItem.getQuantity());				}
+		while(inLoop) {
+			for(Order order :  orders) {
+				for(LineItem lineItem : order.getLineItemArray()) {
+					if(!duckieSales.containsKey(lineItem.getDuckie())) {
+						duckieSales.put(lineItem.getDuckie(), lineItem.getQuantity());
+					} else {
+						duckieSales.put(lineItem.getDuckie(), duckieSales.get(lineItem.getDuckie()) + lineItem.getQuantity());				}
+				}
 			}
-
-		}
-		
-		System.out.println(UIUXBusinessLogic.createSpaceBanner(storeFront.getName().toUpperCase() + " PROFIT REPORTS"));
-
-		Duckie bestSellingDuckie = null;
-		double totalSales = 0;
-		int currentValue = 0;
-		 Iterator<Entry<Duckie, Integer> > new_Iterator
-         = duckieSales.entrySet().iterator();
-
-     // Iterating every set of entry in the HashMap
-	     while (new_Iterator.hasNext()) {
-	         Map.Entry<Duckie, Integer> new_Map
-	             = (Map.Entry<Duckie, Integer>)
-	                   new_Iterator.next();
+			
+			System.out.println(UIUXBusinessLogic.createSpaceBanner(storeFront.getName().toUpperCase() + " PROFIT REPORTS"));
 	
-	         // Displaying HashMap
-	         System.out.println(UIUXBusinessLogic.formatProfits(new_Map.getKey(), new_Map.getValue()));
-	         totalSales += new_Map.getKey().getPrice() * new_Map.getValue();
-	         if(new_Map.getValue() > currentValue) {
-	        	 currentValue = new_Map.getValue();
-	        	 bestSellingDuckie = new_Map.getKey();
-	         }
-	     }
+			Duckie bestSellingDuckie = null;
+			double totalSales = 0;
+			int currentValue = 0;
+			 Iterator<Entry<Duckie, Integer> > new_Iterator
+	         = duckieSales.entrySet().iterator();
+	
+	     // Iterating every set of entry in the HashMap
+		     while (new_Iterator.hasNext()) {
+		         Map.Entry<Duckie, Integer> new_Map
+		             = (Map.Entry<Duckie, Integer>)
+		                   new_Iterator.next();
+		
+		         // Displaying HashMap
+		         System.out.println(UIUXBusinessLogic.formatProfits(new_Map.getKey(), new_Map.getValue()));
+		         totalSales += new_Map.getKey().getPrice() * new_Map.getValue();
+		         if(new_Map.getValue() > currentValue) {
+		        	 currentValue = new_Map.getValue();
+		        	 bestSellingDuckie = new_Map.getKey();
+		         }
+		     }
+	
+		    System.out.println("\n" + UIUXBusinessLogic.centerText("Best Selling Product: " + bestSellingDuckie.getName()));
+			System.out.println(UIUXBusinessLogic.centerText( "Quantity Sold: " + currentValue + " - Total Product Revenue: $" + df.format(bestSellingDuckie.getPrice() * currentValue)));
+		    System.out.println(UIUXBusinessLogic.centerText("---------------------------"));
+			System.out.println(UIUXBusinessLogic.centerText("Total Sales: $" + df.format(totalSales)));
+			
+			System.out.println(UIUXBusinessLogic.dashes());
+			System.out.println("[x] Return to Menu Options");
+			System.out.println(UIUXBusinessLogic.dashes());
 
-	    System.out.println("\n" + UIUXBusinessLogic.centerText("Best Selling Product: " + bestSellingDuckie.getName()));
-		System.out.println(UIUXBusinessLogic.centerText( "Quantity Sold: " + currentValue + " - Total Product Revenue: " + df.format(bestSellingDuckie.getPrice() * currentValue)));
-	    System.out.println(UIUXBusinessLogic.centerText("---------------------------"));
-		System.out.println(UIUXBusinessLogic.centerText("Total Sales: $" + df.format(totalSales)));
+			if(scanner.nextLine().toLowerCase().equals("x")) {
+				inLoop = false;
+			}
+		}
+			
 	}
 	
 	
-	public static void printStoreFrontOrders(StoreFront storeFront) {
+	public static void printStoreFrontOrders(Scanner scanner, StoreFront storeFront) {
 		OrderDAO orderDao = new OrderDAO();
 		ArrayList<Order> orders = orderDao.getAllByStorefrontId(storeFront);
+		boolean inLoop = true;
 		if(orders.size() == 0) {
 			System.out.println(UIUXBusinessLogic.createSpaceBanner("No Previous orders to Display..."));
 		} else {
-			System.out.println(UIUXBusinessLogic.dashes());
-			System.out.println(UIUXBusinessLogic.centerText(storeFront.getName().toUpperCase() + " ORDER HISTORY"));
-			System.out.println(UIUXBusinessLogic.centerText("---------------"));
-			for(int i=0; i<orders.size(); i++) {
-				UIUXBusinessLogic.formatOrder(orders.get(i));
-				if(orders.get(i) != orders.get(orders.size()-1)) {
-					System.out.println(" ");
+			while(inLoop) {
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println(UIUXBusinessLogic.centerText(storeFront.getName().toUpperCase() + " ORDER HISTORY"));
+				System.out.println(UIUXBusinessLogic.centerText("---------------"));
+				for(int i=0; i<orders.size(); i++) {
+					UIUXBusinessLogic.formatOrder(orders.get(i));
+					if(orders.get(i) != orders.get(orders.size()-1)) {
+						System.out.println(" ");
+					}
+				}
+				System.out.println(UIUXBusinessLogic.dashes());
+				
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println("[x] Return to Menu Options");
+				System.out.println(UIUXBusinessLogic.dashes());
+
+				if(scanner.nextLine().toLowerCase().equals("x")) {
+					inLoop = false;
 				}
 			}
-			System.out.println(UIUXBusinessLogic.dashes());
+				
 		}
 	}
 

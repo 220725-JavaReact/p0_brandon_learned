@@ -94,7 +94,7 @@ public class DuckieDAO implements DAO<Duckie>{
 	@Override
 	public Duckie getByName(String name) {
 		try(Connection connection = ConnectionFactory.getInstance().getConnection()){
-			String query = "select * from products where username = ?";
+			String query = "select * from products where product_name = ?";
 			PreparedStatement pstmt = connection.prepareStatement(query); //conevert to prepared statement
 			pstmt.setString(1, name);
 			ResultSet rs = pstmt.executeQuery();

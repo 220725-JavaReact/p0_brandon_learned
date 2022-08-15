@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class Duckie {
@@ -89,7 +90,8 @@ public class Duckie {
 
 	@Override
 	public String toString() {
-		return "Duckie Name: " + name + "\nDuckie Price: $" + price + 
+		DecimalFormat df = new DecimalFormat("#.00");
+		return "Duckie Name: " + name + "\nDuckie Price: $" + df.format(price) + 
 				"\nDescription: " + description + "\nDuckiness: " + quality;
 	}
 	

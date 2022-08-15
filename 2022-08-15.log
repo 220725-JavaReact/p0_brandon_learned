@@ -1,0 +1,148 @@
+info	
+User: blearned92 logged into account
+2022-08-15T07:54:35.738273900
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T07:55:05.613156
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T07:55:09.363913300
+---------------------------------
+info	
+Admin User user Created New Product: Duckie Name: Giant Duck
+Duckie Price: $99.9
+Description: Giant Duck
+Duckiness: Giant
+2022-08-15T07:56:45.430592
+---------------------------------
+info	
+Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 10
+2022-08-15T07:57:06.959592700
+---------------------------------
+info	
+Admin User: user logged out of account
+2022-08-15T07:57:12.757520200
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T07:57:18.701361100
+---------------------------------
+info	
+Order: 
+1 x Giant Duck
+StoreAddress: Good Duckin' Duckies
+TotalPriceOfItems: 99.9
+purchased by customer: blearned92
+2022-08-15T07:59:26.783048500
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T07:59:46.666696300
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T07:59:51.029403100
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T08:14:43.585308700
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T08:18:04.800836100
+---------------------------------
+info	
+Order: 
+1 x Giant Duck
+StoreAddress: Good Duckin' Duckies
+TotalPriceOfItems: 99.9
+purchased by customer: blearned92
+2022-08-15T08:18:46.170274400
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T08:18:57.248037400
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T08:19:02.254471400
+---------------------------------
+info	
+Admin User: user increased the stock of Giant Duck by 1 for storefront Good Duckin' Duckies
+2022-08-15T08:19:21.276118800
+---------------------------------
+info	
+Admin User: user increased the stock of Giant Duck by 10 for storefront Good Duckin' Duckies
+2022-08-15T08:19:31.980245
+---------------------------------
+info	
+Admin User: user increased the stock of Giant Duck by 1 for storefront Good Duckin' Duckies
+2022-08-15T08:20:35.700861300
+---------------------------------
+info	
+Admin User: user removed product Giant Duck from storefront Good Duckin' Duckies
+2022-08-15T08:21:06.473198200
+---------------------------------
+info	
+Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 1
+2022-08-15T08:23:42.838734500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T08:25:03.846759800
+---------------------------------
+info	
+Admin User: user removed product Giant Duck from storefront Good Duckin' Duckies
+2022-08-15T08:25:17.401447800
+---------------------------------
+info	
+Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 1
+2022-08-15T08:25:28.478002
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T08:27:42.559733
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T08:28:09.005699500
+---------------------------------
+info	
+Admin User user Created New Product: Duckie Name: DuckDuckGoose
+Duckie Price: $.10
+Description: YAAAAAS
+Duckiness: Like Old
+2022-08-15T08:29:10.295814100
+---------------------------------
+info	
+User: blearned92 logged into account
+2022-08-15T08:31:09.214209400
+---------------------------------
+info	
+User: blearned92 logged out of account
+2022-08-15T08:31:12.397040900
+---------------------------------
+info	
+New User Created: Name: B B
+Username: username
+Password: password
+Email: e@e.com
+2022-08-15T09:03:44.906077200
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T09:04:44.064435500
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T09:05:54.412822900
+---------------------------------
+info	
+Admin User user Created New Product: Duckie Name: Duckie
+Duckie Price: $1.11
+Description: Duckie
+Duckiness: Duckie
+2022-08-15T09:06:19.452955900
+---------------------------------

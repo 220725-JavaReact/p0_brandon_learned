@@ -21,6 +21,7 @@ public class CreateAccount {
 		String username = "";
 		String password = "";
 		String email = "";
+		String reply = "";
 		
 		while(isRunning) {
 			
@@ -56,35 +57,37 @@ public class CreateAccount {
 				email = BusinessLogic.verifyEmail(attemptEmail);
 			}
 			
-			System.out.println("\nName: " + firstName + " " + lastName 
-					+"\nUsername: " + username
-					+"\nPassword: " + password 
-					+"\nEmail: " + email
-					+"\nDoes this look correct to you? \n[Y/N]"
-					+ "\n" + UIUXBusinessLogic.dashes());
-			
-			switch (scanner.nextLine()) {
-			case "Y":	
-			case "y":
-				isRunning = false;
-				break;
-			case "N":
-			case "n":
-				firstName = "";
-				lastName = "";
-				username = "";
-				password = "";
-				email = "";
-			default:
-				break;
+			while(reply.equals("")) {
+				System.out.println("\nName: " + firstName + " " + lastName 
+						+"\nUsername: " + username
+						+"\nPassword: " + password 
+						+"\nEmail: " + email
+						+"\nDoes this look correct to you? \n[Y/N]"
+						+ "\n" + UIUXBusinessLogic.dashes());
+				reply = scanner.nextLine();
+				switch (reply) {
+				case "Y":	
+				case "y":
+					Customer customer = new Customer(firstName, lastName, username, password, email);
+					customerDao.addInstance(customer);
+					System.out.println(UIUXBusinessLogic.createSpaceBanner("User " + customer.getUsername() + " successfully created!"));
+					Logger.getLogger().log(LogLevel.info, "\nNew User Created: " + customer.toString() + "\n");
+					isRunning = false;
+					break;
+				case "N":
+				case "n":
+					isRunning = false;
+					break;
+				default:
+					reply = "";
+					break;
+				}
 			}
+				
 		}
 		
 		//this should be altered for when database is implemented
-		Customer customer = new Customer(firstName, lastName, username, password, email);
-		customerDao.addInstance(customer);
-		System.out.println(UIUXBusinessLogic.createSpaceBanner("User " + customer.getUsername() + " successfully created!"));
-		Logger.getLogger().log(LogLevel.info, "\nNew User Created: " + customer.toString() + "\n");
+		
 		
 		//login as customer
 		
