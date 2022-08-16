@@ -66,10 +66,20 @@ public class EmployeeStoreMenu {
 					inLoop = true;
 					break;
 				case "3":
-					EmployeeSpecificBusinessLogic.addNewProducts(scanner, employee, storeFront);
+					while(inLoop) {
+						if(EmployeeSpecificBusinessLogic.addNewProducts(scanner, employee, storeFront) == false) {
+							inLoop = false;
+						}
+					}
+					inLoop = true;
 					break;
 				case "4":
-					EmployeeSpecificBusinessLogic.removeProducts(scanner, employee, storeFront);
+					while(inLoop) {
+						if(EmployeeSpecificBusinessLogic.removeProducts(scanner, employee, storeFront) == false) {
+							inLoop = false;
+						}
+					}
+					inLoop = true;
 					break;
 				case "5":
 					ArrayList<Order> orders = orderDao.getAllByStorefrontId(storeFront);

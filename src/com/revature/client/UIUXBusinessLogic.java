@@ -146,6 +146,27 @@ public class UIUXBusinessLogic {
 		return sb.toString();
 	}
 	
+	public static String formatProductsWithIndexAndCost(int i, Duckie duckie) {
+		StringBuilder sb = new StringBuilder();
+		
+		if(i+1 < 10) {
+			sb.append("[" + (i+1) + "]  " + duckie.getName());
+			while(sb.toString().length() < 82 - ("Price: $" + duckie.getPrice()).length()) {
+				sb.append(".");
+			}	
+			sb.append(("Price: $" + duckie.getPrice()));
+		} else {
+			sb.append("[" + (i+1) + "] " + duckie.getName());
+			while(sb.toString().length() < 82 - ("Price: $" + duckie.getPrice()).length()) {
+				sb.append(".");
+			}	
+			sb.append(("Price: $" + duckie.getPrice()));
+		}
+		
+		
+		return sb.toString();
+	}
+	
 	public static String formatCartProductsWithIndex(int i, Duckie duckie, int quantity) {
 		StringBuilder sb = new StringBuilder();
 

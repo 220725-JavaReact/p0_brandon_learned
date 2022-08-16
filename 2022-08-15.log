@@ -1,289 +1,193 @@
+
 info	
-User: blearned92 logged into account
-2022-08-15T07:54:35.738273900
----------------------------------
-info	
-User: blearned92 logged out of account
-2022-08-15T07:55:05.613156
+Admin User: user logged into account
+2022-08-15T14:16:44.664339400
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T07:55:09.363913300
----------------------------------
-info	
-Admin User user Created New Product: Duckie Name: Giant Duck
-Duckie Price: $99.9
-Description: Giant Duck
-Duckiness: Giant
-2022-08-15T07:56:45.430592
----------------------------------
-info	
-Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 10
-2022-08-15T07:57:06.959592700
----------------------------------
-info	
-Admin User: user logged out of account
-2022-08-15T07:57:12.757520200
----------------------------------
-info	
-User: blearned92 logged into account
-2022-08-15T07:57:18.701361100
----------------------------------
-info	
-Order: 
-1 x Giant Duck
-StoreAddress: Good Duckin' Duckies
-TotalPriceOfItems: 99.9
-purchased by customer: blearned92
-2022-08-15T07:59:26.783048500
----------------------------------
-info	
-User: blearned92 logged out of account
-2022-08-15T07:59:46.666696300
+2022-08-15T14:20:01.830315900
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T07:59:51.029403100
----------------------------------
-info	
-User: blearned92 logged into account
-2022-08-15T08:14:43.585308700
----------------------------------
-info	
-User: blearned92 logged into account
-2022-08-15T08:18:04.800836100
----------------------------------
-info	
-Order: 
-1 x Giant Duck
-StoreAddress: Good Duckin' Duckies
-TotalPriceOfItems: 99.9
-purchased by customer: blearned92
-2022-08-15T08:18:46.170274400
----------------------------------
-info	
-User: blearned92 logged out of account
-2022-08-15T08:18:57.248037400
+2022-08-15T14:23:50.647970800
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T08:19:02.254471400
----------------------------------
-info	
-Admin User: user increased the stock of Giant Duck by 1 for storefront Good Duckin' Duckies
-2022-08-15T08:19:21.276118800
----------------------------------
-info	
-Admin User: user increased the stock of Giant Duck by 10 for storefront Good Duckin' Duckies
-2022-08-15T08:19:31.980245
----------------------------------
-info	
-Admin User: user increased the stock of Giant Duck by 1 for storefront Good Duckin' Duckies
-2022-08-15T08:20:35.700861300
----------------------------------
-info	
-Admin User: user removed product Giant Duck from storefront Good Duckin' Duckies
-2022-08-15T08:21:06.473198200
----------------------------------
-info	
-Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 1
-2022-08-15T08:23:42.838734500
+2022-08-15T14:25:45.930955
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T08:25:03.846759800
+2022-08-15T14:50:38.233340300
 ---------------------------------
 info	
-Admin User: user removed product Giant Duck from storefront Good Duckin' Duckies
-2022-08-15T08:25:17.401447800
----------------------------------
-info	
-Admin User: user added product Giant Duck to storefront Good Duckin' Duckies with a stock of 1
-2022-08-15T08:25:28.478002
+Admin User: user added product Golduckie to storefront Duckie Dynasty with a stock of 100
+2022-08-15T14:51:05.219692500
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T08:27:42.559733
+2022-08-15T14:51:59.357738900
+---------------------------------
+info	
+Admin User: user added product Daffy Duckie to storefront Duckie Town USA with a stock of 73
+2022-08-15T14:52:18.441762700
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T08:28:09.005699500
----------------------------------
-info	
-Admin User user Created New Product: Duckie Name: DuckDuckGoose
-Duckie Price: $.10
-Description: YAAAAAS
-Duckiness: Like Old
-2022-08-15T08:29:10.295814100
----------------------------------
-info	
-User: blearned92 logged into account
-2022-08-15T08:31:09.214209400
----------------------------------
-info	
-User: blearned92 logged out of account
-2022-08-15T08:31:12.397040900
----------------------------------
-info	
-New User Created: Name: B B
-Username: username
-Password: password
-Email: e@e.com
-2022-08-15T09:03:44.906077200
+2022-08-15T14:52:38.835492700
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T09:04:44.064435500
+2022-08-15T14:57:31.682260
+---------------------------------
+info	
+Admin User: user added product Duckie Lasek to storefront Duckie Town USA with a stock of 1
+2022-08-15T14:58:00.741822800
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T09:05:54.412822900
----------------------------------
-info	
-Admin User user Created New Product: Duckie Name: Duckie
-Duckie Price: $1.11
-Description: Duckie
-Duckiness: Duckie
-2022-08-15T09:06:19.452955900
+2022-08-15T14:59:07.885423300
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T11:46:03.662415300
+2022-08-15T15:00:04.266399500
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T11:49:46.123661600
+2022-08-15T15:01:54.461541100
+---------------------------------
+info	
+Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 1
+2022-08-15T15:02:07.953561800
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T11:51:29.377856800
+2022-08-15T15:03:15.808510
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:32:24.959091500
+2022-08-15T15:05:38.966704600
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:34:54.210230100
----------------------------------
-info	
-Admin User user Created New StoreFront: StoreFront [name=Duckies ''R'' Us, address=1234 Dillan Street, Gogotown, CO, 12345, orderList=[]]
-2022-08-15T13:35:40.731262700
+2022-08-15T15:06:58.822974300
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:37:27.438940900
----------------------------------
-info	
-Admin User user Created New StoreFront: StoreFront [name=Duckies 'R' Us, address=Duckduckgo, City, ST, 12345, orderList=[]]
-2022-08-15T13:37:48.457414
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-15T13:38:57.212655500
----------------------------------
-info	
-Admin User prowler4 Created New StoreFront: StoreFront [name=Duckies 'R' Us, address=123 Duck Street, Duckington, DN, 12345, orderList=[]]
-2022-08-15T13:40:14.029991
----------------------------------
-info	
-Admin User: prowler4 added product Rubber Duckie to storefront Duckies 'R' Us with a stock of 50
-2022-08-15T13:41:20.950376100
----------------------------------
-info	
-Admin User: prowler4 added product Alien Rubber Duckie to storefront Duckies 'R' Us with a stock of 50
-2022-08-15T13:41:29.459200200
+2022-08-15T15:08:04.358016400
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:45:27.549567800
+2022-08-15T15:10:52.379916800
+---------------------------------
+info	
+Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 1
+2022-08-15T15:11:04.630390200
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:46:12.204487500
+2022-08-15T15:12:08.044463500
+---------------------------------
+info	
+Admin User: user added product Donald Duckie to storefront Duckie Town USA with a stock of 3
+2022-08-15T15:12:36.345239300
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:46:50.228550900
+2022-08-15T15:13:05.066498200
 ---------------------------------
 info	
-Admin User: user increased the stock of Rubber Duckie by 1 for storefront Duckies 'R' Us
-2022-08-15T13:47:24.487246500
+Admin User: user added product [LIMITED EDITION] Black Mage Donald Duckie to storefront Duckie Town USA with a stock of 50
+2022-08-15T15:13:24.320521300
 ---------------------------------
 info	
-Admin User: user logged out of account
-2022-08-15T13:47:42.798258700
+Admin User: user removed product [LIMITED EDITION] Black Mage Donald Duckie from storefront Duckie Town USA
+2022-08-15T15:13:35.881878400
 ---------------------------------
 info	
-User: blearned92 logged into account
-2022-08-15T13:48:15.063841900
+Admin User: user removed product Rubber Duckie from storefront Duckie Town USA
+2022-08-15T15:13:43.307089
 ---------------------------------
 info	
-Order: 
-9 x Rubber Duckie
-StoreAddress: Duckies 'R' Us
-TotalPriceOfItems: 26.910000000000004
-purchased by customer: blearned92
-2022-08-15T13:49:03.043488
+Admin User: user removed product Rubber Duckie from storefront Duckie Town USA
+2022-08-15T15:13:57.152005200
 ---------------------------------
 info	
-User: blearned92 logged out of account
-2022-08-15T13:49:14.732566200
+Admin User: user removed product Rubber Duckie from storefront Duckie Town USA
+2022-08-15T15:14:01.503342400
 ---------------------------------
 info	
-Admin User: user logged into account
-2022-08-15T13:49:19.686870500
+Admin User: user removed product Daffy Duckie from storefront Duckie Town USA
+2022-08-15T15:14:06.424736500
 ---------------------------------
 info	
-Admin User: user logged into account
-2022-08-15T13:50:01.570695700
+Admin User: user removed product Donald Duckie from storefront Duckie Town USA
+2022-08-15T15:14:11.834597300
 ---------------------------------
 info	
-Admin User user Created New StoreFront: StoreFront [name=Duckie Town USA, address=1234 Quack Street, Ducktown, CO, 12345, orderList=[]]
-2022-08-15T13:50:43.212997900
+Admin User: user removed product Howard the Duckie from storefront Duckie Town USA
+2022-08-15T15:14:21.748683600
 ---------------------------------
 info	
-Admin User user Created New Product: Duckie Name: GIANT DUCKIE
-Duckie Price: $99.90
-Description: THIS IS A REEEEAAAAALLY BIG DUCKIE
-Duckiness: SUPER  BIG
-2022-08-15T13:51:20.327977
----------------------------------
-info	
-Admin User: user added product GIANT DUCKIE to storefront Duckie Town USA with a stock of 5
-2022-08-15T13:51:43.485338
----------------------------------
-info	
-Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 100
-2022-08-15T13:51:55.177513700
----------------------------------
-info	
-Admin User: user added product Howard the Duckie to storefront Duckie Town USA with a stock of 40
-2022-08-15T13:52:06.639332800
----------------------------------
-info	
-Admin User: user logged out of account
-2022-08-15T13:52:26.915676600
----------------------------------
-info	
-User: blearned92 logged into account
-2022-08-15T13:52:40.725592900
----------------------------------
-info	
-Order: 
-1 x Rubber Duckie
-1 x Howard the Duckie
-1 x GIANT DUCKIE
-StoreAddress: Duckie Town USA
-TotalPriceOfItems: 129.88
-purchased by customer: blearned92
-2022-08-15T13:53:30.888306300
----------------------------------
-info	
-User: blearned92 logged out of account
-2022-08-15T13:53:41.457051700
+Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 50
+2022-08-15T15:15:00.195990400
 ---------------------------------
 info	
 Admin User: user logged into account
-2022-08-15T13:53:45.477307
+2022-08-15T15:17:56.712023
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T15:22:40.999606600
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T15:23:26.908024200
+---------------------------------
+info	
+Admin User: user added product Psyduckie to storefront Duckie Town USA with a stock of 100
+2022-08-15T15:23:58.577438600
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T15:25:32.100035200
+---------------------------------
+info	
+Admin User: user added product Rubber Duckie to storefront Good Duckin' Duckies with a stock of 1
+2022-08-15T15:25:52.167415600
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T15:29:44.808985100
+---------------------------------
+info	
+Admin User: user added product Rubber Duckie to storefront Duckie Town USA with a stock of 1
+2022-08-15T15:29:59.345954900
+---------------------------------
+info	
+Admin User: user logged into account
+2022-08-15T15:30:59.709140900
+---------------------------------
+info	
+Admin User: user added product Red Rubber Duckie to storefront Duckies 'R' Us with a stock of 1
+2022-08-15T15:31:19.235618200
+---------------------------------
+info	
+Admin User: user added product Daffy Duckie to storefront Duckies 'R' Us with a stock of 3
+2022-08-15T15:31:41.536390200
+---------------------------------
+info	
+Admin User: user removed product Red Rubber Duckie from storefront Duckies 'R' Us
+2022-08-15T15:31:54.810312200
+---------------------------------
+info	
+Admin User: user added product Red Rubber Duckie to storefront Duckies 'R' Us with a stock of 1
+2022-08-15T15:32:13.577387300
+---------------------------------
+info	
+Admin User: user added product [LIMITED EDITION] Black Mage Donald Duckie to storefront Duckies 'R' Us with a stock of 100
+2022-08-15T15:32:53.293697100
+---------------------------------
+info	
+Admin User: user removed product [LIMITED EDITION] Black Mage Donald Duckie from storefront Duckies 'R' Us
+2022-08-15T15:33:17.218110200
 ---------------------------------

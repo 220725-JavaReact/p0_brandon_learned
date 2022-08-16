@@ -473,16 +473,23 @@ public class EmployeeSpecificBusinessLogic {
 		}		
 	}
 	
-	public static void addNewProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
+	public static boolean addNewProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
 		boolean isRunning = true;
 		DecimalFormat df = new DecimalFormat("#.00");
 		DuckieDAO duckieDao = new DuckieDAO();
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		StoreFrontsDAO storeDao = new StoreFrontsDAO();
+		
 		ArrayList<Duckie> storeDuckies = duckieDao.getAllByStoreId(storeFront);
-		ArrayList<Duckie> allDuckies = duckieDao.getAll();
+		ArrayList<Duckie> allDuckies = duckieDao.getAll();	
 		ArrayList<Duckie> duckies = new ArrayList<>();
 		
+		String reply = "";
+		String reply2 = "";
+		int currentList = 0;
+		ArrayList<Duckie> newDuckies = new ArrayList<>();
+		LinkedList<ArrayList<Duckie>> duckieLists = new LinkedList<>();
+
 		boolean duckieFound = false;
 		for(Duckie allDuckie : allDuckies) {
 			for(Duckie storeDuckie : storeDuckies) {
@@ -496,6 +503,17 @@ public class EmployeeSpecificBusinessLogic {
 				duckieFound = false;
 			}
 		}
+		
+		for(int i = 0; i<duckies.size(); i++) {
+			if(newDuckies.size() < 10) {
+				newDuckies.add(duckies.get(i));
+			} else {
+				duckieLists.add(newDuckies);
+				newDuckies = new ArrayList<>();
+				newDuckies.add(duckies.get(i));	
+			}
+		} 
+		duckieLists.add(newDuckies);
 	
 		if(allDuckies.size() == storeDuckies.size()) {
 			System.out.println(UIUXBusinessLogic.dashes());
@@ -510,144 +528,216 @@ public class EmployeeSpecificBusinessLogic {
 		
 		while(isRunning) {
 			
-			int response = 0;
-			while(response == 0) {
-				System.out.println(UIUXBusinessLogic.createSpaceBanner("Please choose a Duckie to add to the " + storeFront.getName() + " Product Catalog"));
-				for(int i = 0; i<duckies.size(); i++) {
-					if(i+1 < 10) {
-						System.out.println("[" + (i+1) + "]  " + 				
-								duckies.get(i).getName() 
-								+ " - $" + df.format(duckies.get(i).getPrice()) + " - " + duckies.get(i).getQuality());
-					} else {
-						System.out.println("[" + (i+1) + "] " + 				
-								duckies.get(i).getName() 
-								+ " - $" + df.format(duckies.get(i).getPrice()) + " - " + duckies.get(i).getQuality());
-					}
-
+			ArrayList<Duckie> currentItems = duckieLists.get(currentList);
+			System.out.println(UIUXBusinessLogic.createBanner("Please choose a Duckie to add to the " + storeFront.getName() + " Product Catalog"));
+			while(reply.equals("")) {
+				if(duckieLists.size() > 1 && (currentList != 0) && currentList != duckieLists.size()-1) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "[e] Next ->");
+				} else if (duckieLists.size() > 1 && (currentList == 0)) {
+					UIUXBusinessLogic.centerTwoString("           ", "[e] Next ->");
+				} else if (duckieLists.size() > 1 && (currentList == duckieLists.size()-1)) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "           ");
 				}
 				System.out.println(UIUXBusinessLogic.dashes());
+				for(int i = 0; i<currentItems.size(); i++) {
+					System.out.println(UIUXBusinessLogic.formatProductsWithIndexAndCost(i, currentItems.get(i)));
+				}				
 
-				try {
-					response = scanner.nextInt();
-					if(response < 1 || response > duckies.size()) {
-						BusinessLogic.inValidOption();
-						scanner.nextLine();
-						response = 0;
-					} else {
-						duckie = duckies.get(response-1);
-						scanner.nextLine();
+				if(currentItems.size()<10) {
+					int temp = currentItems.size();
+					while(temp<10) {
+						System.out.println(" ");
+						temp++;
 					}
-				} catch (Exception e) {
-					BusinessLogic.inValidOption();
-					scanner.nextLine();
-					response = 0;
-				}		
+				}
+				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println(UIUXBusinessLogic.centerText("[x] return to menu"));
+				System.out.println(UIUXBusinessLogic.dashes());
+
+				reply = scanner.nextLine();
+				
+				if(BusinessLogic.isInt(reply)) {
+					for(int i = 0; i<currentItems.size(); i++) {
+						if(BusinessLogic.convertToInt(reply)-1 == i) {
+							duckie = currentItems.get(i);
+							while(quantity == 0) {
+								System.out.println(UIUXBusinessLogic.dashes());
+								System.out.println(UIUXBusinessLogic.centerText("How many " + duckie.getName() + "s would you like to add to"));	
+								System.out.println(UIUXBusinessLogic.centerText("the " + storeFront.getName() + " Product Catalog?(Input a number - MAX: 100)"));
+								System.out.println(UIUXBusinessLogic.dashes());
+								try {
+									quantity = scanner.nextInt();
+									if((quantity < 1) || (quantity > 100)) {
+										BusinessLogic.inValidOption();
+										scanner.nextLine();
+										quantity = 0;
+									} else {
+										duckie = currentItems.get(BusinessLogic.convertToInt(reply)-1);
+										scanner.nextLine();
+									}
+								} catch (Exception e) {
+									BusinessLogic.inValidOption();
+									scanner.nextLine();
+									quantity = 0;
+								}		
+							}
+							
+							while(isRunning) {
+								
+								System.out.println(UIUXBusinessLogic.createSpaceBanner("Add " + quantity + " " + duckie.getName() + "(s) to " + storeFront.getName() + " product catalog?[Y/N]"));
+								reply2 = scanner.nextLine();
+								if(reply2.toLowerCase().equals("y")) {
+									storeItemDao.addInstance(storeFront, new LineItem(duckie, quantity));
+									Logger.getLogger().log(LogLevel.info, "\nAdmin User: " + employee.getUsername() + ""
+											+ " added product " + duckie.getName() + " to storefront " + storeFront.getName() + ""
+													+ " with a stock of " + quantity + "\n");
+									System.out.println(UIUXBusinessLogic.dashes());
+									System.out.println(UIUXBusinessLogic.centerText(duckie.getName() + " was successfully added"));	
+									System.out.println(UIUXBusinessLogic.centerText("to " + storeFront.getName() + "'s Product Catalog!"));
+									System.out.println(UIUXBusinessLogic.dashes());
+									storeDao.initializeAllDuckies(storeFront);
+									return true;
+								} else if(reply2.toLowerCase().equals("n")) {
+									System.out.println(UIUXBusinessLogic.dashes());
+									System.out.println(UIUXBusinessLogic.centerText(duckie.getName() + " was not added to " + storeFront.getName() + "'s Product Catalog!"));	
+									System.out.println(UIUXBusinessLogic.dashes());
+									return true;
+								} else {
+									BusinessLogic.inValidOption();
+								}
+							}	
+						}
+					}
+				} else {
+					if(reply.toLowerCase().equals("x")) {
+						return false;
+					} else if (reply.toLowerCase().equals("q")){
+						if(currentList == 0) {
+							break;
+						} else {
+							currentList -= 1;
+							break;
+						}
+					} else if (reply.toLowerCase().equals("e")){
+						if(currentList == duckieLists.size()-1) {
+							break;
+						} else {
+							currentList += 1;
+							break;
+						}
+					} else {
+						BusinessLogic.inValidOption();
+						reply = "";
+						break;
+					}	
+				}
 			}
-			while(quantity == 0) {
-				System.out.println(UIUXBusinessLogic.dashes());
-				System.out.println(UIUXBusinessLogic.centerText("How many " + duckie.getName() + "s would you like to add to"));	
-				System.out.println(UIUXBusinessLogic.centerText("the " + storeFront.getName() + " Product Catalog?(Input a number - MAX: 100)"));
-				System.out.println(UIUXBusinessLogic.dashes());
-				try {
-					quantity = scanner.nextInt();
-					if((quantity < 1) || (quantity > 100)) {
-						BusinessLogic.inValidOption();
-						scanner.nextLine();
-						quantity = 0;
-					} else {
-						duckie = duckies.get(response-1);
-						scanner.nextLine();
-					}
-				} catch (Exception e) {
-					BusinessLogic.inValidOption();
-					scanner.nextLine();
-					quantity = 0;
-				}		
+			if(isRunning) {
+				reply = "";
 			}
 			
-			while(isRunning) {
-				
-				System.out.println(UIUXBusinessLogic.createSpaceBanner("Add " + quantity + " " + duckie.getName() + "(s) to " + storeFront.getName() + " product catalog?[Y/N]"));
-				String reply = scanner.nextLine();
-				if(reply.toLowerCase().equals("y")) {
-					storeItemDao.addInstance(storeFront, new LineItem(duckie, quantity));
-					Logger.getLogger().log(LogLevel.info, "\nAdmin User: " + employee.getUsername() + ""
-							+ " added product " + duckie.getName() + " to storefront " + storeFront.getName() + ""
-									+ " with a stock of " + quantity + "\n");
-					System.out.println(UIUXBusinessLogic.dashes());
-					System.out.println(UIUXBusinessLogic.centerText(duckie.getName() + " was successfully added"));	
-					System.out.println(UIUXBusinessLogic.centerText("to " + storeFront.getName() + "'s Product Catalog!"));
-					System.out.println(UIUXBusinessLogic.dashes());
-					storeDao.initializeAllDuckies(storeFront);
-					isRunning = false;
-				} else if(reply.toLowerCase().equals("n")) {
-					System.out.println(UIUXBusinessLogic.dashes());
-					System.out.println(UIUXBusinessLogic.centerText(duckie.getName() + " was not added to " + storeFront.getName() + "'s Product Catalog!"));	
-					System.out.println(UIUXBusinessLogic.dashes());
-					isRunning = false;
-					break;
-				} else {
-					BusinessLogic.inValidOption();
-				}
-			}	
 		}
+		return false;
 	}
 	
-	public static void removeProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
+	public static boolean removeProducts(Scanner scanner, Employee employee, StoreFront storeFront) {
 		boolean isRunning = true;
 		DecimalFormat df = new DecimalFormat("#.00");
 		StoreItemDAO storeItemDao = new StoreItemDAO();
 		StoreFrontsDAO storeDao = new StoreFrontsDAO();
 		ArrayList<LineItem> lineItems = storeFront.getLineItems();
 		Duckie duckie = null;
+		int currentList = 0;
+		String reply = "";
+		ArrayList<LineItem> newItems = new ArrayList<>();
+		LinkedList<ArrayList<LineItem>> linkedList = new LinkedList<>();
+		//make rotation, make return boolean to decide if it keeps running
 		
 		if(lineItems.size() == 0) {
 			System.out.println(UIUXBusinessLogic.dashes());
 			System.out.println(UIUXBusinessLogic.centerText(storeFront.getName() + " does not currently contain any available Duckies."));	
 			System.out.println(UIUXBusinessLogic.centerText("You can not remove products at this time."));
 			System.out.println(UIUXBusinessLogic.dashes());
-			isRunning = false;
+			return false;
 		}
 		
+		for(int i = 0; i<lineItems.size(); i++) {
+			if(newItems.size() < 10) {
+				newItems.add(lineItems.get(i));
+			} else {
+				linkedList.add(newItems);
+				newItems = new ArrayList<>();
+				newItems.add(lineItems.get(i));	
+			}
+		} 
+		linkedList.add(newItems);
 		
 		while(isRunning) {	
+			lineItems = linkedList.get(currentList);
 			int response = 0;
 			while(response == 0) {
 				System.out.println(UIUXBusinessLogic.createSpaceBanner("Please choose a Duckie to remove from the " + storeFront.getName() + " Product Catalog"));
-
+				if(linkedList.size() > 1 && (currentList != 0) && currentList != linkedList.size()-1) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "[e] Next ->");
+				} else if (linkedList.size() > 1 && (currentList == 0)) {
+					UIUXBusinessLogic.centerTwoString("           ", "[e] Next ->");
+				} else if (linkedList.size() > 1 && (currentList == linkedList.size()-1)) {
+					UIUXBusinessLogic.centerTwoString("<- Last [q]", "           ");
+				}
 				for(int i = 0; i<lineItems.size(); i++) {
-					if(i+1 < 10) {
-						System.out.println("[" + (i+1) + "]  " + 				
-								lineItems.get(i).getDuckie().getName() 
-								+ " - $" + df.format(lineItems.get(i).getDuckie().getPrice()) + " - " + lineItems.get(i).getDuckie().getQuality());
-					} else {
-						System.out.println("[" + (i+1) + "] " + 				
-								lineItems.get(i).getDuckie().getName() 
-								+ " - $" + df.format(lineItems.get(i).getDuckie().getPrice()) + " - " + lineItems.get(i).getDuckie().getQuality());
+					System.out.println(UIUXBusinessLogic.formatProductsWithIndexAndCost(i, lineItems.get(i).getDuckie()));
+				}
+				if(lineItems.size()<10) {
+					int temp = lineItems.size();
+					while(temp<10) {
+						System.out.println(" ");
+						temp++;
 					}
 				}
 				System.out.println(UIUXBusinessLogic.dashes());
+				System.out.println(UIUXBusinessLogic.centerText("[x] return to menu"));
+				System.out.println(UIUXBusinessLogic.dashes());
 
-				try {
-					response = scanner.nextInt();
-					if(response < 1 || response > lineItems.size()) {
+				reply = scanner.nextLine();
+				if(BusinessLogic.isInt(reply)) {
+					if(BusinessLogic.convertToInt(reply) > lineItems.size() || BusinessLogic.convertToInt(reply) < 1) {
 						BusinessLogic.inValidOption();
-						scanner.nextLine();
-						response = 0;
-					} else {
-						duckie = lineItems.get(response-1).getDuckie();
-						scanner.nextLine();
 					}
-				} catch (Exception e) {
-					BusinessLogic.inValidOption();
-					scanner.nextLine();
-					response = 0;
+					for(int i = 0; i<lineItems.size(); i++) {
+						if(BusinessLogic.convertToInt(reply)-1 == i) {
+							duckie = lineItems.get(i).getDuckie();
+							response = BusinessLogic.convertToInt(reply);
+							break;
+						}					
+					}	
+				} else {
+					if(reply.toLowerCase().equals("x")) {
+						return false;
+					} else if (reply.toLowerCase().equals("q")){
+						if(currentList == 0) {
+							break;
+						} else {
+							currentList -= 1;
+							break;
+						}
+					} else if (reply.toLowerCase().equals("e")){
+						if(currentList == linkedList.size()-1) {
+							break;
+						} else {
+							currentList += 1;
+							break;
+						}
+					} else {
+						BusinessLogic.inValidOption();
+						reply = "";
+						break;
+					}
 				}		
 			}
 			
-			while(isRunning) {
+			while(isRunning && duckie != null) {
 				System.out.println(UIUXBusinessLogic.createSpaceBanner("Remove " + duckie.getName() + " from " + storeFront.getName() + " product catalog?[Y/N]"));
-				String reply = scanner.nextLine();
+				reply = scanner.nextLine();
 				if(reply.toLowerCase().equals("y")) {
 					storeItemDao.deleteInstance(duckie, storeFront);
 					Logger.getLogger().log(LogLevel.info, "\nAdmin User: " + employee.getUsername() + ""
@@ -657,17 +747,18 @@ public class EmployeeSpecificBusinessLogic {
 					System.out.println(UIUXBusinessLogic.centerText("from the " + storeFront.getName() + "'s Product Line!"));
 					System.out.println(UIUXBusinessLogic.dashes());
 					storeDao.initializeAllDuckies(storeFront);
-					isRunning = false;
+					return true;
 				} else if (reply.toLowerCase().equals("n")) {
 					System.out.println(UIUXBusinessLogic.dashes());
 					System.out.println(UIUXBusinessLogic.centerText(duckie.getName() + " was not removed from " + storeFront.getName() + "'s Product Catalog!"));	
 					System.out.println(UIUXBusinessLogic.dashes());
-					isRunning = false;
+					return true;
 				} else {
 					BusinessLogic.inValidOption();
 				}
 			}
 		}
+		return true;
 	}
 	
 	public static void profitReports(Scanner scanner, Employee employee, StoreFront storeFront) {
