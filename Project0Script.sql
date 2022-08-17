@@ -23,7 +23,7 @@ email varchar(50) not null
 create table products (
 product_id serial primary key,
 product_name varchar(50) not null,
-price numeric(10, 2) not null,
+price decimal(10, 2) not null,
 description varchar(100) not null,
 quality varchar(50) not null
 );
@@ -37,7 +37,7 @@ pw varchar(20) not null
 create table storefronts (
 storefront_id serial primary key,
 storefront_name varchar(50),
-address varchar(70)
+address varchar(100)
 );
 --Everything after this relies on something above
 
@@ -61,10 +61,6 @@ product_id int references products(product_id),
 quantity int
 );
 
---ADD CUSTOMERS
---insert into customers (first_name, last_name, username, pw, email) values ('David', 'Bowie', 'ziggystardust1', 'password', 'email@email.com');
---insert into customers (first_name, last_name, username, pw, email) values ('John', 'Davis', 'kornstock', 'password', 'email@email.com');
-
 --ADD PRODUCTS
 insert into products(product_name, price, description, quality) values ('Rubber Duckie', 2.99, 'A basic rubber duckie', 'Mildly Duckie');
 insert into products(product_name, price, description, quality) values ('Rubber Duckie', 4.99, 'A basic rubber duckie', 'Somewhat Duckie');
@@ -84,10 +80,10 @@ insert into products(product_name, price, description, quality) values ('Jon Duc
 insert into products(product_name, price, description, quality) values ('[LIMITED EDITION] Black Mage Donald Duckie', 79.99, 'ZETAFLAAAAARE!!!!!!', 'Rare Edition Duckie');
 
 --ADD EMPLOYEES
-insert into employees(username, pw) values ('user', 'password');
+insert into employees(username, pw) values ('prowler4', 'password');
 
 --ADD STOREFRONTS
-insert into storefronts(storefront_name, address) values ('Good Duckin'' Duckies', '100 Lakewood Drive, Duckvile, Dickington, 12345');
+insert into storefronts(storefront_name, address) values ('Good Duckin'' Duckies', '100 Lakewood Drive, Duckvile, Duckington, 12345');
 insert into storefronts(storefront_name, address) values ('Discount Duckies', '5732 Pond Road, Duck Town, Duck Nation, 11111');
 insert into storefronts(storefront_name, address) values ('Duckie Dynasty', '63111 Ducktail Way, Duck Town, Duck Nation, 11111');
 
@@ -112,7 +108,24 @@ insert into storefront_items(storefront_id, product_id, quantity) values (3, 15,
 insert into storefront_items(storefront_id, product_id, quantity) values (3, 10, 100);
 insert into storefront_items(storefront_id, product_id, quantity) values (3, 16, 20);
 
-
-
-
-
+insert into customers (first_name, last_name, username, pw, email) values ('Brandon', 'Learned', 'blearned92', 'password', 'blearrned@gmail.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Mario', 'Mario', 'goombastomper', 'password', 'email@yahaaa.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Luigi', 'Mario', 'plumberpants', 'password', 'email@woohoo.com');
+insert into customers (first_name, last_name, username, pw, email) values ('David', 'Bowie', 'ziggystardust1', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('John', 'Davis', 'kornstock', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Cloud', 'Strife', 'bustersword', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Tifa', 'Lockhart', 'purplepain20', 'password', 'email@email.net');
+insert into customers (first_name, last_name, username, pw, email) values ('Barret', 'Wallace', 'wreckingball', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Squall', 'Leonhart', 'renzuken', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Red', 'Thirteen', 'ratdogthing', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Aerith', 'Gainsborough', 'holymateria', 'password', 'email@email.net');
+insert into customers (first_name, last_name, username, pw, email) values ('Vincent', 'Valentine', 'lucrecia', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Tom', 'Nook', 'yesyes', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Princess', 'Zelda', 'triforce', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Cid', 'Highwind', 'highwind11', 'password', 'email@email.net');
+insert into customers (first_name, last_name, username, pw, email) values ('Kurt', 'Cobain', 'nevermind', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Sephiroth', 'Unknown', 'masamune', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Yuffie', 'Kisaragi', 'materiahunter', 'password', 'email@email.net');
+insert into customers (first_name, last_name, username, pw, email) values ('Cait', 'Sith', 'reeve', 'password', 'email@email.com');
+insert into customers (first_name, last_name, username, pw, email) values ('Sora', 'Sora', 'keyblade', 'password', 'email@email.net');
+insert into customers (first_name, last_name, username, pw, email) values ('Randy', 'Savage', 'bonesaw', 'password', 'email@email.com');
