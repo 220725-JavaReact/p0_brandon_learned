@@ -148,19 +148,19 @@ public class UIUXBusinessLogic {
 	
 	public static String formatProductsWithIndexAndCost(int i, Duckie duckie) {
 		StringBuilder sb = new StringBuilder();
-		
+		DecimalFormat df = new DecimalFormat("#.00");
 		if(i+1 < 10) {
 			sb.append("[" + (i+1) + "]  " + duckie.getName());
-			while(sb.toString().length() < 82 - ("Price: $" + duckie.getPrice()).length()) {
+			while(sb.toString().length() < 82 - ("Price: $" + df.format(duckie.getPrice())).length()) {
 				sb.append(".");
 			}	
-			sb.append(("Price: $" + duckie.getPrice()));
+			sb.append(("Price: $" + df.format(duckie.getPrice())));
 		} else {
 			sb.append("[" + (i+1) + "] " + duckie.getName());
-			while(sb.toString().length() < 82 - ("Price: $" + duckie.getPrice()).length()) {
+			while(sb.toString().length() < 82 - ("Price: $" + df.format(duckie.getPrice())).length()) {
 				sb.append(".");
 			}	
-			sb.append(("Price: $" + duckie.getPrice()));
+			sb.append(("Price: $" + df.format(duckie.getPrice())));
 		}
 		
 		

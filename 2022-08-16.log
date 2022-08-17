@@ -1,188 +1,78 @@
 info	
-Admin User: user logged out of account
-2022-08-16T07:48:03.776120900
+New User Created: Name: Chuck Wood
+Username: woodchuck
+Password: password
+Email: woodchuck@gmail.com
+2022-08-16T13:00:19.332684500
+---------------------------------
+info	
+User: woodchuck logged into account
+2022-08-16T13:00:30.279572300
+---------------------------------
+info	
+Order: 
+5 x Rubber Duckie
+StoreAddress: Good Duckin' Duckies
+TotalPriceOfItems: 14.950000000000003
+purchased by customer: woodchuck
+2022-08-16T13:02:02.571687200
+---------------------------------
+info	
+User: woodchuck logged out of account
+2022-08-16T13:02:14.376231500
 ---------------------------------
 info	
 Admin User: prowler4 logged into account
-2022-08-16T07:48:14.696051100
+2022-08-16T13:02:22.815758800
 ---------------------------------
 info	
-Admin User: prowler4 added product Red Rubber Duckie to storefront Good Duckin' Duckies with a stock of 50
-2022-08-16T07:49:08.992499300
+Admin User: prowler4 decreased the stock of Jon Duckett Duckie by 1 for storefront Good Duckin' Duckies
+2022-08-16T13:03:03.188512100
 ---------------------------------
 info	
-Admin User: prowler4 added product Donald Duckie to storefront Good Duckin' Duckies with a stock of 100
-2022-08-16T07:50:46.226726100
+Admin User: prowler4 increased the stock of Jon Duckett Duckie by 5 for storefront Good Duckin' Duckies
+2022-08-16T13:03:14.965101100
 ---------------------------------
 info	
-Admin User: prowler4 added product Rubber Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:50:59.636362700
----------------------------------
-info	
-Admin User: prowler4 added product Rubber Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:04.027032500
----------------------------------
-info	
-Admin User: prowler4 added product Alien Rubber Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:08.166733100
----------------------------------
-info	
-Admin User: prowler4 added product Darkwing Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:11.920791500
----------------------------------
-info	
-Admin User: prowler4 added product Howard the Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:15.946321700
----------------------------------
-info	
-Admin User: prowler4 added product Scrooge McDuckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:19.913497700
----------------------------------
-info	
-Admin User: prowler4 added product Duckie Lasek to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:23.749268300
----------------------------------
-info	
-Admin User: prowler4 added product Jon Duckett Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:27.414496500
----------------------------------
-info	
-Admin User: prowler4 added product [LIMITED EDITION] Black Mage Donald Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T07:51:31.432948400
----------------------------------
-info	
-Admin User: prowler4 removed product Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T07:51:52.497813200
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:15:40.519102300
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:16:43.796900700
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:17:47.689799300
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:18:24.716852500
----------------------------------
-info	
-Admin User: prowler4 removed product Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:18:46.886551200
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:21:32.642362500
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:22:12.321211200
----------------------------------
-info	
-Admin User: prowler4 removed product Daffy Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:22:23.966356400
+Admin User: prowler4 added product Duck Grayson to storefront Good Duckin' Duckies with a stock of 100
+2022-08-16T13:03:43.191630100
 ---------------------------------
 info	
 Admin User: prowler4 removed product Donald Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:22:35.159229300
+2022-08-16T13:04:18.570777
 ---------------------------------
 info	
-Admin User: prowler4 logged into account
-2022-08-16T08:26:42.223466200
+Admin User prowler4 Created New StoreFront: StoreFront [name=Duckies 'R' Us, address=10000 Duckie Lane, Duckville, CO, 12345, orderList=[]]
+2022-08-16T13:05:18.349024300
 ---------------------------------
 info	
-Admin User: prowler4 logged into account
-2022-08-16T08:29:22.322630800
+Admin User prowler4 Created New Product: Duckie Name: Duckman!!!
+Duckie Price: $9.99
+Description: It's a duck and a man!
+Duckiness: Duckie
+2022-08-16T13:05:48.785072
 ---------------------------------
 info	
-Admin User: prowler4 removed product Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:29:32.582975500
+Admin User: prowler4 added product Duckman!!! to storefront Duckies 'R' Us with a stock of 100
+2022-08-16T13:06:15.670635400
 ---------------------------------
 info	
-Admin User: prowler4 added product Rubber Duckie to storefront Good Duckin' Duckies with a stock of 50
-2022-08-16T08:33:10.859049300
+Admin User: prowler4 logged out of account
+2022-08-16T13:06:24.198602300
 ---------------------------------
 info	
-Admin User: prowler4 added product Daffy Duckie to storefront Good Duckin' Duckies with a stock of 50
-2022-08-16T08:33:21.361159700
+User: blearned92 logged into account
+2022-08-16T13:06:28.641208300
 ---------------------------------
 info	
-Admin User: prowler4 added product Donald Duckie to storefront Good Duckin' Duckies with a stock of 50
-2022-08-16T08:33:34.653145400
+Order: 
+20 x Duckman!!!
+StoreAddress: Duckies 'R' Us
+TotalPriceOfItems: 199.8
+purchased by customer: blearned92
+2022-08-16T13:06:50.638609200
 ---------------------------------
 info	
-Admin User: prowler4 logged into account
-2022-08-16T08:49:36.578057
----------------------------------
-info	
-Admin User: prowler4 added product Rubber Duckie to storefront Good Duckin' Duckies with a stock of 1
-2022-08-16T08:50:02.558375300
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:51:04.900757700
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:51:32.058482100
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:53:32.029404400
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:53:53.529919200
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:55:52.269452800
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:57:35.095259
----------------------------------
-info	
-Admin User: prowler4 removed product Red Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:58:14.537510500
----------------------------------
-info	
-Admin User: prowler4 removed product Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:58:21.572851800
----------------------------------
-info	
-Admin User: prowler4 removed product [LIMITED EDITION] Black Mage Donald Duckie from storefront Good Duckin' Duckies
-2022-08-16T08:58:29.939284700
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T08:59:47.066663600
----------------------------------
-info	
-Admin User: prowler4 logged into account
-2022-08-16T09:00:52.378686300
----------------------------------
-info	
-Admin User: prowler4 removed product Duckie Lasek from storefront Good Duckin' Duckies
-2022-08-16T09:01:15.699284400
----------------------------------
-info	
-Admin User: prowler4 removed product Alien Rubber Duckie from storefront Good Duckin' Duckies
-2022-08-16T09:01:43.800257
----------------------------------
-info	
-Admin User: prowler4 added product [LIMITED EDITION] Black Mage Donald Duckie to storefront Good Duckin' Duckies with a stock of 4
-2022-08-16T09:02:13.047754900
----------------------------------
-info	
-Admin User: prowler4 added product Duckie Lasek to storefront Good Duckin' Duckies with a stock of 50
-2022-08-16T09:02:21.238310300
----------------------------------
-info	
-Admin User: prowler4 removed product Scrooge McDuckie from storefront Good Duckin' Duckies
-2022-08-16T09:02:42.726456400
+User: blearned92 logged out of account
+2022-08-16T13:07:06.871579600
 ---------------------------------
